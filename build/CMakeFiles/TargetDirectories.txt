@@ -1,0 +1,4 @@
+C:/Users/hdmet/Desktop/cglm/build/CMakeFiles/cglm.dir
+C:/Users/hdmet/Desktop/cglm/build/CMakeFiles/cglm_test.dir
+C:/Users/hdmet/Desktop/cglm/build/CMakeFiles/edit_cache.dir
+C:/Users/hdmet/Desktop/cglm/build/CMakeFiles/rebuild_cache.dir
