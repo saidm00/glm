@@ -17,7 +17,7 @@ The elements of the "templated" vector structs can be accessed in different ways
 ```c
 vec3 v = vec3(-5.0f, 24.0f, 2.75f);
 v.x; // '.x' gets x element of the vector
-v.xy; // '.xy' is of type vec2, self-explanatory.
+v.xy; // '.xy' is of type vec2, self-explanatory
 v.rg;
 v.tp;
 
@@ -35,9 +35,10 @@ xyz(v);
 // ...
 ```
 
-Swizzling is also supported but with *function-like macros*.
-
+Swizzling is also supported with *function-like macros*.
+**NOTE: This component group notation isn't valid on the left hand side.**
 ```c
 vec4 v = vec4(1.0f, 2.0f, 3.0f, 4.0f);
-wzyx(v); // vec4(4.0f, 3.0f, 2.0f, 1.0f)
+v = wzyx(v); // vec4(4.0f, 3.0f, 2.0f, 1.0f)
+wx(v) = vec2(25, -3.0f); // invalid right now
 ```

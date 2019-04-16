@@ -251,7 +251,7 @@ GLM_DEFINE_MATRIX_CONSTRUCTORS(bool)
 // xyxx(vec)
 // vec.xyxx
 //
-
+/*
 #define VECT2U(T,U,...) static inline T U##_to_##T(U v) { return (T)__VA_ARGS__; }
 #define DEF2VEC(T,N,...) VECT2U(T,float##N,__VA_ARGS__) VECT2U(T,double##N,__VA_ARGS__) \
 VECT2U(T,int##N,__VA_ARGS__) VECT2U(T,uint##N,__VA_ARGS__) VECT2U(T,bool##N,__VA_ARGS__)
@@ -506,7 +506,7 @@ GLM_GENERIC_OPERATOR_CASES_B(bool,b,name)
 #define sub(a,b) _Generic(a, GLM_GENERIC_OPERATOR_CASES_AB(b, sub))(a,b)
 #define mul(a,b) _Generic(a, GLM_GENERIC_OPERATOR_CASES_AB(b, mul))(a,b)
 #define div(a,b) _Generic(a, GLM_GENERIC_OPERATOR_CASES_AB(b, div))(a,b)
-
+*/
 
 /* #define alias for types. */
 #define vec2 float2
@@ -562,5 +562,44 @@ GLM_GENERIC_OPERATOR_CASES_B(bool,b,name)
 #define bmat3 bmat3x3
 #define bmat4 bmat4x4
 */
+
+/*
+
+struct vec2 {
+	float x, y;	
+
+	vec2 (*yz)(vec2);
+};
+
+vec2 v;
+v.yx(v);
+
+
+*/
+
+#define GLM_SWIZZLE_HOMO(x,N) _Generic(x, float: float##N(x), double: double##N(x), int: int##N(x), uint: uint##N(x), bool: bool##N(x))
+
+#define    x(v) v.x
+#define    y(v) v.y
+#define    z(v) v.z
+#define    w(v) v.w
+
+#define   xx(v) GLM_SWIZZLE_HOMO(v.x,2)
+#define   yy(v) GLM_SWIZZLE_HOMO(v.y,2)
+#define   zz(v) GLM_SWIZZLE_HOMO(v.z,2)
+#define   ww(v) GLM_SWIZZLE_HOMO(v.w,2)
+
+#define  xxx(v) GLM_SWIZZLE_HOMO(v.x,3)
+#define  yyy(v) GLM_SWIZZLE_HOMO(v.y,3)
+#define  zzz(v) GLM_SWIZZLE_HOMO(v.z,3)
+#define  www(v) GLM_SWIZZLE_HOMO(v.w,3)
+
+#define xxxx(v) GLM_SWIZZLE_HOMO(v.x,4)
+#define yyyy(v) GLM_SWIZZLE_HOMO(v.y,4)
+#define zzzz(v) GLM_SWIZZLE_HOMO(v.z,4)
+#define wwww(v) GLM_SWIZZLE_HOMO(v.w,4)
+
+
+#define yx(v) GLM_SWIZZLE2(v.x, v.y, 2, 1)
 
 #endif // GLM_INCLUDED
