@@ -3,7 +3,7 @@
 glm is a glsl inspired math library in C.
 
 
-This library exploits some `variadic macro` and `pasting tricks` as well as `_Generic` to allow for glsl style vector constructors.
+This library exploits some *variadic macro* and *pasting* tricks as well as `_Generic` to allow for glsl style vector constructors.
 
 ```c
 uvec2 a = uvec2(25, 0x7f);
