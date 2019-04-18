@@ -1,7 +1,6 @@
 #ifndef GLM_INCLUDED
 #define GLM_INCLUDED
 
-
 #ifdef GLM_FORCE_INLINE
 
 #if defined(__GNUC__) || defined(__clang__)
@@ -15,7 +14,6 @@
 #define GLM_API static
 
 #endif
-
 
 
 #include <tgmath.h>
@@ -33,6 +31,7 @@ typedef union {\
     T e[1];\
     T x, s, r;\
 } T##1;\
+\
 typedef union {\
     T e[2];\
     struct { T x, y; };\
@@ -58,12 +57,7 @@ typedef union {\
     struct { T##2 xy, zw; };\
     struct { T##2 rg, ba; };\
     struct { T##2 st, pq; };\
-    struct { T x_; union {\
-    		union { T##2 yz; T##3 yzw; };\
-    		union { T##2 gb; T##3 gba; };\
-    		union { T##2 tp; T##3 tpq; };\
-    	};\
-	};\
+    struct { T x_; union { T##2 yz, gb, tp; T##3 yzw, gba, tpq; }; };\
 } T##4;
 
 GLM_DEFINE_VECTORS(float)
@@ -359,16 +353,16 @@ cast_##T##M##_bool##N(bool##N const)
 
 
 #define GLM_DECLARE_TVEC_CASTS(T)\
-GLM_API T##2 cast_##T##2_##T(T const),\
+GLM_API T##2 \
 GLM_DECLARE_TVECN_CASTS(T,2,1),\
 GLM_DECLARE_TVECN_CASTS(T,2,2),\
 GLM_DECLARE_TVECN_CASTS(T,2,3),\
 GLM_DECLARE_TVECN_CASTS(T,2,4);\
-GLM_API T##3 cast_##T##3_##T(T const),\
+GLM_API T##3 \
 GLM_DECLARE_TVECN_CASTS(T,3,1),\
 GLM_DECLARE_TVECN_CASTS(T,3,3),\
 GLM_DECLARE_TVECN_CASTS(T,3,4);\
-GLM_API T##4 cast_##T##4_##T(T const),\
+GLM_API T##4 \
 GLM_DECLARE_TVECN_CASTS(T,4,1),\
 GLM_DECLARE_TVECN_CASTS(T,4,4);
 
@@ -401,21 +395,9 @@ GLM_DEFINE_TVEC##N##_CASTS(T,bool)
 
 
 #define GLM_DEFINE_TVEC_CASTS(T)\
-GLM_API T##2 cast_##T##2_##T(T const s) {\
-    return (T##2){.e = {s, s}};\
-}\
-GLM_API T##3 cast_##T##3_##T(T const s) {\
-    return (T##3){.e = {s, s, s}};\
-}\
-GLM_API T##4 cast_##T##4_##T(T const s) {\
-    return (T##4){.e = {s, s, s, s}};\
-}\
 GLM_DEFINE_TVECN_CASTS(T,2)\
 GLM_DEFINE_TVECN_CASTS(T,3)\
 GLM_DEFINE_TVECN_CASTS(T,4)
-
-#define GLM_DEFINE_VECTOR_CASTS\
-
 
 #define GLM_IF_SCALAR(x) float: x, double: x, int: x, uint: x, bool: x
 
@@ -426,17 +408,105 @@ int##N: cast_##T##M##_int##N,\
 uint##N: cast_##T##M##_uint##N,\
 bool##N: cast_##T##M##_bool##N
 
-#define T2_1(T, a, ...) _Generic(a, GLM_IF_SCALAR(cast_##T##2_##T), GLM_IF_VECTOR(T,2,2), GLM_IF_VECTOR(T,2,3), GLM_IF_VECTOR(T,2,4))(a)
-#define T3_1(T, a, ...) _Generic(a, GLM_IF_SCALAR(cast_##T##3_##T), GLM_IF_VECTOR(T,3,3), GLM_IF_VECTOR(T,3,4))(a)
-#define T4_1(T, a, ...) _Generic(a, GLM_IF_SCALAR(cast_##T##4_##T), GLM_IF_VECTOR(T,4,4))(a)
 
-#define T2_(T, a1, a2, N, ...)         T2_##N(T, a1, a2)
-#define T3_(T, a1, a2, a3, N, ...)     T3_##N(T, a1, a2, a3)
+#define GLM_DECLARE_TVEC_CONSTRUCTORS(T)\
+GLM_API T##2 T##2_1(T const),\
+             T##2_2(T const, T const);\
+\
+GLM_API T##3 T##3_1(T const),\
+             T##3_2(T##2 const, T const),\
+             T##3_3(T const, T##2 const),\
+             T##3_4(T const, T const, T const);\
+\
+GLM_API T##4 T##4_1(T const),\
+             T##4_2(T##2 const, T##2 const),\
+             T##4_3(T##3 const, T const),\
+             T##4_4(T const, T##3 const),\
+             T##4_5(T##2 const, T const, T const),\
+             T##4_6(T const, T##2 const, T const),\
+             T##4_7(T const, T const, T##2 const),\
+             T##4_8(T const, T const, T const, T const);
+
+
+#define GLM_DEFINE_TVEC_CONSTRUCTORS(T)\
+GLM_API T##2 T##2_1(T const s) {\
+    return (T##2){.e = {s, s}};\
+}\
+GLM_API T##2 T##2_2(T const e0, T const e1) {\
+    return (T##2){.e = {e0, e1}};\
+}\
+GLM_API T##3 T##3_1(T const s) {\
+    return (T##3){.e = {s, s, s}};\
+}\
+GLM_API T##3 T##3_2(T##2 const xy, T const z) {\
+    return (T##3){.xy = xy, .z = z};\
+}\
+GLM_API T##3 T##3_3(T const x, T##2 const yz) {\
+    return (T##3){.x = x, .yz = yz};\
+}\
+GLM_API T##3 T##3_4(T const e0, T const e1, T const e2) {\
+    return (T##3){.e = {e0, e1, e2}};\
+}\
+GLM_API T##4 T##4_1(T const s) {\
+    return (T##4){.e = {s, s, s}};\
+}\
+GLM_API T##4 T##4_2(T##2 const xy, T##2 const zw) {\
+    return (T##4){.xy = xy, .zw = zw};\
+}\
+GLM_API T##4 T##4_3(T##3 const xyz, T const w) {\
+    return (T##4){.xyz = xyz, .w = w};\
+}\
+GLM_API T##4 T##4_4(T const x, T##3 const yzw) {\
+    return (T##4){.x = x, .yzw = yzw};\
+}\
+GLM_API T##4 T##4_5(T##2 const xy, T const z, T const w) {\
+    return (T##4){.xy = xy, .z = z, .w = w};\
+}\
+GLM_API T##4 T##4_6(T const x, T##2 const yz, T const w) {\
+    return (T##4){.x = x, .yz = yz, .w = w};\
+}\
+GLM_API T##4 T##4_7(T const x, T const y, T##2 const zw) {\
+    return (T##4){.x = x, .y = y, .zw = zw};\
+}\
+GLM_API T##4 T##4_8(T const e0, T const e1, T const e2, T const e3) {\
+    return (T##4){.e = {e0, e1, e2, e3}};\
+}
+
+
+#define GLM_GENERIC_SCALAR_CASES(x) float: x, double: x, int: x, uint: x, bool: x
+#define GLM_GENERIC_VECN_CASES(N,x) float##N: x, double##N: x, int##N: x, uint##N: x, bool##N: x
+
+#define GLM_GENERIC_IF_SCALAR(x, a, b) _Generic(x, GLM_GENERIC_SCALAR_CASES(a), default: b)
+#define GLM_GENERIC_IF_VECN(N, x, a, b) _Generic(x, GLM_GENERIC_VECN_CASES(N,a), default: b)
+
+#define T2_1(T, a, ...) _Generic(a, GLM_IF_SCALAR(T##2_1), GLM_IF_VECTOR(T,2,2), GLM_IF_VECTOR(T,2,3), GLM_IF_VECTOR(T,2,4))(a)
+#define T2_2(T, e0, e1, ...) T##2_2(e0, e1)
+
+#define T3_1(T, a, ...) _Generic(a, GLM_IF_SCALAR(T##3_1), GLM_IF_VECTOR(T,3,3), GLM_IF_VECTOR(T,3,4))(a)
+
+#define T3_2(T, a1, a2, ...) GLM_GENERIC_IF_VECN(2, a1, T##3_2, T##3_3)(\
+GLM_GENERIC_IF_VECN(2,a1,T##2(a1),a1),\
+GLM_GENERIC_IF_VECN(2,a2,T##2(a2),a2))
+
+#define T3_3(T, e0, e1, e2, ...) T##3_4(e0, e1, e2)
+
+#define T4_1(T, a, ...) _Generic(a, GLM_IF_SCALAR(T##4_1), GLM_IF_VECTOR(T,4,4))(a)
+
+#define T4_2(T, a1, a2, ...)\
+GLM_GENERIC_IF_VECN(2, a1, T##4_2, GLM_GENERIC_IF_VECN(3, a1, T##4_3, T##4_4))(\
+_Generic(a1, GLM_GENERIC_VECN_CASES(2, T##2(a1)), default: a1),\
+_Generic(a2, GLM_GENERIC_VECN_CASES(2, T##2(a2)), GLM_GENERIC_VECN_CASES(3, T##3(a2)), default: a2))
+
+#define T4_3(T, a1, a2, a3, ...) 
+#define T4_4(T, e0, e1, e2, e3, ...) T##4_8(e0, e1, e2, e3)
+
+#define         T2_(T, a1, a2, N, ...) T2_##N(T, a1, a2)
+#define     T3_(T, a1, a2, a3, N, ...) T3_##N(T, a1, a2, a3)
 #define T4_(T, a1, a2, a3, a4, N, ...) T4_##N(T, a1, a2, a3, a4)
 
-#define T2(T,...) T2_(T,__VA_ARGS__, 2, 1, 0)
-#define T3(T,...) T3_(T,__VA_ARGS__, 3, 2, 1, 0)
-#define T4(T,...) T4_(T,__VA_ARGS__, 4, 3, 2, 1, 0)
+#define T2(T,...) T2_(T, __VA_ARGS__, 2, 1, 0)
+#define T3(T,...) T3_(T, __VA_ARGS__, 3, 2, 1, 0)
+#define T4(T,...) T4_(T, __VA_ARGS__, 4, 3, 2, 1, 0)
 
 #define  float2(...) T2(float,  __VA_ARGS__)
 #define  float3(...) T3(float,  __VA_ARGS__)
@@ -460,19 +530,31 @@ GLM_DECLARE_TVEC_CASTS(int)
 GLM_DECLARE_TVEC_CASTS(uint)
 GLM_DECLARE_TVEC_CASTS(bool)
 
+GLM_DECLARE_TVEC_CONSTRUCTORS(float)
+GLM_DECLARE_TVEC_CONSTRUCTORS(double)
+GLM_DECLARE_TVEC_CONSTRUCTORS(int)
+GLM_DECLARE_TVEC_CONSTRUCTORS(uint)
+GLM_DECLARE_TVEC_CONSTRUCTORS(bool)
+
 GLM_DECLARE_TMAT_CONSTRUCTORS(float)
 GLM_DECLARE_TMAT_CONSTRUCTORS(double)
 GLM_DECLARE_TMAT_CONSTRUCTORS(int)
 GLM_DECLARE_TMAT_CONSTRUCTORS(uint)
 GLM_DECLARE_TMAT_CONSTRUCTORS(bool)
 
-#if defined(GLM_HEADER_ONLY)
+#if defined(GLM_INCLUDE_IMPLEMENTATION)
 
 GLM_DEFINE_TVEC_CASTS(float)
 GLM_DEFINE_TVEC_CASTS(double)
 GLM_DEFINE_TVEC_CASTS(int)
 GLM_DEFINE_TVEC_CASTS(uint)
 GLM_DEFINE_TVEC_CASTS(bool)
+
+GLM_DEFINE_TVEC_CONSTRUCTORS(float)
+GLM_DEFINE_TVEC_CONSTRUCTORS(double)
+GLM_DEFINE_TVEC_CONSTRUCTORS(int)
+GLM_DEFINE_TVEC_CONSTRUCTORS(uint)
+GLM_DEFINE_TVEC_CONSTRUCTORS(bool)
 
 GLM_DEFINE_TMAT_CONSTRUCTORS(float)
 GLM_DEFINE_TMAT_CONSTRUCTORS(double)
@@ -482,6 +564,60 @@ GLM_DEFINE_TMAT_CONSTRUCTORS(bool)
 
 #endif
 
+/* #define alias for types. */
+#define vec2 float2
+#define vec3 float3
+#define vec4 float4
+#define dvec2 double2
+#define dvec3 double3
+#define dvec4 double4
+#define ivec2 int2
+#define ivec3 int3
+#define ivec4 int4
+#define uvec2 uint2
+#define uvec3 uint3
+#define uvec4 uint4
+#define bvec2 bool2
+#define bvec3 bool3
+#define bvec4 bool4
+
+
+#define  mat2x2  float2x2
+#define  mat3x3  float3x3
+#define  mat4x4  float4x4
+#define dmat2x2 double2x2
+#define dmat3x3 double3x3
+#define dmat4x4 double4x4
+/*
+#define imat2x2    int2x2
+#define imat3x3    int3x3
+#define imat4x4    int4x4
+#define umat2x2   uint2x2
+#define umat3x3   uint3x3
+#define umat4x4   uint4x4
+#define bmat2x2   bool2x2
+#define bmat3x3   bool3x3
+#define bmat4x4   bool4x4
+*/
+
+/* shorthand matrix notation, eg. mat2 = mat2x2, etc... */
+#define mat2   mat2x2
+#define mat3   mat3x3
+#define mat4   mat4x4
+#define dmat2 dmat2x2
+#define dmat3 dmat3x3
+#define dmat4 dmat4x4
+/*
+#define imat2 imat2x2
+#define imat3 imat3x3
+#define imat4 imat4x4
+#define umat2 umat2x2
+#define umat3 umat3x3
+#define umat4 umat4x4
+#define bmat2 bmat2x2
+#define bmat3 bmat3x3
+#define bmat4 bmat4x4
+*/
 
 
 // Pre-Processor generate Vector-Scalar operator definition name.
@@ -630,62 +766,6 @@ GLM_GENERIC_OPERATOR_CASES_B(bool,b,name)
 #define mul(a,b) _Generic(a, GLM_GENERIC_OPERATOR_CASES_AB(b, mul))(a,b)
 #define div(a,b) _Generic(a, GLM_GENERIC_OPERATOR_CASES_AB(b, div))(a,b)
 
-
-/* #define alias for types. */
-#define vec2 float2
-#define vec3 float3
-#define vec4 float4
-#define dvec2 double2
-#define dvec3 double3
-#define dvec4 double4
-#define ivec2 int2
-#define ivec3 int3
-#define ivec4 int4
-#define uvec2 uint2
-#define uvec3 uint3
-#define uvec4 uint4
-#define bvec2 bool2
-#define bvec3 bool3
-#define bvec4 bool4
-
-
-#define  mat2x2  float2x2
-#define  mat3x3  float3x3
-#define  mat4x4  float4x4
-#define dmat2x2 double2x2
-#define dmat3x3 double3x3
-#define dmat4x4 double4x4
-/*
-#define imat2x2    int2x2
-#define imat3x3    int3x3
-#define imat4x4    int4x4
-#define umat2x2   uint2x2
-#define umat3x3   uint3x3
-#define umat4x4   uint4x4
-#define bmat2x2   bool2x2
-#define bmat3x3   bool3x3
-#define bmat4x4   bool4x4
-*/
-
-/* shorthand matrix notation, eg. mat2 = mat2x2, etc... */
-#define mat2   mat2x2
-#define mat3   mat3x3
-#define mat4   mat4x4
-#define dmat2 dmat2x2
-#define dmat3 dmat3x3
-#define dmat4 dmat4x4
-/*
-#define imat2 imat2x2
-#define imat3 imat3x3
-#define imat4 imat4x4
-#define umat2 umat2x2
-#define umat3 umat3x3
-#define umat4 umat4x4
-#define bmat2 bmat2x2
-#define bmat3 bmat3x3
-#define bmat4 bmat4x4
-*/
-
 /*
 
 struct vec2 {
@@ -700,7 +780,7 @@ v.yx(v);
 
 */
 
-#define GLM_SWIZZLE_HOMO(x,N) _Generic(x, float: float##N(x), double: double##N(x), int: int##N(x), uint: uint##N(x), bool: bool##N(x))
+#define GLM_SWIZZLE_HOMO(x,N) _Generic(x, float: float##N, double: double##N, int: int##N, uint: uint##N, bool: bool##N)(x)
 
 #define    x(v) v.x
 #define    y(v) v.y
