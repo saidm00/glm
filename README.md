@@ -42,3 +42,12 @@ vec4 v = vec4(1.0f, 2.0f, 3.0f, 4.0f);
 v = wzyx(v); // vec4(4.0f, 3.0f, 2.0f, 1.0f)
 wx(v) = vec2(25, -3.0f); // invalid right now
 ```
+
+TODO:
+* [X] vector constructors
+* [] matrix constructors
+* [] layout qualifiers
+* [] operator functions
+* [] SIMD acceleration
+* [] compatibility with C standards other than the C11 standard
+* [] compatibility with C++
