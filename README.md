@@ -45,9 +45,9 @@ wx(v) = vec2(25, -3.0f); // invalid right now
 
 TODO:
 * [X] vector constructors
-* [] matrix constructors
-* [] layout qualifiers
-* [] operator functions
-* [] SIMD acceleration
-* [] compatibility with C standards other than the C11 standard
-* [] compatibility with C++
+* [X] matrix constructors
+* [X] layout qualifiers
+* [X] operator functions
+* [ ] SIMD acceleration
+* [ ] compatibility with C standards other than the C11 standard
+* [ ] compatibility with C++
