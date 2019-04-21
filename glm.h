@@ -3,11 +3,11 @@
 
 #define GLM_STATIC static
 
-#if defined(GLM_FORCE_INLINE)
+#if (defined(GLM_FORCE_INLINE))
 
-#if defined(__GNUC__) || defined(__clang__)
+#if (defined(__GNUC__) || defined(__clang__))
 #define GLM_API GLM_STATIC __inline__ __attribute__((always_inline))
-#elif defined(__MSVC)
+#elif (defined(__MSVC))
 #define GLM_API GLM_STATIC inline __forceinline
 #endif
 
@@ -19,11 +19,9 @@
 #define max(x,y) (((x)>(y))?(x):(y))
 #define clamp(x,a,b) (((x)<(a))?(a):((x)>(b))?(b):(x))
 
-#ifndef __cplusplus
 #include <stdbool.h>
 #undef bool
 typedef _Bool bool;
-#endif
 
 typedef unsigned int uint;
 
@@ -608,7 +606,7 @@ GLM_DEFINE_TMAT_CONSTRUCTORS(bool)
 
 #define std140_alignment(t, n) sizeof(t)*(n==3?4:n)
 
-#if defined(__GNUC__) || defined(__GNUG__)
+#if (defined(__GNUC__) || defined(__GNUG__))
 
 /* https://www.khronos.org/registry/OpenGL/specs/gl/glspec45.core.pdf#page=159 */
 
@@ -620,10 +618,6 @@ GLM_DEFINE_TMAT_CONSTRUCTORS(bool)
 
 #define layout(...) union __attribute__(__VA_ARGS__)
 
-#elif defined(__MSVC)
-
-/* #define layout(...) __declspec(__VA_ARGS__) */
-
-#else
-
 #endif
+
+#endif // GLM_INCLUDED
