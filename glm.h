@@ -6,7 +6,7 @@
 #if defined(GLM_FORCE_INLINE)
 
 #if defined(__GNUC__) || defined(__clang__)
-#define GLM_API GLM_STATIC inline __attribute__((always_inline))
+#define GLM_API GLM_STATIC __inline__ __attribute__((always_inline))
 #elif defined(__MSVC)
 #define GLM_API GLM_STATIC inline __forceinline
 #endif
@@ -604,23 +604,26 @@ GLM_DEFINE_TMAT_CONSTRUCTORS(bool)
 #define bmat4 bmat4x4
 */
 
-#endif // GLM_INCLUDED
-/*
-int main(void) {
-    vec2 a = vec2(0.5f);
-    uint2 b = uvec2(0.2f, 0xab);
+//#include <stdlib.h>
 
-    vec3 c = float3(25.8f, b);
-    
-    vec4 d = float4(c, false);
-    bvec4 e = bool4(false, bool3(5, -35, true));
-    
-    a = float2(a);
-    vec4 f = float4(a, b);
+#define std140_alignment(t, n) sizeof(t)*(n==3?4:n)
 
-    uint x = uint(f);
+#if defined(__GNUC__) || defined(__GNUG__)
 
-    //vec4 f = float4(a, b);
+/* https://www.khronos.org/registry/OpenGL/specs/gl/glspec45.core.pdf#page=159 */
 
-    return 0;
-}*/
+#define align(x) (__aligned__(x))
+#define std140(t, n) align(std140_alignment(t,n))
+#define std430(t, n) std140(t, n)
+#define packed (__packed__)
+#define shared packed
+
+#define layout(...) union __attribute__(__VA_ARGS__)
+
+#elif defined(__MSVC)
+
+/* #define layout(...) __declspec(__VA_ARGS__) */
+
+#else
+
+#endif
