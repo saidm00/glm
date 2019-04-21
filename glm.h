@@ -452,20 +452,20 @@ _Generic(a2, GLM_GENERIC_CAST_CASES(T,,), GLM_GENERIC_CAST_CASES(T,2,2), GLM_GEN
 #define    uint1(x) tvec1(uint,   x)
 #define    bool1(x) tvec1(bool,   x)
 
-#define   float2(...) tvec2(float,  __VA_ARGS__)
-#define   float3(...) tvec3(float,  __VA_ARGS__)
-#define   float4(...) tvec4(float,  __VA_ARGS__)
-#define  double2(...) tvec2(double, __VA_ARGS__)
-#define  double3(...) tvec3(double, __VA_ARGS__)
-#define  double4(...) tvec4(double, __VA_ARGS__)
-#define     int2(...) tvec2(int,    __VA_ARGS__)
-#define     int3(...) tvec3(int,    __VA_ARGS__)
-#define     int4(...) tvec4(int,    __VA_ARGS__)
-#define    uint2(...) tvec2(uint,   __VA_ARGS__)
-#define    uint3(...) tvec3(uint,   __VA_ARGS__)
-#define    uint4(...) tvec4(uint,   __VA_ARGS__)
-#define    bool2(...) tvec2(bool,   __VA_ARGS__)
-#define    bool3(...) tvec3(bool,   __VA_ARGS__)
+#define    float2(...) tvec2(float,  __VA_ARGS__)
+#define    float3(...) tvec3(float,  __VA_ARGS__)
+#define    float4(...) tvec4(float,  __VA_ARGS__)
+#define   double2(...) tvec2(double, __VA_ARGS__)
+#define   double3(...) tvec3(double, __VA_ARGS__)
+#define   double4(...) tvec4(double, __VA_ARGS__)
+#define      int2(...) tvec2(int,    __VA_ARGS__)
+#define      int3(...) tvec3(int,    __VA_ARGS__)
+#define      int4(...) tvec4(int,    __VA_ARGS__)
+#define     uint2(...) tvec2(uint,   __VA_ARGS__)
+#define     uint3(...) tvec3(uint,   __VA_ARGS__)
+#define     uint4(...) tvec4(uint,   __VA_ARGS__)
+#define     bool2(...) tvec2(bool,   __VA_ARGS__)
+#define     bool3(...) tvec3(bool,   __VA_ARGS__)
 #define    bool4(...) tvec4(bool,   __VA_ARGS__)
 
 #define  float2x2(...) tmat2x2(float, __VA_ARGS__)
@@ -485,9 +485,6 @@ _Generic(a2, GLM_GENERIC_CAST_CASES(T,,), GLM_GENERIC_CAST_CASES(T,2,2), GLM_GEN
 #define   bool4x4(...) tmat4x4(bool,  __VA_ARGS__)
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 GLM_DECLARE_VECTORS(float)
 GLM_DECLARE_VECTORS(double)
@@ -507,11 +504,9 @@ GLM_DECLARE_TVEC_CONSTRUCTORS(int)
 GLM_DECLARE_TVEC_CONSTRUCTORS(uint)
 GLM_DECLARE_TVEC_CONSTRUCTORS(bool)
 
-#ifdef __cplusplus
-}
-#endif
 
-#if defined(GLM_HEADER_ONLY)
+
+#if (defined(GLM_HEADER_ONLY))
 
 GLM_DEFINE_VECTORS(float)
 GLM_DEFINE_VECTORS(double)
