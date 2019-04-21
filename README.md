@@ -1,6 +1,6 @@
 
 # glm
-glm is a glsl inspired math library in C.
+glm is a an attempt at bringing the [glsl](https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.50.pdf) language to C as a library.
 
 
 This library exploits some *variadic macro* and *pasting* tricks as well as `_Generic` to allow for glsl style vector constructors.
