@@ -1,3 +1,6 @@
+#ifndef GLM_SWIZZLE_H
+#define GLM_SWIZZLE_H
+
 #include <glm/vec2.h>
 #include <glm/vec3.h>
 #include <glm/vec4.h>
@@ -95,3 +98,5 @@
 #define www(_) swizzle(_, 3, 3, 3)
 
 #endif
+
+#endif /* GLM_SWIZZLE_H */
