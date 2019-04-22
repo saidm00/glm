@@ -1,13 +1,22 @@
 #ifndef GLM_INCLUDED
 #define GLM_INCLUDED
 
+
+#if(defined(__clang__))
+#define GLM_COMPILER_CLANG
+#elif(defined(__GNUC__) || defined(__GNUG__))
+#define GLM_COMPILER_GCC
+#elif(defined(__MSVC))
+#define GLM_COMPILER_VC
+#endif
+
 #define GLM_STATIC static
 
 #if (defined(GLM_FORCE_INLINE))
 
-#if (defined(__GNUC__) || defined(__clang__))
+#if(defined(GLM_COMPILER_CLANG) || defined(GLM_COMPILER_GCC))
 #define GLM_API GLM_STATIC __inline__ __attribute__((always_inline))
-#elif (defined(__MSVC))
+#elif(defined(GLM_COMPILER_VC))
 #define GLM_API GLM_STATIC inline __forceinline
 #endif
 
