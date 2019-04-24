@@ -1,11 +1,10 @@
-#include <glm/glm.h>
+#include <glm/vec2.h>
+
+#include <stdio.h>
 
 int main(void) {
-	vec2 a = {0.37f, 0x4b};
-	vec2 b = {1.0f, 1.0f};
-	
-	a *= ++b;
-	
+	ivec2 a = ivec2(1.0f, -5.7f);
+	vec2 b = vec2(a);
 	
 	return 0;
 }

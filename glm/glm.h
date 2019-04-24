@@ -1,28 +1,14 @@
 #ifndef GLM_INCLUDED
 #define GLM_INCLUDED
-
-#define GLM_STATIC static
-
-#if (defined(GLM_FORCE_INLINE))
-
-#if(defined(GLM_COMPILER_CLANG) || defined(GLM_COMPILER_GCC))
-#define GLM_API GLM_STATIC __inline__ __attribute__((always_inline))
-#elif(defined(GLM_COMPILER_VC))
-#define GLM_API GLM_STATIC inline __forceinline
-#endif
-
-#else
-#define GLM_API GLM_STATIC inline
-#endif
+#include <glm/detail/setup.h>
 
 #define min(x,y) (((x)>(y))?(y):(x))
 #define max(x,y) (((x)>(y))?(x):(y))
 #define clamp(x,a,b) (((x)<(a))?(a):((x)>(b))?(b):(x))
 
-#include <stdbool.h>
-#undef bool
-typedef _Bool bool;
-
+typedef unsigned char bool;
+#define true (1)
+#define false (0)
 typedef unsigned int uint;
 
 #define GLM_DECLARE_VECTORS(T)\
