@@ -1,7 +1,7 @@
 #ifndef GLM_DETAIL_SETUP_H
 #define GLM_DETAIL_SETUP_H
 
-//#include <tgmath.h>
+//#include <math.h>
 
 #if defined(GLM_FORCE_INLINE)
 #	if GLM_COMPILER & GLM_COMPILER_VC
@@ -25,7 +25,7 @@
 //#define GLM_FUNC_QUALIFIER GLM_INLINE
 #define GLM_FUNC_QUALIFIER GLM_NEVER_INLINE
 
-#define GLM_ENABLE (1)
+#define GLM_ENABLE 1
 
 #define GLM_CONFIG_SIMD GLM_ENABLE
 

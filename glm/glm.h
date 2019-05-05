@@ -452,7 +452,7 @@ _Generic(a2, GLM_GENERIC_CAST_CASES(T,,), GLM_GENERIC_CAST_CASES(T,2,2), GLM_GEN
 #define     uint4(...) tvec4(uint,   __VA_ARGS__)
 #define     bool2(...) tvec2(bool,   __VA_ARGS__)
 #define     bool3(...) tvec3(bool,   __VA_ARGS__)
-#define    bool4(...) tvec4(bool,   __VA_ARGS__)
+#define     bool4(...) tvec4(bool,   __VA_ARGS__)
 
 #define  float2x2(...) tmat2x2(float, __VA_ARGS__)
 #define  float3x3(...) tmat3x3(float, __VA_ARGS__)

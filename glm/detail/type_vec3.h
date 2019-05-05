@@ -3,12 +3,12 @@
 
 #include "qualifier.h"
 
-#define GLM_TEMPLATE_TVEC3(T, Q)\
-GLM_INLINE vec(3, T, Q) T##3_1(void);\
-GLM_INLINE vec(3, T, Q) T##3_2(T const scalar);\
-GLM_INLINE vec(3, T, Q) T##3_3(vec(2, T, Q) const _xy, T const _z);\
-GLM_INLINE vec(3, T, Q) T##3_4(T const _x, vec(2, T, Q) const _yz);\
-GLM_INLINE vec(3, T, Q) T##3_5(T const _x, T const _y, T const _z, T const _w);
+GLM_DECLARE_VEC(3, float, vec)
+GLM_DECLARE_VEC(3, double, dvec)
+GLM_DECLARE_VEC(3, int, ivec)
+GLM_DECLARE_VEC(3, uint, uvec)
+GLM_DECLARE_VEC(3, bool, bvec)
 
+#include "type_vec3.inl"
 
 #endif /* GLM_DETAIL_TYPE_VEC3_H */

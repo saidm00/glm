@@ -100,33 +100,92 @@ GLM_TEMPLATE_DECLARE_VEC_CASTS(4, bool, defaultp)
 #define GLM_GENERIC_CAST_CASE(L1, L2, T1, T2, Q1, Q2) T2##L2##_##Q2: cast_##T1##L1##_##Q1##_from_##T2##L2##_##Q2
 */
 
-#define GLM_MANGLE(NAME, L, T) NAME##_##T##L
-/* Name mangle all types with vector length. */
-#define GLM_MANGLE_ALL_TYPES(NAME, L) \
-GLM_MANGLE(NAME, L, float), \
-GLM_MANGLE(NAME, L, double), \
-GLM_MANGLE(NAME, L, int), \
-GLM_MANGLE(NAME, L, uint), \
-GLM_MANGLE(NAME, L, bool)
 
-#define GLM_GENERIC_MANGLE_CASES(NAME)\
-GLM_MANGLE_ALL_TYPES(NAME, ), \
-GLM_MANGLE_ALL_TYPES(NAME, 2), \
-GLM_MANGLE_ALL_TYPES(NAME, 3), \
-GLM_MANGLE_ALL_TYPES(NAME, 4)
+#define GLM_PASTE(a,b) a##b
+#define GLM_PREFIX(a,b) a##_##b
+#define GLM_NAMESPACE(x) GLM_PASTE(glm_,x)
 
-#define GLM_GENERIC_CALL_1ARG(NAME, _) _Generic(_, GLM_GENERIC_MANGLE_CASES(NAME))(_)
+/* namespaced vector name, example: GLM_VECNAME(3, uint) => glm_uint3 */
+#define GLM_VECNAME(L, T) GLM_NAMESPACE(T##L)
 
-#define          sqrt(x) GLM_GENERIC_CALL_1ARG(sqrt, x)
-#define        length(x) GLM_GENERIC_CALL_1ARG(length, x)
-#define       sin(angle) GLM_GENERIC_CALL_1ARG(sin, angle)
-#define       cos(angle) GLM_GENERIC_CALL_1ARG(cos, angle)
-#define       tan(angle) GLM_GENERIC_CALL_1ARG(tan, angle)
-#define          asin(x) GLM_GENERIC_CALL_1ARG(asin, x)
-#define          acos(x) GLM_GENERIC_CALL_1ARG(acos, x)
-#define          atan(x) GLM_GENERIC_CALL_1ARG(atan, x)
-#define radians(degrees) GLM_GENERIC_CALL_1ARG(radians, degrees)
-#define degrees(radians) GLM_GENERIC_CALL_1ARG(degrees, radians)
+/* namespaced vector function name, example: GLM_FUNCNAME(3, uint, sqrt) => glm_sqrt_uint3 */
+#define GLM_FUNCNAME(name, L, T) GLM_NAMESPACE(name##_##T##L)
+
+#define GLM_DECLARE_VEC(L, T, name)\
+typedef union GLM_VECNAME(L, T) GLM_VECNAME(L, T), GLM_NAMESPACE(name##L);\
+\
+GLM_VECNAME(L, T) GLM_FUNC_QUALIFIER \
+GLM_FUNCNAME(add, L, T) (const register GLM_VECNAME(L, T), const register GLM_VECNAME(L, T)),\
+GLM_FUNCNAME(sub, L, T) (const register GLM_VECNAME(L, T), const register GLM_VECNAME(L, T)),\
+GLM_FUNCNAME(mul, L, T) (const register GLM_VECNAME(L, T), const register GLM_VECNAME(L, T)),\
+GLM_FUNCNAME(div, L, T) (const register GLM_VECNAME(L, T), const register GLM_VECNAME(L, T)),\
+GLM_FUNCNAME(sqrt, L, T) (const register GLM_VECNAME(L, T) x),\
+GLM_FUNCNAME(rsqrt, L, T) (const register GLM_VECNAME(L, T) x);\
+\
+T GLM_FUNC_QUALIFIER \
+GLM_FUNCNAME(dot, L, T) (const register GLM_VECNAME(L, T) x, const register GLM_VECNAME(L, T) y);\
+\
+T GLM_FUNC_QUALIFIER \
+GLM_FUNCNAME(length, L, T) (const register GLM_VECNAME(L, T) x);\
+\
+T GLM_FUNC_QUALIFIER \
+GLM_FUNCNAME(distance, L, T) (const register GLM_VECNAME(L, T) p0, const register GLM_VECNAME(L, T) p1);\
+\
+GLM_VECNAME(L, T) GLM_FUNC_QUALIFIER \
+GLM_FUNCNAME(normalize, L, T) (const register GLM_VECNAME(L, T) v);\
+\
+GLM_VECNAME(L, T) GLM_FUNC_QUALIFIER \
+GLM_FUNCNAME(min, L, T) (const register GLM_VECNAME(L, T) x, const register GLM_VECNAME(L, T) y);\
+\
+GLM_VECNAME(L, T) GLM_FUNC_QUALIFIER \
+GLM_FUNCNAME(max, L, T) (const register GLM_VECNAME(L, T) x, const register GLM_VECNAME(L, T) y);\
+\
+GLM_VECNAME(L, T) GLM_FUNC_QUALIFIER \
+GLM_FUNCNAME(floor, L, T)(const register GLM_VECNAME(L, T) x);\
+\
+GLM_VECNAME(L, T) GLM_FUNC_QUALIFIER \
+GLM_FUNCNAME(ceil, L, T) (const register GLM_VECNAME(L, T) x);\
+\
+GLM_VECNAME(L, T) GLM_FUNC_QUALIFIER \
+GLM_FUNCNAME(round, L, T) (const register GLM_VECNAME(L, T) x);	
+
+
+#define GLM_MANGLE_ALL_TYPES(name, L) \
+GLM_VECNAME(L, float): GLM_FUNCNAME(name, L, float), \
+GLM_VECNAME(L, double): GLM_FUNCNAME(name, L, double), \
+GLM_VECNAME(L, int): GLM_FUNCNAME(name, L, int), \
+GLM_VECNAME(L, uint): GLM_FUNCNAME(name, L, uint), \
+GLM_VECNAME(L, bool): GLM_FUNCNAME(name, L, bool)
+
+#define GLM_GENERIC_MANGLE_CASES(name)\
+GLM_MANGLE_ALL_TYPES(name, 2)
+
+#define GLM_GENERIC_CALL(name, _) _Generic(_, GLM_GENERIC_MANGLE_CASES(name))(_)
+
+#define          glm_sqrt(x) GLM_GENERIC_CALL(sqrt, x)
+#define        glm_length(x) GLM_GENERIC_CALL(length, x)
+/*
+#define       glm_sin(angle) GLM_GENERIC_CALL(sin, angle)
+#define       glm_cos(angle) GLM_GENERIC_CALL(cos, angle)
+#define       glm_tan(angle) GLM_GENERIC_CALL(tan, angle)
+#define          glm_asin(x) GLM_GENERIC_CALL(asin, x)
+#define          glm_acos(x) GLM_GENERIC_CALL(acos, x)
+#define          glm_atan(x) GLM_GENERIC_CALL(atan, x)
+*/
+#define glm_radians(degrees) GLM_GENERIC_CALL(radians, degrees)
+#define glm_degrees(radians) GLM_GENERIC_CALL(degrees, radians)
+/*
+#ifdef GLM_USING_NAMESPACE
+#define sqrt(x)          glm_sqrt(x)
+#define length(x)        glm_length(x)
+#define radians(degrees) glm_radians(degrees)
+#define degrees(radians) glm_degrees(radians)
+#endif
+*/
+/*
+#define dot(x, y)
+#define distance(p0, p1)
+*/
 
 
 #endif /* GLM_DETAIL_QUALIFIER_H */
