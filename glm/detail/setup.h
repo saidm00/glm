@@ -1,19 +1,7 @@
 #ifndef GLM_DETAIL_SETUP_H
 #define GLM_DETAIL_SETUP_H
 
-#include <tgmath.h>
-
-#define GLM_COMPILER_GCC   (0x00000001)
-#define GLM_COMPILER_CLANG (0x00000002)
-#define GLM_COMPILER_VC    (0x00000004)
-
-#if defined(__clang__)
-#	define GLM_COMPILER GLM_COMPILER_CLANG
-#elif defined(__GNUC__) || defined(__GNUG__)
-#	define GLM_COMPILER GLM_COMPILER_GCC
-#elif defined(__MSVC)
-#	define GLM_COMPILER GLM_COMPILER_VC
-#endif
+//#include <tgmath.h>
 
 #if defined(GLM_FORCE_INLINE)
 #	if GLM_COMPILER & GLM_COMPILER_VC
@@ -33,6 +21,13 @@
 #	define GLM_INLINE inline
 #	define GLM_NEVER_INLINE
 #endif
+
+//#define GLM_FUNC_QUALIFIER GLM_INLINE
+#define GLM_FUNC_QUALIFIER GLM_NEVER_INLINE
+
+#define GLM_ENABLE (1)
+
+#define GLM_CONFIG_SIMD GLM_ENABLE
 
 #define true (1)
 #define false (0)

@@ -3,37 +3,50 @@
 
 #include "qualifier.h"
 
-#define GLM_TEMPLATE_DECLARE_TVEC2(T, Q)\
-GLM_INLINE vec(2, T, Q) T##2_##Q##_1(void);\
-GLM_INLINE vec(2, T, Q) T##2_##Q##_2(T const scalar);\
-GLM_INLINE vec(2, T, Q) T##2_##Q##_3(vec(2, T, Q) const vector);\
-GLM_INLINE vec(2, T, Q) T##2_##Q##_4(vec(3, T, Q) const vector);\
-GLM_INLINE vec(2, T, Q) T##2_##Q##_5(vec(4, T, Q) const vector);\
-GLM_INLINE vec(2, T, Q) T##2_##Q##_6(T const x, T const y);
+union float2;
+union double2;
+union int2;
+union uint2;
+union bool2;
 
-#define GLM_GENERIC_CAST_CASE(L, T1, T2, Q) T2##L##_##Q: cast_##T1##L##_##Q##_from_##T2##L##_##Q
+typedef union float2 float2;
+typedef union double2 double2;
+typedef union int2 int2;
+typedef union uint2 uint2;
+typedef union bool2 bool2;
 
-#define GLM_GENERIC_CAST_CASES(L, T, Q)\
-GLM_GENERIC_CAST_CASE(L, T, float, Q),\
-GLM_GENERIC_CAST_CASE(L, T, double, Q),\
-GLM_GENERIC_CAST_CASE(L, T, int, Q),\
-GLM_GENERIC_CAST_CASE(L, T, uint, Q),\
-GLM_GENERIC_CAST_CASE(L, T, bool, Q)
+double2 GLM_FUNC_QUALIFIER
+add_double2(const register double2 a, register double2 b);
 
-#define GLM_GENERIC_FOREACH_VEC_CASES(L, Q, x) float##L##_##Q: x, double##L##_##Q: x, int##L##_##Q: x, uint##L##_##Q: x, bool##L##_##Q: x
+double2 GLM_FUNC_QUALIFIER
+sub_double2(const register double2 a, register double2 b);
 
-#define GLM_CREATE_TVEC2_0(T, Q, ...) T##2_##Q##_1()
-#define GLM_CREATE_TVEC2_1(T, Q, p, ...) _Generic(p, \
-GLM_GENERIC_FOREACH_VEC_CASES(2, Q, T##2_##Q##_3 ), \
-GLM_GENERIC_FOREACH_VEC_CASES(3, Q, T##2_##Q##_4 ), \
-GLM_GENERIC_FOREACH_VEC_CASES(4, Q, T##2_##Q##_5 ), \
-default: T##2_##Q##_2)\
-(_Generic(p, T##2_##Q: p, default: _Generic(p, GLM_GENERIC_CAST_CASES(2, T, Q), GLM_GENERIC_CAST_CASES(3, T, Q), GLM_GENERIC_CAST_CASES(4, T, Q))(p)))
+double2 GLM_FUNC_QUALIFIER
+mul_double2(const register double2 a, register double2 b);
 
-#define GLM_CREATE_TVEC2_2(T, Q, x, y, ...) T##2_##Q##_6(x, y)
+double2 GLM_FUNC_QUALIFIER
+div_double2(const register double2 a, register double2 b);
 
-#define GLM_CREATE_TVEC2_(T, Q, p1, p2, N, ...) GLM_CREATE_TVEC2_##N(T, Q, p1, p2,)
-#define GLM_CREATE_TVEC2(T, Q, ...) GLM_CREATE_TVEC2_(T, Q, __VA_ARGS__, 2, 1, 0)
+double2 GLM_FUNC_QUALIFIER
+sqrt_double2(register double2 x);
+
+double GLM_FUNC_QUALIFIER
+dot_double2(const register double2 x, const register double2 y);
+
+double GLM_FUNC_QUALIFIER
+length_double2(register double2 x);
+
+double GLM_FUNC_QUALIFIER
+distance_double2(const register double2 p0, const register double2 p1);
+
+double2 GLM_FUNC_QUALIFIER
+normalize_double2(register double2 v);
+
+double2 GLM_FUNC_QUALIFIER
+min_double2(const register double2 x, const register double2 y);
+
+double2 GLM_FUNC_QUALIFIER
+max_double2(const register double2 x, const register double2 y);
 
 #include "type_vec2.inl"
 
