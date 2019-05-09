@@ -3,11 +3,13 @@
 
 #include "qualifier.h"
 
-GLM_DECLARE_VEC(3, float, vec)
-GLM_DECLARE_VEC(3, double, dvec)
-GLM_DECLARE_VEC(3, int, ivec)
-GLM_DECLARE_VEC(3, uint, uvec)
-GLM_DECLARE_VEC(3, bool, bvec)
+#define GLM_DECLARE_TVEC3_CONSTRUCTORS(T)\
+vec(3, T) GLM_FUNC_QUALIFIER T##3_1(void);\
+vec(3, T) GLM_FUNC_QUALIFIER T##3_2(const register T);\
+vec(3, T) GLM_FUNC_QUALIFIER T##3_3(const register vec(2, T), const register T);\
+vec(3, T) GLM_FUNC_QUALIFIER T##3_4(const register T, const register vec(2, T));\
+vec(3, T) GLM_FUNC_QUALIFIER T##3_5(const register T, const register T, const register T);
+
 
 #include "type_vec3.inl"
 

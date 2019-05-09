@@ -1,7 +1,7 @@
 #ifndef GLM_DETAIL_SETUP_H
 #define GLM_DETAIL_SETUP_H
 
-//#include <math.h>
+#include <math.h>
 
 #if defined(GLM_FORCE_INLINE)
 #	if GLM_COMPILER & GLM_COMPILER_VC
