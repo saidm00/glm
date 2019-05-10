@@ -19,9 +19,7 @@ union vec(2, double)
 GLM_DEFINE_TVEC2(double)
 GLM_DEFINE_TVEC2_CONSTRUCTORS(double)
 
-typedef vec(2, double) dvec2;
-
 #define double2(...) tvec2_(double, __VA_ARGS__)
-#define dvec2(...) double2(__VA_ARGS__)
+#define dvec2 vec(2, double)
 
 #endif /* GLM_EXT_VECTOR_DOUBLE2_H */

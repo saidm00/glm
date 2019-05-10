@@ -15,9 +15,7 @@ union vec(2, float)
 GLM_DEFINE_TVEC2(float)
 GLM_DEFINE_TVEC2_CONSTRUCTORS(float)
 
-typedef vec(2, float) vec2;
-
 #define float2(...) tvec2_(float, __VA_ARGS__)
-#define vec2(...) float2(__VA_ARGS__)
+#define vec2 vec(2, float)
 
 #endif /* GLM_EXT_VECTOR_FLOAT2_H */

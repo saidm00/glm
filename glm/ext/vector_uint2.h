@@ -19,9 +19,7 @@ union vec(2, uint)
 GLM_DEFINE_TVEC2(uint)
 GLM_DEFINE_TVEC2_CONSTRUCTORS(uint)
 
-typedef vec(2, uint) uvec2;
-
 #define uint2(...) tvec2_(uint, __VA_ARGS__)
-#define uvec2(...) uint2(__VA_ARGS__)
+#define uvec2 vec(2, uint)
 
 #endif /* GLM_EXT_VECTOR_INT2_H */

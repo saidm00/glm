@@ -15,9 +15,7 @@ union vec(2, bool)
 GLM_DEFINE_TVEC2(bool)
 GLM_DEFINE_TVEC2_CONSTRUCTORS(bool)
 
-typedef vec(2, bool) bvec2;
-
 #define bool2(...) tvec2_(bool, __VA_ARGS__)
-#define bvec2(...) bool2(__VA_ARGS__)
+#define bvec2 vec(2, bool)
 
 #endif /* GLM_EXT_VECTOR_BOOL2_H */
