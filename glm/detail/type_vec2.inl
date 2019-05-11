@@ -72,3 +72,45 @@ GLM_DEFINE_VEC2(bool)
 //	return dst.e[0] + dst.e[1];
 //	#endif
 //}
+
+union vec(2, float)
+{
+	float e[2];
+	struct { union { float x, r, s; }; union { float y, g, t; }; };
+};
+
+union vec(2, double)
+{
+	double e[2];
+	struct { union { double x, r, s; }; union { double y, g, t; }; };
+
+	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_SSE2_BIT
+	__m128d _simd;
+	#endif
+};
+
+union vec(2, int)
+{
+	int e[2];
+	struct { union { int x, r, s; }; union { int y, g, t; }; };
+	
+	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_MMX_BIT
+	__m64 _simd;
+	#endif
+};
+
+union vec(2, uint)
+{
+	uint e[2];
+	struct { union { uint x, r, s; }; union { uint y, g, t; }; };
+	
+	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_MMX_BIT
+	__m64 _simd;
+	#endif
+};
+
+union vec(2, bool)
+{
+	bool e[2];
+	struct { union { bool x, r, s; }; union { bool y, g, t; }; };
+};

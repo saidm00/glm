@@ -3,18 +3,9 @@
 #define GLM_USING_NAMESPACE
 #include <glm/vec2.h>
 
-//#include <stdio.h>
 
-/*
-	Hello World!
-*/
+
 int main(int argc, char** argv) {
-	/*
-	int3 x;
-	bvec4 y;
-	uvec2 z;
-	bool4 w;
-	*/
 	vec2 x = float2(32, 0x4b);
 	dvec2 y = vec(2, double)(25.0);
 
@@ -22,6 +13,9 @@ int main(int argc, char** argv) {
 	
 	double l = _length(x);
 	
+	z = int2(y);
+
+	z = int2(int2(55));
 
 	return 0;
 }

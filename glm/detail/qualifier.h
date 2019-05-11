@@ -102,9 +102,26 @@ GLM_TEMPLATE_DECLARE_VEC_CASTS(4, bool, defaultp)
 
 #define GLM_FUNCNAME(NAME, L, T) NAME##_##T##L
 
-
-
 /*
+	vec
+	---
+	vector type
+	L -> element count
+	T -> type of element
+
+	mat
+	---
+	matrix type
+	C -> columns
+	R -> rows
+	T -> type of element
+
+	qua
+	---
+	quaternion type
+	T -> type of element
+
+
 	vec(4, float) -> float4
 	mat(2, 3, int) -> int2x3
 	tmat2x2(float) -> float2x2
@@ -145,7 +162,7 @@ GLM_TEMPLATE_DECLARE_VEC_CASTS(4, bool, defaultp)
 
 
 
-#define GLM_DECLARE_VEC(L, T)\
+#define GLM_VEC_DECL(L, T)\
 typedef union vec(L, T) vec(L, T);\
 \
 vec(L, T) GLM_FUNC_QUALIFIER \
@@ -191,5 +208,75 @@ GLM_MANGLE_ALL_TYPES(NAME, 2)
 #define _degrees(radians) GLM_GENERIC_CALL(degrees, radians)
 
 
+
+/*
+	foreach macro
+
+	allows loop-like control with the preprocessor
+*/
+
+#define GLM_TRIM_0(...)
+#define GLM_TRIM_1(A1, ...)                             A1
+#define GLM_TRIM_2(A1, A2, ...)                         A1, A2
+#define GLM_TRIM_3(A1, A2, A3, ...)                     A1, A2, A3
+#define GLM_TRIM_4(A1, A2, A3, A4, ...)                 A1, A2, A3, A4
+#define GLM_TRIM_5(A1, A2, A3, A4, A5, ...)             A1, A2, A3, A4, A5
+#define GLM_TRIM_6(A1, A2, A3, A4, A5, A6, ...)         A1, A2, A3, A4, A5, A6
+#define GLM_TRIM_7(A1, A2, A3, A4, A5, A6, A7, ...)     A1, A2, A3, A4, A5, A6, A7
+#define GLM_TRIM_8(A1, A2, A3, A4, A5, A6, A7, A8, ...) A1, A2, A3, A4, A5, A6, A7, A8
+
+#define ___GLM_FOREACH_1(MACRO, N, A1, A2, A3, A4, A5, A6, A7, A8) GLM_TRIM_##N(MACRO(A1), A2, A3, A4, A5, A6, A7, A8)
+#define ___GLM_FOREACH_2(MACRO, N, A1, A2, A3, A4, A5, A6, A7, A8) ___GLM_FOREACH_1(MACRO, N, A1, MACRO(A2), A3, A4, A5, A6, A7, A8)
+#define ___GLM_FOREACH_3(MACRO, N, A1, A2, A3, A4, A5, A6, A7, A8) ___GLM_FOREACH_2(MACRO, N, A1, A2, MACRO(A3), A4, A5, A6, A7, A8)
+#define ___GLM_FOREACH_4(MACRO, N, A1, A2, A3, A4, A5, A6, A7, A8) ___GLM_FOREACH_3(MACRO, N, A1, A2, A3, MACRO(A4), A5, A6, A7, A8)
+#define ___GLM_FOREACH_5(MACRO, N, A1, A2, A3, A4, A5, A6, A7, A8) ___GLM_FOREACH_4(MACRO, N, A1, A2, A3, A4, MACRO(A5), A6, A7, A8)
+#define ___GLM_FOREACH_6(MACRO, N, A1, A2, A3, A4, A5, A6, A7, A8) ___GLM_FOREACH_5(MACRO, N, A1, A2, A3, A4, A5, MACRO(A6), A7, A8)
+#define ___GLM_FOREACH_7(MACRO, N, A1, A2, A3, A4, A5, A6, A7, A8) ___GLM_FOREACH_6(MACRO, N, A1, A2, A3, A4, A5, A6, MACRO(A7), A8)
+#define ___GLM_FOREACH_8(MACRO, N, A1, A2, A3, A4, A5, A6, A7, A8) ___GLM_FOREACH_7(MACRO, N, A1, A2, A3, A4, A5, A6, A7, MACRO(A8))
+
+#define ___GLM_FOREACH(MACRO, A1, A2, A3, A4, A5, A6, A7, A8, N, ...) ___GLM_FOREACH_##N(MACRO, N, A1, A2, A3, A4, A5, A6, A7, A8)
+#define GLM_FOREACH(MACRO, ...) ___GLM_FOREACH(MACRO, __VA_ARGS__, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+
+/*
+#define ___GLM_CONCAT_0(...)
+#define ___GLM_CONCAT_1(A1, ...)                         A1
+#define ___GLM_CONCAT_2(A1, A2 ...)                      A1##A2
+#define ___GLM_CONCAT_3(A1, A2, A3, ...)                 A1##A2##A3
+#define ___GLM_CONCAT_4(A1, A2, A3, A4, ...)             A1##A2##A3##A4
+#define ___GLM_CONCAT_5(A1, A2, A3, A4, A5, ...)         A1##A2##A3##A4##A5
+#define ___GLM_CONCAT_6(A1, A2, A3, A4, A5, A6, ...)     A1##A2##A3##A4##A5##A6
+#define ___GLM_CONCAT_7(A1, A2, A3, A4, A5, A6, A7, ...) A1##A2##A3##A4##A5##A6##A7
+#define ___GLM_CONCAT_8(A1, A2, A3, A4, A5, A6, A7, A8)  A1##A2##A3##A4##A5##A6##A7##A8
+*/
+
+#define GLM_EVAL(ARG) ARG
+#define GLM_PASTE(A, B) A##B
+
+#define ___GLM_CONCAT_0(...)
+#define ___GLM_CONCAT_1(A1, ...)                         A1
+#define ___GLM_CONCAT_2(A1, A2 ...)                      A1##A2
+#define ___GLM_CONCAT_3(A1, A2, A3, ...)                 A1##A2##A3
+#define ___GLM_CONCAT_4(A1, A2, A3, A4, ...)             A1##A2##A3##A4
+#define ___GLM_CONCAT_5(A1, A2, A3, A4, A5, ...)         A1##A2##A3##A4##A5
+#define ___GLM_CONCAT_6(A1, A2, A3, A4, A5, A6, ...)     A1##A2##A3##A4##A5##A6
+#define ___GLM_CONCAT_7(A1, A2, A3, A4, A5, A6, A7, ...) A1##A2##A3##A4##A5##A6##A7
+#define ___GLM_CONCAT_8(A1, A2, A3, A4, A5, A6, A7, A8)  A1##A2##A3##A4##A5##A6##A7##A8
+
+
+#define ___GLM_CONCAT(A1, A2, A3, A4, A5, A6, A7, A8, N, ...) ___GLM_CONCAT_##N(A1, A2, A3, A4, A5, A6, A7, A8)
+#define GLM_CONCAT(...) ___GLM_CONCAT(__VA_ARGS__, 8, 7, 6, 5, 4, 3, 2, 1, 0)
+
+#define GLM_UNDERSCORE_PREFIX(x) _ ## x
+
+#define GLM_ARG_QUALIFIER const register
+#define GLM_ARG_QUALIFY(ARG) GLM_ARG_QUALIFIER ARG
+
+/*
+	NAME -> method name
+	T -> return type
+	... -> argument types
+*/
+#define GLM_METHOD_NAME(NAME, ...) GLM_CONCAT(NAME, GLM_FOREACH(GLM_UNDERSCORE_PREFIX, __VA_ARGS__))
+#define GLM_METHOD_DECL(NAME, T, ...) T GLM_FUNC_QUALIFIER GLM_METHOD_NAME(NAME, T, __VA_ARGS__) (GLM_FOREACH(GLM_ARG_QUALIFY, __VA_ARGS__))
 
 #endif /* GLM_DETAIL_QUALIFIER_H */

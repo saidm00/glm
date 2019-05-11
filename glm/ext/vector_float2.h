@@ -3,17 +3,16 @@
 
 #include "../detail/type_vec2.h"
 
-GLM_DECLARE_VEC(2, float)
-GLM_DECLARE_TVEC2_CONSTRUCTORS(float)
+GLM_METHOD_DECL(cast, vec(2, float), vec(2, double));
+GLM_METHOD_DECL(cast, vec(2, float), vec(2, int));
+GLM_METHOD_DECL(cast, vec(2, float), vec(2, uint));
+GLM_METHOD_DECL(cast, vec(2, float), vec(2, bool));
 
-union vec(2, float)
-{
-	float e[2];
-	struct { union { float x, r, s; }; union { float y, g, t; }; };
-};
-
-GLM_DEFINE_TVEC2(float)
-GLM_DEFINE_TVEC2_CONSTRUCTORS(float)
+GLM_TVEC2_DEF(float)
+GLM_TVEC2_CAST_DEF(float, double)
+GLM_TVEC2_CAST_DEF(float, int)
+GLM_TVEC2_CAST_DEF(float, uint)
+GLM_TVEC2_CAST_DEF(float, bool)
 
 #define float2(...) tvec2_(float, __VA_ARGS__)
 #define vec2 vec(2, float)
