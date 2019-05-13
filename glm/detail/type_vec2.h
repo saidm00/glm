@@ -5,39 +5,40 @@
 
 #define GLM_TVEC2_DECL(T)\
 vec(2, T) GLM_FUNC_QUALIFIER \
-T##2_0(void), \
-T##2_1(const register T), \
-T##2_2(const register vec(2, T)), \
-T##2_3(const register T, const register T);
+GLM_FUNC_NAME(create, vec(2, T), void) (void), \
+GLM_FUNC_NAME(create, vec(2, T), T) (const register T), \
+GLM_FUNC_NAME(create, vec(2, T), vec(2, T)) (const register vec(2, T)), \
+GLM_FUNC_NAME(create, vec(2, T), T, T) (const register T, const register T);
 
-float sqrt_float(float x)
+float GLM_FUNC_NAME(sqrt, float, float) (float x)
 {
 	return sqrtf(x);
 }
 
-double sqrt_double(double x)
+double GLM_FUNC_NAME(sqrt, double, double) (double x)
 {
 	return sqrt(x);
 }
 
-int sqrt_int(int x)
+int GLM_FUNC_NAME(sqrt, int, int) (int x)
 {
 	return sqrtl(x);
 }
 
-uint sqrt_uint(uint x)
+uint GLM_FUNC_NAME(sqrt, uint, uint) (uint x)
 {
 	return sqrtl(x);
 }
 
-bool sqrt_bool(bool x)
+bool GLM_FUNC_NAME(sqrt, bool, bool) (bool x)
 {
 	return sqrtl(x);
 }
+
 
 #define GLM_TVEC2_DEF(T)\
 vec(2, T) GLM_FUNC_QUALIFIER \
-T##2_0(void)\
+GLM_FUNC_NAME(create, vec(2, T), void) (void)\
 {\
 	vec(2, T) dst;\
 	dst.e[0] = (T)0;\
@@ -45,7 +46,7 @@ T##2_0(void)\
 	return dst;\
 }\
 vec(2, T) GLM_FUNC_QUALIFIER \
-T##2_1(const register T s)\
+GLM_FUNC_NAME(create, vec(2, T), T) (const register T s)\
 {\
 	vec(2, T) dst;\
 	dst.e[0] = s;\
@@ -53,7 +54,7 @@ T##2_1(const register T s)\
 	return dst;\
 }\
 vec(2, T) GLM_FUNC_QUALIFIER \
-T##2_2(const register vec(2, T) v)\
+GLM_FUNC_NAME(create, vec(2, T), vec(2, T)) (const register vec(2, T) v)\
 {\
 	vec(2, T) dst;\
 	dst.e[0] = v.e[0];\
@@ -61,13 +62,16 @@ T##2_2(const register vec(2, T) v)\
 	return dst;\
 }\
 vec(2, T) GLM_FUNC_QUALIFIER \
-T##2_3(const register T x, const register T y)\
+GLM_FUNC_NAME(create, vec(2, T), T, T) (const register T x, const register T y)\
 {\
 	vec(2, T) dst;\
 	dst.e[0] = x;\
 	dst.e[1] = y;\
 	return dst;\
 }\
+\
+\
+\
 vec(2, T) GLM_FUNC_QUALIFIER \
 GLM_FUNCNAME(vadd, 2, T) (const register vec(2, T) a, const register vec(2, T) b)\
 {\
@@ -104,22 +108,22 @@ vec(2, T) GLM_FUNC_QUALIFIER \
 GLM_FUNCNAME(sqrt, 2, T) (const register vec(2, T) x)\
 {\
 	register vec(2, T) dst;\
-	dst.e[0] = sqrt_##T(x.e[0]);\
-	dst.e[1] = sqrt_##T(x.e[1]);\
+	dst.e[0] = GLM_FUNC_NAME(sqrt, T, T)(x.e[0]);\
+	dst.e[1] = GLM_FUNC_NAME(sqrt, T, T)(x.e[1]);\
 	return dst;\
 }\
 vec(2, T) GLM_FUNC_QUALIFIER \
 GLM_FUNCNAME(rsqrt, 2, T) (const register vec(2, T) x)\
 {\
 	register vec(2, T) dst;\
-	dst.e[0] = ((T)1)/sqrt_##T(x.e[0]);\
-	dst.e[1] = ((T)1)/sqrt_##T(x.e[1]);\
+	dst.e[0] = ((T)1)/GLM_FUNC_NAME(sqrt, T, T)(x.e[0]);\
+	dst.e[1] = ((T)1)/GLM_FUNC_NAME(sqrt, T, T)(x.e[1]);\
 	return dst;\
 }\
 T GLM_FUNC_QUALIFIER \
 GLM_FUNCNAME(length, 2, T) (const register vec(2, T) x)\
 {\
-	return sqrt_##T(x.x*x.x + x.y*x.y);\
+	return GLM_FUNC_NAME(sqrt, T, T)(x.x*x.x + x.y*x.y);\
 }
 
 /*
@@ -142,7 +146,7 @@ GLM_CAST_FUNC_NAME(2, T, U) (const register vec(2, U) v)\
 #define GLM_CAST_DECL(P1, P2) ___GLM_CAST_DECL(P1, P2)
 */
 
-#define GLM_GENERIC_VEC_CAST_CASE(L, T1, T2) vec(L, T2): GLM_METHOD_NAME(cast, vec(L, T1), vec(L, T2))
+#define GLM_GENERIC_VEC_CAST_CASE(L, T1, T2) vec(L, T2): GLM_FUNC_NAME(cast, vec(L, T1), vec(L, T2))
 
 
 #define GLM_ASSOCIATION_LIST_VECTOR_cast_float(L)\
@@ -175,7 +179,7 @@ GLM_CAST_FUNC_NAME(2, T, U) (const register vec(2, U) v)\
                 GLM_GENERIC_VEC_CAST_CASE(L, bool, int), \
                 GLM_GENERIC_VEC_CAST_CASE(L, bool, uint)
 
-#define GLM_ASSOCIATION_LIST_SCALAR(x) float: x, double: x, int: x, uint: x, bool: x
+#define GLM_GENERIC_IF_SCALAR(x) float: x, double: x, int: x, uint: x, bool: x
 
 #define GLM_ASSOCIATION_LIST_VECTOR_SELECT(NAME, L, T) GLM_ASSOCIATION_LIST_VECTOR_##NAME##_##T(L)
 
@@ -186,36 +190,47 @@ GLM_CAST_FUNC_NAME(2, T, U) (const register vec(2, U) v)\
 */
 #define cast_vec(L, T, ARG) GLM_GENERIC_FUNC(cast, L, T, ARG)(ARG)
 
-#define tvec2(T) vec(2, T)
-
-#define tvec2_0(T, ...) T##2_1()
-#define tvec2_1(T, a, ...) _Generic( a, default: T##2_1, vec(2, T): T##2_2, GLM_ASSOCIATION_LIST_VECTOR_SELECT(cast, 2, T))(a)
-#define tvec2_2(T, x, y) T##2_3(x, y)
-
-#define tvec2__(T, a1, a2, N, ...) tvec2_##N(T, a1, a2)
-#define tvec2_(T, ...) tvec2__(T, __VA_ARGS__, 2, 1, 0)
-
-#define GLM_TVEC2_CAST_DEF(T1, T2)\
-vec(2, T1) GLM_FUNC_QUALIFIER \
-GLM_METHOD_NAME(cast, vec(2, T1), vec(2, T2)) (GLM_ARG_QUALIFIER vec(2, T2) src)\
+#define GLM_TVEC2_CAST_DEF(A, B)\
+vec(2, A) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(cast, vec(2, A), vec(2, B)) (const register vec(2, B) src)\
 {\
-	vec(2, T1) dst;\
-	dst.e[0] = (T1)src.e[0];\
-	dst.e[1] = (T1)src.e[1];\
+	vec(2, A) dst;\
+	dst.e[0] = (A)src.e[0];\
+	dst.e[1] = (A)src.e[1];\
 	return dst;\
 }
-
-GLM_VEC_DECL(2, float)
-GLM_VEC_DECL(2, double)
-GLM_VEC_DECL(2, int)
-GLM_VEC_DECL(2, uint)
-GLM_VEC_DECL(2, bool)
 
 GLM_TVEC2_DECL(float)
 GLM_TVEC2_DECL(double)
 GLM_TVEC2_DECL(int)
 GLM_TVEC2_DECL(uint)
 GLM_TVEC2_DECL(bool)
+
+/*
+	int3 -> float2
+	either you int3 -> float3 and then access xy member
+	or you access xy member, then cast int2 -> float2
+
+	second one is more economic
+*/
+/*
+	if(scalar) no cast, call vecn_1
+	if(vector) cast to same component count vector of same type then call vecn_m
+
+*/
+
+#define _create_tvec2_0(T, ...) GLM_FUNC_NAME(create, vec(2, T), void) ()
+
+#define _create_tvec2_1(T, a, ...) _Generic(a, \
+default: GLM_FUNC_NAME(create, vec(2, T), T), \
+vec(2, T): GLM_FUNC_NAME(create, vec(2, T), vec(2, T))\
+) (a)
+
+#define _create_tvec2_2(T, x, y) GLM_FUNC_NAME(create, vec(2, T), T, T) (x, y)
+
+#define tvec2(T) vec(2, T)
+#define _create_tvec2(T, a1, a2, N, ...) _create_tvec2_##N(T, a1, a2)
+#define _tvec2(T, ...) _create_tvec2(T, __VA_ARGS__, 2, 1, 0)
 
 #include "type_vec2.inl"
 

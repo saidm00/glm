@@ -132,8 +132,10 @@ GLM_TEMPLATE_DECLARE_VEC_CASTS(4, bool, defaultp)
 #define mat(C, R, T) T##C##x##R
 #define qua(T) qua_##T
 
-#define tvec3(T) vec(3, T)
-#define tvec4(T) vec(4, T)
+#define _vec(L, T, ...) _tvec##L(T, __VA_ARGS__)
+#define _mat(C, R, T, ...) _tmat##C##x##R(T, __VA_ARGS__)
+#define _qua(T, ...) _qua_##T(T, __VA_ARGS__)
+
 #define tmat2x2(T) mat(2, 2, T)
 #define tmat2x3(T) mat(2, 3, T)
 #define tmat2x4(T) mat(2, 4, T)
@@ -144,12 +146,6 @@ GLM_TEMPLATE_DECLARE_VEC_CASTS(4, bool, defaultp)
 #define tmat4x3(T) mat(4, 3, T)
 #define tmat4x4(T) mat(4, 4, T)
 
-#define _vec(L, T, ...) _tvec##L(T, __VA_ARGS__)
-#define _mat(C, R, T, ...) _tmat##C##x##R(T, __VA_ARGS__)
-#define _qua(T, ...)
-
-#define _tvec3(T, ...)
-#define _tvec4(T, ...)
 #define _tmat2x2(T, ...)
 #define _tmat2x3(T, ...)
 #define _tmat2x4(T, ...)
@@ -276,7 +272,77 @@ GLM_MANGLE_ALL_TYPES(NAME, 2)
 	T -> return type
 	... -> argument types
 */
-#define GLM_METHOD_NAME(NAME, ...) GLM_CONCAT(NAME, GLM_FOREACH(GLM_UNDERSCORE_PREFIX, __VA_ARGS__))
-#define GLM_METHOD_DECL(NAME, T, ...) T GLM_FUNC_QUALIFIER GLM_METHOD_NAME(NAME, T, __VA_ARGS__) (GLM_FOREACH(GLM_ARG_QUALIFY, __VA_ARGS__))
+#define GLM_FUNC_NAME(NAME, ...) GLM_CONCAT(NAME, GLM_FOREACH(GLM_UNDERSCORE_PREFIX, __VA_ARGS__))
+#define GLM_METHOD_DECL(NAME, T, ...) T GLM_FUNC_QUALIFIER GLM_FUNC_NAME(NAME, T, __VA_ARGS__) (GLM_FOREACH(GLM_ARG_QUALIFY, __VA_ARGS__))
+
+GLM_VEC_DECL(2, float)
+GLM_VEC_DECL(2, double)
+GLM_VEC_DECL(2, int)
+GLM_VEC_DECL(2, uint)
+GLM_VEC_DECL(2, bool)
+
+GLM_VEC_DECL(3, float)
+GLM_VEC_DECL(3, double)
+GLM_VEC_DECL(3, int)
+GLM_VEC_DECL(3, uint)
+GLM_VEC_DECL(3, bool)
+
+GLM_VEC_DECL(4, float)
+GLM_VEC_DECL(4, double)
+GLM_VEC_DECL(4, int)
+GLM_VEC_DECL(4, uint)
+GLM_VEC_DECL(4, bool)
+
+#define GLM_DECL_CAST_VECL_METHODS(L)\
+GLM_METHOD_DECL(cast, vec(L, float), vec(L, double)); \
+GLM_METHOD_DECL(cast, vec(L, float), vec(L, int)); \
+GLM_METHOD_DECL(cast, vec(L, float), vec(L, uint)); \
+GLM_METHOD_DECL(cast, vec(L, float), vec(L, bool));
+
+#define GLM_DECL_CAST_DVECL_METHODS(L)\
+GLM_METHOD_DECL(cast, vec(L, double), vec(L, float)); \
+GLM_METHOD_DECL(cast, vec(L, double), vec(L, int)); \
+GLM_METHOD_DECL(cast, vec(L, double), vec(L, uint)); \
+GLM_METHOD_DECL(cast, vec(L, double), vec(L, bool));
+
+#define GLM_DECL_CAST_IVECL_METHODS(L)\
+GLM_METHOD_DECL(cast, vec(L, int), vec(L, float)); \
+GLM_METHOD_DECL(cast, vec(L, int), vec(L, double)); \
+GLM_METHOD_DECL(cast, vec(L, int), vec(L, uint)); \
+GLM_METHOD_DECL(cast, vec(L, int), vec(L, bool));
+
+#define GLM_DECL_CAST_UVECL_METHODS(L)\
+GLM_METHOD_DECL(cast, vec(L, uint), vec(L, float)); \
+GLM_METHOD_DECL(cast, vec(L, uint), vec(L, double)); \
+GLM_METHOD_DECL(cast, vec(L, uint), vec(L, int)); \
+GLM_METHOD_DECL(cast, vec(L, uint), vec(L, bool));
+
+#define GLM_DECL_CAST_BVECL_METHODS(L)\
+GLM_METHOD_DECL(cast, vec(L, bool), vec(L, float)); \
+GLM_METHOD_DECL(cast, vec(L, bool), vec(L, double)); \
+GLM_METHOD_DECL(cast, vec(L, bool), vec(L, int)); \
+GLM_METHOD_DECL(cast, vec(L, bool), vec(L, uint));
+
+
+
+GLM_DECL_CAST_VECL_METHODS(2)
+GLM_DECL_CAST_VECL_METHODS(3)
+GLM_DECL_CAST_VECL_METHODS(4)
+
+GLM_DECL_CAST_DVECL_METHODS(2)
+GLM_DECL_CAST_DVECL_METHODS(3)
+GLM_DECL_CAST_DVECL_METHODS(4)
+
+GLM_DECL_CAST_IVECL_METHODS(2)
+GLM_DECL_CAST_IVECL_METHODS(3)
+GLM_DECL_CAST_IVECL_METHODS(4)
+
+GLM_DECL_CAST_UVECL_METHODS(2)
+GLM_DECL_CAST_UVECL_METHODS(3)
+GLM_DECL_CAST_UVECL_METHODS(4)
+
+GLM_DECL_CAST_BVECL_METHODS(2)
+GLM_DECL_CAST_BVECL_METHODS(3)
+GLM_DECL_CAST_BVECL_METHODS(4)
 
 #endif /* GLM_DETAIL_QUALIFIER_H */

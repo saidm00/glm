@@ -1,9 +1,7 @@
 #define GLM_FORCE_INTRINSICS
 #define GLM_FORCE_INLINE
-#define GLM_USING_NAMESPACE
 #include <glm/vec2.h>
-
-
+#include <glm/vec3.h>
 
 int main(int argc, char** argv) {
 	vec2 x = float2(32, 0x4b);
@@ -15,7 +13,10 @@ int main(int argc, char** argv) {
 	
 	z = int2(y);
 
-	z = int2(int2(55));
+	//z = int2(int2(55));
+
+	//int3 w = (int3) {1, 2, 3};
+	//z = int2(w);
 
 	return 0;
 }
