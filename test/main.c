@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
 
 	vec(2, int) z = int2(x.e[0]);
 	
-	double l = _length(x);
+	//double l = _length(x);
 	
 	z = int2(y);
 

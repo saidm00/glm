@@ -159,36 +159,36 @@ GLM_TEMPLATE_DECLARE_VEC_CASTS(4, bool, defaultp)
 
 
 #define GLM_VEC_DECL(L, T)\
-typedef union vec(L, T) vec(L, T);\
-\
+typedef union vec(L, T) vec(L, T); \
+ \
 vec(L, T) GLM_FUNC_QUALIFIER \
-GLM_FUNCNAME(vadd, L, T)   (const register vec(L, T), const register vec(L, T)),\
-GLM_FUNCNAME(vsub, L, T)   (const register vec(L, T), const register vec(L, T)),\
-GLM_FUNCNAME(vmul, L, T)   (const register vec(L, T), const register vec(L, T)),\
-GLM_FUNCNAME(vdiv, L, T)   (const register vec(L, T), const register vec(L, T)),\
-GLM_FUNCNAME(sqrt, L, T)   (const register vec(L, T) x),\
-GLM_FUNCNAME(rsqrt, L, T)  (const register vec(L, T) x);\
-\
+GLM_FUNC_NAME(add, vec(L, T), vec(L, T), vec(L, T)) (const register vec(L, T), const register vec(L, T)), \
+GLM_FUNC_NAME(sub, vec(L, T), vec(L, T), vec(L, T)) (const register vec(L, T), const register vec(L, T)), \
+GLM_FUNC_NAME(mul, vec(L, T), vec(L, T), vec(L, T)) (const register vec(L, T), const register vec(L, T)), \
+GLM_FUNC_NAME(div, vec(L, T), vec(L, T), vec(L, T)) (const register vec(L, T), const register vec(L, T)), \
+GLM_FUNC_NAME(sqrt, vec(L, T), vec(L, T)) (const register vec(L, T) x), \
+GLM_FUNC_NAME(rsqrt, vec(L, T), vec(L, T)) (const register vec(L, T) x); \
+ \
 T GLM_FUNC_QUALIFIER \
-GLM_FUNCNAME(dot, L, T)      (const register vec(L, T) x, const register vec(L, T) y),\
-GLM_FUNCNAME(length, L, T)   (const register vec(L, T) x),\
-GLM_FUNCNAME(distance, L, T) (const register vec(L, T) p0, const register vec(L, T) p1);\
-\
+GLM_FUNC_NAME(dot, T, vec(L, T), vec(L, T)) (const register vec(L, T) x, const register vec(L, T) y), \
+GLM_FUNC_NAME(length, T, vec(L, T)) (const register vec(L, T) x), \
+GLM_FUNC_NAME(distance, T, vec(L, T), vec(L, T)) (const register vec(L, T) p0, const register vec(L, T) p1); \
+ \
 vec(L, T) GLM_FUNC_QUALIFIER \
-GLM_FUNCNAME(normalize, L, T) (const register vec(L, T) v),\
-GLM_FUNCNAME(min, L, T)       (const register vec(L, T) x, const register vec(L, T) y),\
-GLM_FUNCNAME(max, L, T)       (const register vec(L, T) x, const register vec(L, T) y),\
-GLM_FUNCNAME(floor, L, T)     (const register vec(L, T) x),\
-GLM_FUNCNAME(ceil, L, T)      (const register vec(L, T) x),\
-GLM_FUNCNAME(round, L, T)     (const register vec(L, T) x);
+GLM_FUNC_NAME(normalize, vec(L, T), vec(L, T)) (const register vec(L, T) v), \
+GLM_FUNC_NAME(min, vec(L, T), vec(L, T), vec(L, T)) (const register vec(L, T) x, const register vec(L, T) y), \
+GLM_FUNC_NAME(max, vec(L, T), vec(L, T), vec(L, T)) (const register vec(L, T) x, const register vec(L, T) y), \
+GLM_FUNC_NAME(floor, vec(L, T), vec(L, T)) (const register vec(L, T) x), \
+GLM_FUNC_NAME(ceil, vec(L, T), vec(L, T)) (const register vec(L, T) x), \
+GLM_FUNC_NAME(round, vec(L, T), vec(L, T)) (const register vec(L, T) x);
 
 
 #define GLM_MANGLE_ALL_TYPES(NAME, L) \
-vec(L, float): GLM_FUNCNAME(NAME, L, float), \
-vec(L, double): GLM_FUNCNAME(NAME, L, double), \
-vec(L, int): GLM_FUNCNAME(NAME, L, int), \
-vec(L, uint): GLM_FUNCNAME(NAME, L, uint), \
-vec(L, bool): GLM_FUNCNAME(NAME, L, bool)
+vec(L, float): GLM_FUNC_NAME(NAME, float, vec(L, float)), \
+vec(L, double): GLM_FUNC_NAME(NAME, double, vec(L, double)), \
+vec(L, int): GLM_FUNC_NAME(NAME, int, vec(L, int)), \
+vec(L, uint): GLM_FUNC_NAME(NAME, uint, vec(L, uint)), \
+vec(L, bool): GLM_FUNC_NAME(NAME, bool, vec(L, bool))
 
 #define GLM_GENERIC_MANGLE_CASES(NAME)\
 GLM_MANGLE_ALL_TYPES(NAME, 2)
