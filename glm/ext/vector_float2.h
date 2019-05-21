@@ -3,16 +3,7 @@
 
 #include "../detail/type_vec2.h"
 
-GLM_METHOD_DECL(cast, vec(2, float), vec(2, double));
-GLM_METHOD_DECL(cast, vec(2, float), vec(2, int));
-GLM_METHOD_DECL(cast, vec(2, float), vec(2, uint));
-GLM_METHOD_DECL(cast, vec(2, float), vec(2, bool));
-
 GLM_TVEC2_DEF(float)
-GLM_TVEC2_CAST_DEF(float, double)
-GLM_TVEC2_CAST_DEF(float, int)
-GLM_TVEC2_CAST_DEF(float, uint)
-GLM_TVEC2_CAST_DEF(float, bool)
 
 #define float2(...) _tvec2(float, __VA_ARGS__)
 #define vec2 vec(2, float)

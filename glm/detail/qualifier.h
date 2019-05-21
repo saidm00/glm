@@ -293,56 +293,11 @@ GLM_VEC_DECL(4, int)
 GLM_VEC_DECL(4, uint)
 GLM_VEC_DECL(4, bool)
 
-#define GLM_DECL_CAST_VECL_METHODS(L)\
-GLM_METHOD_DECL(cast, vec(L, float), vec(L, double)); \
-GLM_METHOD_DECL(cast, vec(L, float), vec(L, int)); \
-GLM_METHOD_DECL(cast, vec(L, float), vec(L, uint)); \
-GLM_METHOD_DECL(cast, vec(L, float), vec(L, bool));
-
-#define GLM_DECL_CAST_DVECL_METHODS(L)\
-GLM_METHOD_DECL(cast, vec(L, double), vec(L, float)); \
-GLM_METHOD_DECL(cast, vec(L, double), vec(L, int)); \
-GLM_METHOD_DECL(cast, vec(L, double), vec(L, uint)); \
-GLM_METHOD_DECL(cast, vec(L, double), vec(L, bool));
-
-#define GLM_DECL_CAST_IVECL_METHODS(L)\
-GLM_METHOD_DECL(cast, vec(L, int), vec(L, float)); \
-GLM_METHOD_DECL(cast, vec(L, int), vec(L, double)); \
-GLM_METHOD_DECL(cast, vec(L, int), vec(L, uint)); \
-GLM_METHOD_DECL(cast, vec(L, int), vec(L, bool));
-
-#define GLM_DECL_CAST_UVECL_METHODS(L)\
-GLM_METHOD_DECL(cast, vec(L, uint), vec(L, float)); \
-GLM_METHOD_DECL(cast, vec(L, uint), vec(L, double)); \
-GLM_METHOD_DECL(cast, vec(L, uint), vec(L, int)); \
-GLM_METHOD_DECL(cast, vec(L, uint), vec(L, bool));
-
-#define GLM_DECL_CAST_BVECL_METHODS(L)\
-GLM_METHOD_DECL(cast, vec(L, bool), vec(L, float)); \
-GLM_METHOD_DECL(cast, vec(L, bool), vec(L, double)); \
-GLM_METHOD_DECL(cast, vec(L, bool), vec(L, int)); \
-GLM_METHOD_DECL(cast, vec(L, bool), vec(L, uint));
-
-
-
-GLM_DECL_CAST_VECL_METHODS(2)
-GLM_DECL_CAST_VECL_METHODS(3)
-GLM_DECL_CAST_VECL_METHODS(4)
-
-GLM_DECL_CAST_DVECL_METHODS(2)
-GLM_DECL_CAST_DVECL_METHODS(3)
-GLM_DECL_CAST_DVECL_METHODS(4)
-
-GLM_DECL_CAST_IVECL_METHODS(2)
-GLM_DECL_CAST_IVECL_METHODS(3)
-GLM_DECL_CAST_IVECL_METHODS(4)
-
-GLM_DECL_CAST_UVECL_METHODS(2)
-GLM_DECL_CAST_UVECL_METHODS(3)
-GLM_DECL_CAST_UVECL_METHODS(4)
-
-GLM_DECL_CAST_BVECL_METHODS(2)
-GLM_DECL_CAST_BVECL_METHODS(3)
-GLM_DECL_CAST_BVECL_METHODS(4)
+#define GLM_TEMPLATE_CREATE_TVECL(T, L, M)\
+GLM_FUNC_NAME(create, vec(L, T), vec(M, float))  (const register vec(M, float)), \
+GLM_FUNC_NAME(create, vec(L, T), vec(M, double)) (const register vec(M, double)), \
+GLM_FUNC_NAME(create, vec(L, T), vec(M, int))    (const register vec(M, int)), \
+GLM_FUNC_NAME(create, vec(L, T), vec(M, uint))   (const register vec(M, uint)), \
+GLM_FUNC_NAME(create, vec(L, T), vec(M, bool))   (const register vec(M, bool))
 
 #endif /* GLM_DETAIL_QUALIFIER_H */

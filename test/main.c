@@ -2,6 +2,7 @@
 #define GLM_FORCE_INLINE
 #include <glm/vec2.h>
 #include <glm/vec3.h>
+//#include <glm/vec4.h>
 
 int main(int argc, char** argv) {
 	vec2 x = float2(32, 0x4b);

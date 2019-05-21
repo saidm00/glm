@@ -2,7 +2,6 @@
 #define GLM_DETAIL_TYPE_VEC4_H
 
 #include "qualifier.h"
-
 #include "type_vec2.h"
 #include "type_vec3.h"
 
