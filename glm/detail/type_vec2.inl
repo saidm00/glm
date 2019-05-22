@@ -1,3 +1,55 @@
+union vec(2, float)
+{
+	float e[2];
+	struct { float x, y; };
+	struct { float r, g; };
+	struct { float s, t; };
+};
+
+union vec(2, double)
+{
+	double e[2];
+	struct { double x, y; };
+	struct { double r, g; };
+	struct { double s, t; };
+	
+	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_SSE2_BIT
+	__m128d _simd;
+	#endif
+};
+
+union vec(2, int)
+{
+	int e[2];
+	struct { int x, y; };
+	struct { int r, g; };
+	struct { int s, t; };
+	
+	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_MMX_BIT
+	__m64 _simd;
+	#endif
+};
+
+union vec(2, uint)
+{
+	uint e[2];
+	struct { uint x, y; };
+	struct { uint r, g; };
+	struct { uint s, t; };
+	
+	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_MMX_BIT
+	__m64 _simd;
+	#endif
+};
+
+union vec(2, bool)
+{
+	bool e[2];
+	struct { bool x, y; };
+	struct { bool r, g; };
+	struct { bool s, t; };
+};
+
 /*
 #if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_SSE2_BIT
 
@@ -76,55 +128,3 @@ GLM_FUNC_NAME(dot, vec(2, double)) (const register vec(2, double) x, const regis
 }
 #endif
 */
-
-union vec(2, float)
-{
-	float e[2];
-	struct { float x, y; };
-	struct { float r, g; };
-	struct { float s, t; };
-};
-
-union vec(2, double)
-{
-	double e[2];
-	struct { double x, y; };
-	struct { double r, g; };
-	struct { double s, t; };
-	
-	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_SSE2_BIT
-	__m128d _simd;
-	#endif
-};
-
-union vec(2, int)
-{
-	int e[2];
-	struct { int x, y; };
-	struct { int r, g; };
-	struct { int s, t; };
-	
-	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_MMX_BIT
-	__m64 _simd;
-	#endif
-};
-
-union vec(2, uint)
-{
-	uint e[2];
-	struct { uint x, y; };
-	struct { uint r, g; };
-	struct { uint s, t; };
-	
-	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_MMX_BIT
-	__m64 _simd;
-	#endif
-};
-
-union vec(2, bool)
-{
-	bool e[2];
-	struct { bool x, y; };
-	struct { bool r, g; };
-	struct { bool s, t; };
-};
