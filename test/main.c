@@ -14,6 +14,12 @@ int main(int argc, char** argv) {
 	
 	z = int2(y);
 
+	vec(3, uint) w = tvec3(uint)(25u);
+
+	bool3 k = vec(3, bool)(bvec2(false), false);
+
+	uvec3 l = tvec3(uint)(0x5au, uint2(true, 63));
+
 	//z = int2(int2(55));
 
 	//int3 w = (int3) {1, 2, 3};

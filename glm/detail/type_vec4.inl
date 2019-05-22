@@ -1,17 +1,10 @@
-#define GLM_TVEC4_SWIZZLE1(T)\
-	struct\
-	{\
-		union { T x, r, s; };\
-		union { T y, g, t; };\
-		union { T z, b, p; };\
-		union { T w, a, q; };\
-	}
-	
-
 union vec(4, float)
 {
 	float e[4];
-	GLM_TVEC4_SWIZZLE1(float);
+	
+	struct { float x, y, z, w; };
+	struct { float r, g, b, a; };
+	struct { float s, t, p, q; };
 
 	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_SSE2_BIT
 	__m128 _simd;
@@ -21,7 +14,10 @@ union vec(4, float)
 union vec(4, double)
 {
 	double e[4];
-	GLM_TVEC4_SWIZZLE1(double);
+
+	struct { double x, y, z, w; };
+	struct { double r, g, b, a; };
+	struct { double s, t, p, q; };
 
 	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_AVX_BIT
 	__m256d _simd;
@@ -31,7 +27,10 @@ union vec(4, double)
 union vec(4, int)
 {
 	int e[4];
-	GLM_TVEC4_SWIZZLE1(int);
+	
+	struct { int x, y, z, w; };
+	struct { int r, g, b, a; };
+	struct { int s, t, p, q; };
 
 	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_SSE2_BIT
 	__m128i _simd;
@@ -41,7 +40,10 @@ union vec(4, int)
 union vec(4, uint)
 {
 	uint e[4];
-	GLM_TVEC4_SWIZZLE1(uint);
+	
+	struct { uint x, y, z, w; };
+	struct { uint r, g, b, a; };
+	struct { uint s, t, p, q; };
 
 	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_SSE2_BIT
 	__m128i _simd;
@@ -51,5 +53,8 @@ union vec(4, uint)
 union vec(4, bool)
 {
 	bool e[4];
-	GLM_TVEC4_SWIZZLE1(bool);
+	
+	struct { bool x, y, z, w; };
+	struct { bool r, g, b, a; };
+	struct { bool s, t, p, q; };
 };

@@ -158,8 +158,15 @@ GLM_TEMPLATE_DECLARE_VEC_CASTS(4, bool, defaultp)
 
 
 
+
+#define GLM_CONVERT_FUNC_DECL(A, B) A GLM_FUNC_QUALIFIER GLM_FUNC_NAME(convert, A, B) (const register B);
+
 #define GLM_VEC_DECL(L, T)\
-typedef union vec(L, T) vec(L, T); \
+GLM_CONVERT_FUNC_DECL(vec(L, T), vec(L, float)) \
+GLM_CONVERT_FUNC_DECL(vec(L, T), vec(L, double)) \
+GLM_CONVERT_FUNC_DECL(vec(L, T), vec(L, int)) \
+GLM_CONVERT_FUNC_DECL(vec(L, T), vec(L, uint)) \
+GLM_CONVERT_FUNC_DECL(vec(L, T), vec(L, bool)) \
  \
 vec(L, T) GLM_FUNC_QUALIFIER \
 GLM_FUNC_NAME(add, vec(L, T), vec(L, T), vec(L, T)) (const register vec(L, T), const register vec(L, T)), \
@@ -182,7 +189,6 @@ GLM_FUNC_NAME(floor, vec(L, T), vec(L, T)) (const register vec(L, T) x), \
 GLM_FUNC_NAME(ceil, vec(L, T), vec(L, T)) (const register vec(L, T) x), \
 GLM_FUNC_NAME(round, vec(L, T), vec(L, T)) (const register vec(L, T) x);
 
-
 #define GLM_MANGLE_ALL_TYPES(NAME, L) \
 vec(L, float): GLM_FUNC_NAME(NAME, float, vec(L, float)), \
 vec(L, double): GLM_FUNC_NAME(NAME, double, vec(L, double)), \
@@ -193,7 +199,7 @@ vec(L, bool): GLM_FUNC_NAME(NAME, bool, vec(L, bool))
 #define GLM_GENERIC_MANGLE_CASES(NAME)\
 GLM_MANGLE_ALL_TYPES(NAME, 2)
 
-#define GLM_GENERIC_CALL(NAME, _) _Generic(_, GLM_GENERIC_MANGLE_CASES(NAME))(_)
+#define GLM_GENERIC_CALL(NAME, ARG) _Generic(ARG, GLM_GENERIC_MANGLE_CASES(NAME))(ARG)
 
 #define          _sqrt(x) _Generic(x, float: sqrtf, double: sqrt, int: sqrtl, uint: sqrtl, GLM_GENERIC_MANGLE_CASES(sqrt))(x)
 #define        _length(x) GLM_GENERIC_CALL(length, x)
@@ -262,7 +268,6 @@ GLM_MANGLE_ALL_TYPES(NAME, 2)
 #define ___GLM_CONCAT(A1, A2, A3, A4, A5, A6, A7, A8, N, ...) ___GLM_CONCAT_##N(A1, A2, A3, A4, A5, A6, A7, A8)
 #define GLM_CONCAT(...) ___GLM_CONCAT(__VA_ARGS__, 8, 7, 6, 5, 4, 3, 2, 1, 0)
 
-#define GLM_UNDERSCORE_PREFIX(x) _ ## x
 
 #define GLM_ARG_QUALIFIER const register
 #define GLM_ARG_QUALIFY(ARG) GLM_ARG_QUALIFIER ARG
@@ -272,32 +277,42 @@ GLM_MANGLE_ALL_TYPES(NAME, 2)
 	T -> return type
 	... -> argument types
 */
+#define GLM_UNDERSCORE_PREFIX(x) _ ## x
 #define GLM_FUNC_NAME(NAME, ...) GLM_CONCAT(NAME, GLM_FOREACH(GLM_UNDERSCORE_PREFIX, __VA_ARGS__))
 #define GLM_METHOD_DECL(NAME, T, ...) T GLM_FUNC_QUALIFIER GLM_FUNC_NAME(NAME, T, __VA_ARGS__) (GLM_FOREACH(GLM_ARG_QUALIFY, __VA_ARGS__))
 
-GLM_VEC_DECL(2, float)
-GLM_VEC_DECL(2, double)
-GLM_VEC_DECL(2, int)
-GLM_VEC_DECL(2, uint)
-GLM_VEC_DECL(2, bool)
 
-GLM_VEC_DECL(3, float)
-GLM_VEC_DECL(3, double)
-GLM_VEC_DECL(3, int)
-GLM_VEC_DECL(3, uint)
-GLM_VEC_DECL(3, bool)
 
-GLM_VEC_DECL(4, float)
-GLM_VEC_DECL(4, double)
-GLM_VEC_DECL(4, int)
-GLM_VEC_DECL(4, uint)
-GLM_VEC_DECL(4, bool)
 
-#define GLM_TEMPLATE_CREATE_TVECL(T, L, M)\
-GLM_FUNC_NAME(create, vec(L, T), vec(M, float))  (const register vec(M, float)), \
-GLM_FUNC_NAME(create, vec(L, T), vec(M, double)) (const register vec(M, double)), \
-GLM_FUNC_NAME(create, vec(L, T), vec(M, int))    (const register vec(M, int)), \
-GLM_FUNC_NAME(create, vec(L, T), vec(M, uint))   (const register vec(M, uint)), \
-GLM_FUNC_NAME(create, vec(L, T), vec(M, bool))   (const register vec(M, bool))
+GLM_VEC_DECL(, float)
+GLM_VEC_DECL(, double)
+GLM_VEC_DECL(, int)
+GLM_VEC_DECL(, uint)
+GLM_VEC_DECL(, bool)
+
+typedef union vec(2, float)  float2;
+typedef union vec(2, double) double2;
+typedef union vec(2, int)    int2;
+typedef union vec(2, uint)   uint2;
+typedef union vec(2, bool)   bool2;
+
+typedef union vec(3, float)  float3;
+typedef union vec(3, double) double3;
+typedef union vec(3, int)    int3;
+typedef union vec(3, uint)   uint3;
+typedef union vec(3, bool)   bool3;
+
+typedef union vec(4, float)  float4;
+typedef union vec(4, double) double4;
+typedef union vec(4, int)    int4;
+typedef union vec(4, uint)   uint4;
+typedef union vec(4, bool)   bool4;
+
+#define OPERATOR_add +
+#define OPERATOR_sub -
+#define OPERATOR_mul *
+#define OPERATOR_div /
+#define OPERATOR(OP) OPERATOR_##OP
+
 
 #endif /* GLM_DETAIL_QUALIFIER_H */

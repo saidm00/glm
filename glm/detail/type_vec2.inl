@@ -61,29 +61,37 @@ GLM_DEFINE_TVEC2(float)
 GLM_DEFINE_VEC2(bool)
 */
 
-//double GLM_FUNC_QUALIFIER
-//GLM_FUNCNAME(dot, 2, double) (const register vec(2, double) x, const register vec(2, double) y)
-//{
-//	#if (GLM_CONFIG_SIMD == GLM_ENABLE) && (GLM_ARCH & GLM_ARCH_SSE41_BIT)
-//	/* 0x31u = 0b00110001u */
-//	return _mm_cvtsd_f64(_mm_dp_pd(x._simd, y._simd, 0x31u));
-//	#else
-//	register vec(2, double) dst = GLM_FUNCNAME(mul, 2, double)(x, y);
-//	return dst.e[0] + dst.e[1];
-//	#endif
-//}
+/*
+#if (GLM_CONFIG_SIMD == GLM_ENABLE) && (GLM_ARCH & GLM_ARCH_SSE41_BIT)
+double GLM_FUNC_QUALIFIER
+GLM_FUNC_NAME(dot, vec(2, double)) (const register vec(2, double) x, const register vec(2, double) y)
+{
+	return _mm_cvtsd_f64(_mm_dp_pd(x._simd, y._simd, 0x31u));
+}
+#else
+double GLM_FUNC_QUALIFIER
+GLM_FUNC_NAME(dot, vec(2, double)) (const register vec(2, double) x, const register vec(2, double) y)
+{
+	return x.e[0] * y.e[0] + x.e[1] * y.e[1];
+}
+#endif
+*/
 
 union vec(2, float)
 {
 	float e[2];
-	struct { union { float x, r, s; }; union { float y, g, t; }; };
+	struct { float x, y; };
+	struct { float r, g; };
+	struct { float s, t; };
 };
 
 union vec(2, double)
 {
 	double e[2];
-	struct { union { double x, r, s; }; union { double y, g, t; }; };
-
+	struct { double x, y; };
+	struct { double r, g; };
+	struct { double s, t; };
+	
 	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_SSE2_BIT
 	__m128d _simd;
 	#endif
@@ -92,7 +100,9 @@ union vec(2, double)
 union vec(2, int)
 {
 	int e[2];
-	struct { union { int x, r, s; }; union { int y, g, t; }; };
+	struct { int x, y; };
+	struct { int r, g; };
+	struct { int s, t; };
 	
 	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_MMX_BIT
 	__m64 _simd;
@@ -102,7 +112,9 @@ union vec(2, int)
 union vec(2, uint)
 {
 	uint e[2];
-	struct { union { uint x, r, s; }; union { uint y, g, t; }; };
+	struct { uint x, y; };
+	struct { uint r, g; };
+	struct { uint s, t; };
 	
 	#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_MMX_BIT
 	__m64 _simd;
@@ -112,5 +124,7 @@ union vec(2, uint)
 union vec(2, bool)
 {
 	bool e[2];
-	struct { union { bool x, r, s; }; union { bool y, g, t; }; };
+	struct { bool x, y; };
+	struct { bool r, g; };
+	struct { bool s, t; };
 };
