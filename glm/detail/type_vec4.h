@@ -32,6 +32,93 @@ GLM_TVEC4_DECL(bool)
 
 
 
+#define GLM_TVEC4_DEF(T)\
+vec(4, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(create, vec(4, T), void) (void) \
+{ \
+	vec(4, T) dst; \
+	return dst; \
+} \
+vec(4, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(create, vec(4, T), T) (const register T s) \
+{ \
+	vec(4, T) dst; \
+	dst.e[0] = s; \
+	dst.e[1] = s; \
+	dst.e[2] = s; \
+	dst.e[3] = s; \
+	return dst; \
+} \
+vec(4, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(create, vec(4, T), vec(4, T)) (const register vec(4, T) v) \
+{ \
+	return v; \
+} \
+vec(4, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(create, vec(4, T), vec(3, T), T) (const register vec(3, T) e012, const register T e3) \
+{ \
+	vec(4, T) dst; \
+	dst.e[0] = e012.e[0]; \
+	dst.e[1] = e012.e[1]; \
+	dst.e[2] = e012.e[2]; \
+	dst.e[3] = e3; \
+	return dst; \
+} \
+vec(4, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(create, vec(4, T), T, vec(3, T)) (const register T e0, const register vec(3, T) e123) \
+{ \
+	vec(4, T) dst; \
+	dst.e[0] = e0; \
+	dst.e[1] = e123.e[0]; \
+	dst.e[2] = e123.e[1]; \
+	dst.e[3] = e123.e[2]; \
+	return dst; \
+} \
+vec(4, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(create, vec(4, T), T, vec(2, T), T, T) (const register vec(2, T) e01, const register T e2, const register T e3) \
+{ \
+	vec(4, T) dst; \
+	dst.e[0] = e01.e[0]; \
+	dst.e[1] = e01.e[1]; \
+	dst.e[2] = e2; \
+	dst.e[3] = e3; \
+	return dst; \
+} \
+vec(4, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(create, vec(4, T), T, T, vec(2, T), T) (const register T e0, const register vec(2, T) e12, const register T e3) \
+{ \
+	vec(4, T) dst; \
+	dst.e[0] = e0; \
+	dst.e[1] = e12.e[0]; \
+	dst.e[2] = e12.e[1]; \
+	dst.e[3] = e3; \
+	return dst; \
+} \
+vec(4, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(create, vec(4, T), T, T, T, vec(2, T)) (const register T e0, const register T e1, const register vec(2, T) e23) \
+{ \
+	vec(4, T) dst; \
+	dst.e[0] = e0; \
+	dst.e[1] = e1; \
+	dst.e[2] = e23.e[0]; \
+	dst.e[3] = e23.e[1]; \
+	return dst; \
+} \
+vec(4, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(create, vec(4, T), T, T, T, T) (const register T e0, const register T e1, const register T e2, const register T e3) \
+{ \
+	vec(4, T) dst; \
+	dst.e[0] = e0; \
+	dst.e[1] = e1; \
+	dst.e[2] = e2; \
+	dst.e[3] = e3; \
+	return dst; \
+}
+
+
+
+
+
 #define _create_tvec4_0(T, ...) GLM_FUNC_NAME(create, vec(4, T), void)()
 
 #define _create_tvec4_1(T, a, ...)\
