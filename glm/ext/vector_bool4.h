@@ -3,7 +3,7 @@
 
 #include "../detail/type_vec4.h"
 
-GLM_TVEC2_DEF(bool)
+GLM_TVEC4_DEF(bool)
 
 #define bool4(...) _tvec4(bool, __VA_ARGS__)
 #define bvec4 vec(4, bool)
