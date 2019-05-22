@@ -315,4 +315,12 @@ typedef union vec(4, bool)   bool4;
 #define OPERATOR(OP) OPERATOR_##OP
 
 
+#define GLM_CONVERT_VEC_FUNC_SELECT(L1, T1, L2)\
+vec(L2, float):  GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, float)), \
+vec(L2, double): GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, double)), \
+vec(L2, int):    GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, int)), \
+vec(L2, uint):   GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, uint)), \
+vec(L2, bool):   GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, bool))
+
+
 #endif /* GLM_DETAIL_QUALIFIER_H */

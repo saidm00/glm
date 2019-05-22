@@ -7,13 +7,13 @@
 
 #define GLM_TVEC3_DECL(T)\
 vec(3, T) GLM_FUNC_QUALIFIER \
-GLM_FUNC_NAME(create, vec(3, T), void) (void), \
-GLM_FUNC_NAME(create, vec(3, T), T) (const register T), \
-GLM_FUNC_NAME(create, vec(3, T), vec(3, T)) (const register vec(3, T)), \
-GLM_FUNC_NAME(create, vec(3, T), vec(4, T)) (const register vec(4, T)), \
+GLM_FUNC_NAME(create, vec(3, T), void)         (void), \
+GLM_FUNC_NAME(create, vec(3, T), T)            (const register T), \
+GLM_FUNC_NAME(create, vec(3, T), vec(3, T))    (const register vec(3, T)), \
+GLM_FUNC_NAME(create, vec(3, T), vec(4, T))    (const register vec(4, T)), \
 GLM_FUNC_NAME(create, vec(3, T), vec(2, T), T) (const register vec(2, T), const register T), \
 GLM_FUNC_NAME(create, vec(3, T), T, vec(2, T)) (const register T, const register vec(2, T)), \
-GLM_FUNC_NAME(create, vec(3, T), T, T, T) (const register T, const register T, const register T);
+GLM_FUNC_NAME(create, vec(3, T), T, T, T)      (const register T, const register T, const register T);
 
 GLM_VEC_DECL(3, float)
 GLM_VEC_DECL(3, double)
@@ -29,6 +29,7 @@ GLM_TVEC3_DECL(bool)
 
 
 
+
 #define GLM_TVEC3_OPERATION_DEF(T, OP)\
 vec(3, T) GLM_FUNC_QUALIFIER \
 GLM_FUNC_NAME(OP, vec(3, T), vec(3, T), vec(3, T)) (const register vec(3, T) a, const register vec(3, T) b) \
@@ -39,6 +40,7 @@ GLM_FUNC_NAME(OP, vec(3, T), vec(3, T), vec(3, T)) (const register vec(3, T) a, 
 	dst.e[2] = a.e[2] OPERATOR(OP) b.e[2]; \
 	return dst; \
 }
+
 
 
 
@@ -98,10 +100,6 @@ GLM_FUNC_NAME(create, vec(3, T), T, T, T) (const register T e0, const register T
 
 
 
-
-
-#define _create_tvec3_0(T, ...) GLM_FUNC_NAME(create, vec(3, T), void) ()
- 
 #define GLM_CREATE_TVEC3_FUNC_SELECT1(L, T)\
 vec(L, float):  GLM_FUNC_NAME(create, vec(3, T), vec(L, T)), \
 vec(L, double): GLM_FUNC_NAME(create, vec(3, T), vec(L, T)), \
@@ -116,6 +114,10 @@ vec(2, int):    GLM_FUNC_NAME(create, vec(3, T), vec(2, T), T), \
 vec(2, uint):   GLM_FUNC_NAME(create, vec(3, T), vec(2, T), T), \
 vec(2, bool):   GLM_FUNC_NAME(create, vec(3, T), vec(2, T), T)
 
+
+
+
+#define _create_tvec3_0(T, ...) GLM_FUNC_NAME(create, vec(3, T), void) ()
 
 #define _create_tvec3_1(T, a, ...)\
 _Generic(a, \

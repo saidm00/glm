@@ -83,18 +83,6 @@ GLM_FUNC_NAME(create, vec(2, T), T, T) (const register T e0, const register T e1
 	dst.e[0] = e0;\
 	dst.e[1] = e1;\
 	return dst; \
-} \
-GLM_TVEC2_OPERATION_DEF(T,add) \
-GLM_TVEC2_OPERATION_DEF(T,sub) \
-GLM_TVEC2_OPERATION_DEF(T,mul) \
-GLM_TVEC2_OPERATION_DEF(T,div) \
-vec(2, T) GLM_FUNC_QUALIFIER \
-GLM_FUNC_NAME(sqrt, vec(2, T), vec(2, T)) (const register vec(2, T) x) \
-{ \
-	vec(2, T) dst; \
-	dst.e[0] = sqrt(x.e[0]); \
-	dst.e[1] = sqrt(x.e[1]); \
-	return dst; \
 }
 
 
@@ -106,13 +94,6 @@ vec(L, double): GLM_FUNC_NAME(create, vec(2, T), vec(L, T)), \
 vec(L, int):    GLM_FUNC_NAME(create, vec(2, T), vec(L, T)), \
 vec(L, uint):   GLM_FUNC_NAME(create, vec(2, T), vec(L, T)), \
 vec(L, bool):   GLM_FUNC_NAME(create, vec(2, T), vec(L, T))
-
-#define GLM_CONVERT_VEC_FUNC_SELECT(L1, T1, L2)\
-vec(L2, float):  GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, float)), \
-vec(L2, double): GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, double)), \
-vec(L2, int):    GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, int)), \
-vec(L2, uint):   GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, uint)), \
-vec(L2, bool):   GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, bool))
 
 
 
@@ -137,8 +118,12 @@ GLM_CONVERT_VEC_FUNC_SELECT(4, T, 4) \
 
 #define _create_tvec2_2(T, x, y) GLM_FUNC_NAME(create, vec(2, T), T, T) (x, y)
 
-#define tvec2(T) vec(2, T)
 #define _create_tvec2(T, a1, a2, N, ...) _create_tvec2_##N(T, a1, a2)
+
+
+
+
+#define tvec2(T) vec(2, T)
 #define _tvec2(T, ...) _create_tvec2(T, __VA_ARGS__, 2, 1, 0)
 
 
