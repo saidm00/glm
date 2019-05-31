@@ -102,6 +102,9 @@ GLM_TEMPLATE_DECLARE_VEC_CASTS(4, bool, defaultp)
 
 #define GLM_FUNCNAME(NAME, L, T) NAME##_##T##L
 
+
+
+
 /*
 	vec
 	---
@@ -283,12 +286,38 @@ GLM_MANGLE_ALL_TYPES(NAME, 2)
 
 
 
+#define GLM_CONVERT_SCALAR_DEF(T)\
+T GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(convert, T, float) (const register float x) \
+{ \
+	return x; \
+} \
+T GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(convert, T, double) (const register double x) \
+{ \
+	return x; \
+} \
+T GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(convert, T, int) (const register int x) \
+{ \
+	return x; \
+} \
+T GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(convert, T, uint) (const register uint x) \
+{ \
+	return x; \
+} \
+T GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(convert, T, bool) (const register bool x) \
+{ \
+	return x; \
+}
 
-GLM_VEC_DECL(, float)
-GLM_VEC_DECL(, double)
-GLM_VEC_DECL(, int)
-GLM_VEC_DECL(, uint)
-GLM_VEC_DECL(, bool)
+GLM_CONVERT_SCALAR_DEF(float)
+GLM_CONVERT_SCALAR_DEF(double)
+GLM_CONVERT_SCALAR_DEF(int)
+GLM_CONVERT_SCALAR_DEF(uint)
+GLM_CONVERT_SCALAR_DEF(bool)
 
 typedef union vec(2, float)  float2;
 typedef union vec(2, double) double2;

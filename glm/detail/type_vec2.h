@@ -7,12 +7,12 @@
 
 #define GLM_TVEC2_DECL(T)\
 vec(2, T) GLM_FUNC_QUALIFIER \
-GLM_FUNC_NAME(create, vec(2, T), void)      (void), \
-GLM_FUNC_NAME(create, vec(2, T), T)         (const register T), \
-GLM_FUNC_NAME(create, vec(2, T), vec(2, T)) (const register vec(2, T)), \
-GLM_FUNC_NAME(create, vec(2, T), vec(3, T)) (const register vec(3, T)), \
-GLM_FUNC_NAME(create, vec(2, T), vec(4, T)) (const register vec(4, T)), \
-GLM_FUNC_NAME(create, vec(2, T), T, T)      (const register T, const register T);
+GLM_FUNC_NAME(create, vec(2, T), void)       (void), \
+GLM_FUNC_NAME(create, vec(2, T), T)          (const register T), \
+GLM_FUNC_NAME(create, vec(2, T), vec(2, T))  (const register vec(2, T)), \
+GLM_FUNC_NAME(create, vec(2, T), vec(3, T))  (const register vec(3, T)), \
+GLM_FUNC_NAME(create, vec(2, T), vec(4, T))  (const register vec(4, T)), \
+GLM_FUNC_NAME(create, vec(2, T), T, T)       (const register T, const register T);
 
 GLM_VEC_DECL(2, float)
 GLM_VEC_DECL(2, double)
@@ -40,19 +40,30 @@ GLM_FUNC_NAME(OP, vec(2, T), vec(2, T), vec(2, T)) (const register vec(2, T) a, 
 }
 
 
+#define GLM_CONVERT_TVEC2_DEF(A, B)\
+vec(2, A) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(convert, vec(2, A), vec(2, B))  (const register vec(2, B) src) \
+{ \
+	vec(2, A) dst; \
+	dst.e[0] = (A) src.e[0]; \
+	dst.e[1] = (A) src.e[1]; \
+	return dst; \
+}
 
 
 #define GLM_TVEC2_DEF(T)\
-vec(2, T) GLM_FUNC_QUALIFIER GLM_FUNC_NAME(create, vec(2, T), void) (void) \
+vec(2, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(create, vec(2, T), void) (void) \
 { \
 	vec(2, T) dst; \
 	return dst; \
 } \
-vec(2, T) GLM_FUNC_QUALIFIER GLM_FUNC_NAME(create, vec(2, T), T) (const register T s) \
+vec(2, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(create, vec(2, T), T) (const register T s) \
 { \
 	vec(2, T) dst; \
-	dst.e[0] = s;\
-	dst.e[1] = s;\
+	dst.e[0] = s; \
+	dst.e[1] = s; \
 	return dst; \
 } \
 vec(2, T) GLM_FUNC_QUALIFIER \
@@ -64,26 +75,32 @@ vec(2, T) GLM_FUNC_QUALIFIER \
 GLM_FUNC_NAME(create, vec(2, T), vec(3, T)) (const register vec(3, T) v) \
 { \
 	vec(2, T) dst; \
-	dst.e[0] = v.e[0];\
-	dst.e[1] = v.e[1];\
+	dst.e[0] = v.e[0]; \
+	dst.e[1] = v.e[1]; \
 	return dst; \
 } \
 vec(2, T) GLM_FUNC_QUALIFIER \
 GLM_FUNC_NAME(create, vec(2, T), vec(4, T)) (const register vec(4, T) v) \
 { \
 	vec(2, T) dst; \
-	dst.e[0] = v.e[0];\
-	dst.e[1] = v.e[1];\
+	dst.e[0] = v.e[0]; \
+	dst.e[1] = v.e[1]; \
 	return dst; \
 } \
 vec(2, T) GLM_FUNC_QUALIFIER \
 GLM_FUNC_NAME(create, vec(2, T), T, T) (const register T e0, const register T e1) \
 { \
 	vec(2, T) dst; \
-	dst.e[0] = e0;\
-	dst.e[1] = e1;\
+	dst.e[0] = e0; \
+	dst.e[1] = e1; \
 	return dst; \
-}
+} \
+GLM_CONVERT_TVEC2_DEF(T, float) \
+GLM_CONVERT_TVEC2_DEF(T, double) \
+GLM_CONVERT_TVEC2_DEF(T, int) \
+GLM_CONVERT_TVEC2_DEF(T, uint) \
+GLM_CONVERT_TVEC2_DEF(T, bool)
+
 
 
 
