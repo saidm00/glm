@@ -29,18 +29,45 @@ GLM_TVEC3_DECL(bool)
 
 
 
-
-#define GLM_TVEC3_OPERATION_DEF(T, OP)\
+#define GLM_TVEC3_BINARY_OPERATOR_FUNCS_DEF(T, OPERATOR_NAME)\
 vec(3, T) GLM_FUNC_QUALIFIER \
-GLM_FUNC_NAME(OP, vec(3, T), vec(3, T), vec(3, T)) (const register vec(3, T) a, const register vec(3, T) b) \
+GLM_FUNC_NAME(OPERATOR_NAME, vec(3, T), vec(3, T), vec(3, T)) (const register vec(3, T) a, const register vec(3, T) b) \
 { \
 	vec(3, T) dst; \
-	dst.e[0] = a.e[0] OPERATOR(OP) b.e[0]; \
-	dst.e[1] = a.e[1] OPERATOR(OP) b.e[1]; \
-	dst.e[2] = a.e[2] OPERATOR(OP) b.e[2]; \
+	dst.e[0] = a.e[0] OPERATOR(OPERATOR_NAME) b.e[0]; \
+	dst.e[1] = a.e[1] OPERATOR(OPERATOR_NAME) b.e[1]; \
+	dst.e[2] = a.e[2] OPERATOR(OPERATOR_NAME) b.e[2]; \
+	return dst; \
+} \
+vec(3, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(OPERATOR_NAME, vec(3, T), vec(3, T), T) (const register vec(3, T) a, const register T b) \
+{ \
+	vec(3, T) dst; \
+	dst.e[0] = a.e[0] OPERATOR(OPERATOR_NAME) b; \
+	dst.e[1] = a.e[1] OPERATOR(OPERATOR_NAME) b; \
+	dst.e[2] = a.e[2] OPERATOR(OPERATOR_NAME) b; \
+	return dst; \
+} \
+vec(3, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(OPERATOR_NAME, vec(3, T), T, vec(3, T)) (const register T a, const register vec(3, T) b) \
+{ \
+	vec(3, T) dst; \
+	dst.e[0] = a OPERATOR(OPERATOR_NAME) b.e[0]; \
+	dst.e[1] = a OPERATOR(OPERATOR_NAME) b.e[1]; \
+	dst.e[2] = a OPERATOR(OPERATOR_NAME) b.e[2]; \
 	return dst; \
 }
 
+#define GLM_TVEC3_CONVERT_FUNC_DEF(TYPE1, TYPE2)\
+vec(3, TYPE1) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(convert, vec(3, TYPE1), vec(3, TYPE2))  (const register vec(3, TYPE2) src) \
+{ \
+	vec(3, TYPE1) dst; \
+	dst.e[0] = (TYPE1) src.e[0]; \
+	dst.e[1] = (TYPE1) src.e[1]; \
+	dst.e[2] = (TYPE1) src.e[2]; \
+	return dst; \
+}
 
 
 
@@ -95,8 +122,16 @@ GLM_FUNC_NAME(create, vec(3, T), T, T, T) (const register T e0, const register T
 	dst.e[1] = e1; \
 	dst.e[2] = e2; \
 	return dst; \
-}
-
+} \
+GLM_TVEC3_CONVERT_FUNC_DEF(T, float) \
+GLM_TVEC3_CONVERT_FUNC_DEF(T, double) \
+GLM_TVEC3_CONVERT_FUNC_DEF(T, uint) \
+GLM_TVEC3_CONVERT_FUNC_DEF(T, int) \
+GLM_TVEC3_CONVERT_FUNC_DEF(T, bool) \
+GLM_TVEC3_BINARY_OPERATOR_FUNCS_DEF(T, add) \
+GLM_TVEC3_BINARY_OPERATOR_FUNCS_DEF(T, sub) \
+GLM_TVEC3_BINARY_OPERATOR_FUNCS_DEF(T, mul) \
+GLM_TVEC3_BINARY_OPERATOR_FUNCS_DEF(T, div)
 
 
 
@@ -155,7 +190,6 @@ _Generic(a2, GLM_CONVERT_VEC_FUNC_SELECT(,T,), GLM_CONVERT_VEC_FUNC_SELECT(2, T,
 
 #define tvec3(T) vec(3, T)
 #define _tvec3(T, ...) _create_tvec3(T, __VA_ARGS__, 3, 2, 1, 0)
-
 
 #include "type_vec3.inl"
 

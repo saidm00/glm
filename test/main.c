@@ -1,27 +1,21 @@
-#define GLM_FORCE_INTRINSICS
+//#define GLM_FORCE_INTRINSICS
 #define GLM_FORCE_INLINE
 #include <glm/glm.h>
 
+#include <stdio.h>
+
 int main(int argc, char** argv) {
-	vec2 x = float2(32, 0x4b);
-	dvec2 y = vec(2, double)(25.0);
-
-	vec(2, int) z = int2(x.e[0]);
 	
-	//double l = _length(x);
-	
-	z = int2(y);
+	vec2 a = vec2(1.0f, 2.0f), b = vec2(2.0f);
 
-	vec(3, uint) w = tvec3(uint)(25u);
+	vec2 c = add(a, b);
+	printf("%f, %f\n", c.e[0], c.e[1]);
 
-	bool3 k = vec(3, bool)(bvec2(false), false);
+	c = mul(c, 2.0f);
+	printf("%f, %f\n", c.e[0], c.e[1]);
 
-	uvec3 l = tvec3(uint)(0x5au, uint2(true, 63));
-
-	//z = int2(int2(55));
-
-	//int3 w = (int3) {1, 2, 3};
-	//z = int2(w);
+	c = sub(10.0f, c);
+	printf("%f, %f\n", c.e[0], c.e[1]);
 
 	return 0;
 }

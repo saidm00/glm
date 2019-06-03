@@ -22,7 +22,7 @@
 #	define GLM_NEVER_INLINE
 #endif
 
-//#define GLM_FUNC_QUALIFIER GLM_INLINE
+//#define GLM_FUNC_QUALIFIER static GLM_INLINE
 #define GLM_FUNC_QUALIFIER static GLM_NEVER_INLINE
 
 #define GLM_ENABLE 1

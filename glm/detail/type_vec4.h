@@ -30,6 +30,49 @@ GLM_TVEC4_DECL(uint)
 GLM_TVEC4_DECL(bool)
 
 
+#define GLM_TVEC4_BINARY_OPERATOR_FUNCS_DEF(T, OPERATOR_NAME)\
+vec(4, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(OPERATOR_NAME, vec(4, T), vec(4, T), vec(4, T)) (const register vec(4, T) a, const register vec(4, T) b) \
+{ \
+	vec(4, T) dst; \
+	dst.e[0] = a.e[0] OPERATOR(OPERATOR_NAME) b.e[0]; \
+	dst.e[1] = a.e[1] OPERATOR(OPERATOR_NAME) b.e[1]; \
+	dst.e[2] = a.e[2] OPERATOR(OPERATOR_NAME) b.e[2]; \
+	dst.e[3] = a.e[3] OPERATOR(OPERATOR_NAME) b.e[3]; \
+	return dst; \
+} \
+vec(4, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(OPERATOR_NAME, vec(4, T), vec(4, T), T) (const register vec(4, T) a, const register T b) \
+{ \
+	vec(4, T) dst; \
+	dst.e[0] = a.e[0] OPERATOR(OPERATOR_NAME) b; \
+	dst.e[1] = a.e[1] OPERATOR(OPERATOR_NAME) b; \
+	dst.e[2] = a.e[2] OPERATOR(OPERATOR_NAME) b; \
+	dst.e[3] = a.e[3] OPERATOR(OPERATOR_NAME) b; \
+	return dst; \
+} \
+vec(4, T) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(OPERATOR_NAME, vec(4, T), T, vec(4, T)) (const register T a, const register vec(4, T) b) \
+{ \
+	vec(4, T) dst; \
+	dst.e[0] = a OPERATOR(OPERATOR_NAME) b.e[0]; \
+	dst.e[1] = a OPERATOR(OPERATOR_NAME) b.e[1]; \
+	dst.e[2] = a OPERATOR(OPERATOR_NAME) b.e[2]; \
+	dst.e[3] = a OPERATOR(OPERATOR_NAME) b.e[3]; \
+	return dst; \
+}
+
+#define GLM_TVEC4_CONVERT_FUNC_DEF(TYPE1, TYPE2)\
+vec(4, TYPE1) GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(convert, vec(4, TYPE1), vec(4, TYPE2))  (const register vec(4, TYPE2) src) \
+{ \
+	vec(4, TYPE1) dst; \
+	dst.e[0] = (TYPE1) src.e[0]; \
+	dst.e[1] = (TYPE1) src.e[1]; \
+	dst.e[2] = (TYPE1) src.e[2]; \
+	dst.e[3] = (TYPE1) src.e[3]; \
+	return dst; \
+}
 
 
 #define GLM_TVEC4_DEF(T)\
@@ -113,8 +156,16 @@ GLM_FUNC_NAME(create, vec(4, T), T, T, T, T) (const register T e0, const registe
 	dst.e[2] = e2; \
 	dst.e[3] = e3; \
 	return dst; \
-}
-
+} \
+GLM_TVEC4_CONVERT_FUNC_DEF(T, float) \
+GLM_TVEC4_CONVERT_FUNC_DEF(T, double) \
+GLM_TVEC4_CONVERT_FUNC_DEF(T, uint) \
+GLM_TVEC4_CONVERT_FUNC_DEF(T, int) \
+GLM_TVEC4_CONVERT_FUNC_DEF(T, bool) \
+GLM_TVEC4_BINARY_OPERATOR_FUNCS_DEF(T, add) \
+GLM_TVEC4_BINARY_OPERATOR_FUNCS_DEF(T, sub) \
+GLM_TVEC4_BINARY_OPERATOR_FUNCS_DEF(T, mul) \
+GLM_TVEC4_BINARY_OPERATOR_FUNCS_DEF(T, div)
 
 
 

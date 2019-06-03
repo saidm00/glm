@@ -285,8 +285,14 @@ GLM_MANGLE_ALL_TYPES(NAME, 2)
 #define GLM_METHOD_DECL(NAME, T, ...) T GLM_FUNC_QUALIFIER GLM_FUNC_NAME(NAME, T, __VA_ARGS__) (GLM_FOREACH(GLM_ARG_QUALIFY, __VA_ARGS__))
 
 
+#define GLM_BINARY_OPERATOR_SCALAR_DEF(T, OPERATOR_NAME)\
+T GLM_FUNC_QUALIFIER \
+GLM_FUNC_NAME(OPERATOR_NAME, T, T, T) (const register T x, const register T y) \
+{ \
+	return x + y; \
+}
 
-#define GLM_CONVERT_SCALAR_DEF(T)\
+#define GLM_SCALAR_DEF(T)\
 T GLM_FUNC_QUALIFIER \
 GLM_FUNC_NAME(convert, T, float) (const register float x) \
 { \
@@ -311,13 +317,17 @@ T GLM_FUNC_QUALIFIER \
 GLM_FUNC_NAME(convert, T, bool) (const register bool x) \
 { \
 	return x; \
-}
+} \
+GLM_BINARY_OPERATOR_SCALAR_DEF(T, add) \
+GLM_BINARY_OPERATOR_SCALAR_DEF(T, sub) \
+GLM_BINARY_OPERATOR_SCALAR_DEF(T, mul) \
+GLM_BINARY_OPERATOR_SCALAR_DEF(T, div)
 
-GLM_CONVERT_SCALAR_DEF(float)
-GLM_CONVERT_SCALAR_DEF(double)
-GLM_CONVERT_SCALAR_DEF(int)
-GLM_CONVERT_SCALAR_DEF(uint)
-GLM_CONVERT_SCALAR_DEF(bool)
+GLM_SCALAR_DEF(float)
+GLM_SCALAR_DEF(double)
+GLM_SCALAR_DEF(int)
+GLM_SCALAR_DEF(uint)
+GLM_SCALAR_DEF(bool)
 
 typedef union vec(2, float)  float2;
 typedef union vec(2, double) double2;
@@ -341,15 +351,140 @@ typedef union vec(4, bool)   bool4;
 #define OPERATOR_sub -
 #define OPERATOR_mul *
 #define OPERATOR_div /
-#define OPERATOR(OP) OPERATOR_##OP
+#define OPERATOR(OPERATOR_NAME) OPERATOR_ ## OPERATOR_NAME
 
 
-#define GLM_CONVERT_VEC_FUNC_SELECT(L1, T1, L2)\
+#define GLM_CONVERT_VEC_FUNC_SELECT(L1, T1, L2) \
 vec(L2, float):  GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, float)), \
 vec(L2, double): GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, double)), \
 vec(L2, int):    GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, int)), \
 vec(L2, uint):   GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, uint)), \
 vec(L2, bool):   GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, bool))
 
+
+
+
+#define GLM_BINARY_OPERATOR_VECTOR_FUNC_CASE(L, T, OPERATOR_NAME, ARG_2) \
+vec(L, T): \
+	_Generic(ARG_2, \
+	vec(L, T): GLM_FUNC_NAME(OPERATOR_NAME, vec(L, T), vec(L, T), vec(L, T)), \
+	default:   GLM_FUNC_NAME(OPERATOR_NAME, vec(L, T), vec(L, T), T))
+
+
+#define GLM_BINARY_OPERATOR_VECTOR_FUNC_SELECT(L, OPERATOR_NAME, ARG_2) \
+GLM_BINARY_OPERATOR_VECTOR_FUNC_CASE(L, float,  OPERATOR_NAME, ARG_2), \
+GLM_BINARY_OPERATOR_VECTOR_FUNC_CASE(L, double, OPERATOR_NAME, ARG_2), \
+GLM_BINARY_OPERATOR_VECTOR_FUNC_CASE(L, int,    OPERATOR_NAME, ARG_2), \
+GLM_BINARY_OPERATOR_VECTOR_FUNC_CASE(L, uint,   OPERATOR_NAME, ARG_2), \
+GLM_BINARY_OPERATOR_VECTOR_FUNC_CASE(L, bool,   OPERATOR_NAME, ARG_2)
+
+
+/*
+	Could have operators only be between equivalent vector types.
+	Could use variadic functions instead of _Generic logic but that has runtime cost.
+	Maybe could adapt _Generic method
+
+*/
+
+
+#define GLM_GENERIC_BINARY_OPERATOR(OPERATOR_NAME, a, b)\
+_Generic(a, \
+GLM_BINARY_OPERATOR_VECTOR_FUNC_SELECT(2, OPERATOR_NAME, b), \
+GLM_BINARY_OPERATOR_VECTOR_FUNC_SELECT(3, OPERATOR_NAME, b), \
+GLM_BINARY_OPERATOR_VECTOR_FUNC_SELECT(4, OPERATOR_NAME, b) \
+)(a, b)
+
+
+#define add(a, b) GLM_GENERIC_BINARY_OPERATOR(add, a, b)
+#define sub(a, b) GLM_GENERIC_BINARY_OPERATOR(sub, a, b)
+#define mul(a, b) GLM_GENERIC_BINARY_OPERATOR(mul, a, b)
+#define div(a, b) GLM_GENERIC_BINARY_OPERATOR(div, a, b)
+
+
+//#define sub(a, b) _Generic(a, vec(2, float): GLM_CONCAT(sub, vec(2, float)) )
+
+/*
+
+#include <assert.h>
+#include <stdarg.h>
+#include <string.h>
+
+typedef enum glm_type
+{
+	GLM_TYPE_FLOAT,
+	GLM_TYPE_DOUBLE,
+	GLM_TYPE_INT,
+	GLM_TYPE_UINT,
+	GLM_TYPE_BOOL,
+	GLM_TYPE_FLOAT1,
+	GLM_TYPE_DOUBLE1,
+	GLM_TYPE_INT1,
+	GLM_TYPE_UINT1,
+	GLM_TYPE_BOOL1,
+	GLM_TYPE_FLOAT2,
+	GLM_TYPE_DOUBLE2,
+	GLM_TYPE_INT2,
+	GLM_TYPE_UINT2,
+	GLM_TYPE_BOOL2,
+	GLM_TYPE_FLOAT3,
+	GLM_TYPE_DOUBLE3,
+	GLM_TYPE_INT3,
+	GLM_TYPE_UINT3,
+	GLM_TYPE_BOOL3,
+	GLM_TYPE_FLOAT4,
+	GLM_TYPE_DOUBLE4,
+	GLM_TYPE_INT4,
+	GLM_TYPE_UINT4,
+	GLM_TYPE_BOOL4
+} glm_type;
+
+#define GLM_TYPENAME_UPPER_float2 FLOAT2
+#define GLM_TYPENAME_UPPER_double2 DOUBLE2
+#define GLM_TYPENAME_UPPER_int2 INT2
+#define GLM_TYPENAME_UPPER_uint2 UINT2
+#define GLM_TYPENAME_UPPER_bool2 BOOL2
+
+#define GLM_TYPENAME_UPPER(TYPENAME)
+
+#define GLM_TYPE_ENUM_(TYPENAME) GLM_TYPE_ ## TYPENAME
+#define GLM_TYPE_ENUM(TYPENAME) GLM_TYPE_ENUM (GLM_TYPENAME_UPPER(TYPENAME))
+
+
+#define GLM_DEFINE_VECTOR_BINARY_OPERATOR_VARIADIC_FUNC(L, T, OPEARTOR_NAME) \
+vec(L, T) GLM_FUNC_QUALIFIER \
+GLM_CONCAT(OPEARTOR_NAME, format, vec(L, T)) (glm_type types[2], ...) \
+{ \
+	vec(L, T) dst; \
+	va_list args; \
+	va_start(args, types); \
+	 \
+	assert(types[0] == GLM_TYPE_ENUM(vec(L, T)) || types[1] == GLM_TYPE_ENUM(vec(L, T))); \
+	 \
+	if (types[0] == GLM_TYPE_ENUM(vec(L, T))) \
+	{ \
+		vec(L, T) _1 = va_arg(args, vec(L, T)); \
+		if (types[1] == GLM_TYPE_ENUM(vec(L, T))) \
+		{ \
+			vec(L, T) _2 = va_arg(args, vec(L, T)); \
+			dst = GLM_FUNC_NAME(OPEARTOR_NAME, vec(L, T), vec(L, T), vec(L, T)) (_1, _2); \
+		} \
+		else if (types[1] == GLM_TYPE_ENUM(T)) \
+		{ \
+			T _2 = va_arg(args, T); \
+			dst = GLM_FUNC_NAME(OPEARTOR_NAME, vec(L, T), vec(L, T), T) (_1, _2); \
+		} \
+	} \
+	else if (types[0] == GLM_TYPE_ENUM(T) && \
+		types[1] == GLM_TYPE_ENUM(vec(L, T)) ) \
+	{ \
+		T         _1 = va_arg(args, T); \
+		vec(L, T) _2 = va_arg(args, vec(L, T)); \
+		dst = GLM_FUNC_NAME(OPEARTOR_NAME, vec(L, T), T, vec(L, T)) (_1, _2); \
+	} \
+	 \
+	va_end(args); \
+	return dst; \
+}
+*/
 
 #endif /* GLM_DETAIL_QUALIFIER_H */
