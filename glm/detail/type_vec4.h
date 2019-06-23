@@ -167,11 +167,24 @@ GLM_TVEC4_BINARY_OPERATOR_FUNCS_DEF(T, sub) \
 GLM_TVEC4_BINARY_OPERATOR_FUNCS_DEF(T, mul) \
 GLM_TVEC4_BINARY_OPERATOR_FUNCS_DEF(T, div)
 
+#define GLM_CREATE_TVEC4_FUNC_SELECT1(L, T)\
+vec(L, float):  GLM_FUNC_NAME(create, vec(4, T), vec(L, T)), \
+vec(L, double): GLM_FUNC_NAME(create, vec(4, T), vec(L, T)), \
+vec(L, int):    GLM_FUNC_NAME(create, vec(4, T), vec(L, T)), \
+vec(L, uint):   GLM_FUNC_NAME(create, vec(4, T), vec(L, T)), \
+vec(L, bool):   GLM_FUNC_NAME(create, vec(4, T), vec(L, T))
 
-
+#define GLM_CREATE_TVEC4_FUNC_SELECT2(T)\
+vec(3, float):  GLM_FUNC_NAME(create, vec(4, T), vec(3, T), T), \
+vec(3, double): GLM_FUNC_NAME(create, vec(4, T), vec(3, T), T), \
+vec(3, int):    GLM_FUNC_NAME(create, vec(4, T), vec(3, T), T), \
+vec(3, uint):   GLM_FUNC_NAME(create, vec(4, T), vec(3, T), T), \
+vec(3, bool):   GLM_FUNC_NAME(create, vec(4, T), vec(3, T), T)
 
 #define _create_tvec4_0(T, ...) GLM_FUNC_NAME(create, vec(4, T), void)()
 
+#define _create_tvec4_1(T, a, ...) v##T##4 ( 1, GLM_TYPEOF(a), a )
+/*
 #define _create_tvec4_1(T, a, ...)\
 _Generic(a, \
 float:  GLM_FUNC_NAME(create, vec(4, T), T), \
@@ -184,8 +197,20 @@ GLM_CREATE_TVEC4_FUNC_SELECT1(4, T) \
 GLM_CONVERT_VEC_FUNC_SELECT(,T,), \
 GLM_CONVERT_VEC_FUNC_SELECT(4, T, 4) \
 )(a))
+*/
 
-#define _create_tvec4_2(T, a1, a2, ...)
+#define _create_tvec4_2(T, a1, a2, ...)\
+_Generic(a1, \
+float:  GLM_FUNC_NAME(create, vec(4, T), T, vec(3, T)), \
+double: GLM_FUNC_NAME(create, vec(4, T), T, vec(3, T)), \
+int:    GLM_FUNC_NAME(create, vec(4, T), T, vec(3, T)), \
+uint:   GLM_FUNC_NAME(create, vec(4, T), T, vec(3, T)), \
+bool:   GLM_FUNC_NAME(create, vec(4, T), T, vec(3, T)), \
+GLM_CREATE_TVEC4_FUNC_SELECT2(T) \
+)( \
+_Generic(a1, GLM_CONVERT_VEC_FUNC_SELECT(,T,), GLM_CONVERT_VEC_FUNC_SELECT(3, T, 3))(a1), \
+_Generic(a2, GLM_CONVERT_VEC_FUNC_SELECT(,T,), GLM_CONVERT_VEC_FUNC_SELECT(3, T, 3))(a2) \
+)
 
 #define _create_tvec4_3(T, a1, a2, a3, ...)
 

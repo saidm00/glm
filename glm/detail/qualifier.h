@@ -202,15 +202,29 @@ vec(L, bool): GLM_FUNC_NAME(NAME, bool, vec(L, bool))
 #define GLM_GENERIC_MANGLE_CASES(NAME)\
 GLM_MANGLE_ALL_TYPES(NAME, 2)
 
-#define GLM_GENERIC_CALL(NAME, ARG) _Generic(ARG, GLM_GENERIC_MANGLE_CASES(NAME))(ARG)
 
-#define          _sqrt(x) _Generic(x, float: sqrtf, double: sqrt, int: sqrtl, uint: sqrtl, GLM_GENERIC_MANGLE_CASES(sqrt))(x)
-#define        _length(x) GLM_GENERIC_CALL(length, x)
-#define         _floor(x) GLM_GENERIC_CALL(floor, x)
-#define          _ceil(x) GLM_GENERIC_CALL(ceil, x)
-#define         _round(x) GLM_GENERIC_CALL(round, x)
-#define _radians(degrees) GLM_GENERIC_CALL(radians, degrees)
-#define _degrees(radians) GLM_GENERIC_CALL(degrees, radians)
+#define GLM_MANGLE_ALL_TYPES_VEC(NAME, L) \
+vec(L, float): GLM_FUNC_NAME(NAME, vec(L, float), vec(L, float)), \
+vec(L, double): GLM_FUNC_NAME(NAME, vec(L, double), vec(L, double)), \
+vec(L, int): GLM_FUNC_NAME(NAME, vec(L, int), vec(L, int)), \
+vec(L, uint): GLM_FUNC_NAME(NAME, vec(L, uint), vec(L, uint)), \
+vec(L, bool): GLM_FUNC_NAME(NAME, vec(L, bool), vec(L, bool))
+
+#define GLM_GENERIC_MANGLE_VEC_CASES(NAME)\
+GLM_MANGLE_ALL_TYPES_VEC(NAME, 2)
+
+
+#define GLM_GENERIC_CALL(NAME, ARG) _Generic(ARG, GLM_GENERIC_MANGLE_CASES(NAME))(ARG)
+#define GLM_GENERIC_CALL_VEC(NAME, ARG) _Generic(ARG, GLM_GENERIC_MANGLE_VEC_CASES(NAME))(ARG)
+
+#define          sqrt(x) _Generic(x, float: sqrtf, double: sqrt, int: sqrtl, uint: sqrtl, GLM_GENERIC_MANGLE_VEC_CASES(sqrt))(x)
+#define         rsqrt(x) GLM_GENERIC_CALL_VEC(rsqrt, x)
+#define        length(x) GLM_GENERIC_CALL(length, x)
+#define         floor(x) GLM_GENERIC_CALL_VEC(floor, x)
+#define          ceil(x) GLM_GENERIC_CALL_VEC(ceil, x)
+#define         round(x) GLM_GENERIC_CALL_VEC(round, x)
+#define radians(degrees) GLM_GENERIC_CALL_VEC(radians, degrees)
+#define degrees(radians) GLM_GENERIC_CALL_VEC(degrees, radians)
 
 
 
@@ -486,5 +500,172 @@ GLM_CONCAT(OPEARTOR_NAME, format, vec(L, T)) (glm_type types[2], ...) \
 	return dst; \
 }
 */
+
+typedef unsigned int length_t;
+typedef enum
+{
+    GLM_TYPE_FLOAT,
+    GLM_TYPE_VEC1,
+    GLM_TYPE_VEC2,
+    GLM_TYPE_VEC3,
+    GLM_TYPE_VEC4,
+    GLM_TYPE_DOUBLE,
+    GLM_TYPE_DVEC1,
+    GLM_TYPE_DVEC2,
+    GLM_TYPE_DVEC3,
+    GLM_TYPE_DVEC4,
+    GLM_TYPE_INT,
+    GLM_TYPE_IVEC1,
+    GLM_TYPE_IVEC2,
+    GLM_TYPE_IVEC3,
+    GLM_TYPE_IVEC4,
+    GLM_TYPE_UINT,
+    GLM_TYPE_UVEC1,
+    GLM_TYPE_UVEC2,
+    GLM_TYPE_UVEC3,
+    GLM_TYPE_UVEC4,
+    GLM_TYPE_BOOL,
+    GLM_TYPE_BVEC1,
+    GLM_TYPE_BVEC2,
+    GLM_TYPE_BVEC3,
+    GLM_TYPE_BVEC4
+} type_t;
+
+#define GLM_TYPEOF(x) _Generic(x,\
+float: GLM_TYPE_FLOAT,\
+vec1: GLM_TYPE_VEC1, \
+vec2: GLM_TYPE_VEC2, \
+vec3: GLM_TYPE_VEC3, \
+vec4: GLM_TYPE_VEC4, \
+double: GLM_TYPE_DOUBLE, \
+dvec1: GLM_TYPE_DVEC1, \
+dvec2: GLM_TYPE_DVEC2, \
+dvec3: GLM_TYPE_DVEC3, \
+dvec4: GLM_TYPE_DVEC4, \
+int: GLM_TYPE_INT, \
+ivec1: GLM_TYPE_IVEC1, \
+ivec2: GLM_TYPE_IVEC2, \
+ivec3: GLM_TYPE_IVEC3, \
+ivec4: GLM_TYPE_IVEC4, \
+uint: GLM_TYPE_UINT, \
+uvec1: GLM_TYPE_UVEC1, \
+uvec2: GLM_TYPE_UVEC2, \
+uvec3: GLM_TYPE_UVEC3, \
+uvec4: GLM_TYPE_UVEC4, \
+bool: GLM_TYPE_BOOL, \
+bvec1: GLM_TYPE_BVEC1, \
+bvec2: GLM_TYPE_BVEC2, \
+bvec3: GLM_TYPE_BVEC3, \
+bvec4: GLM_TYPE_BVEC4 \
+)
+
+bool GLM_FUNC_QUALIFIER
+IsScalarType (type_t type)
+{
+    return (type == GLM_TYPE_FLOAT) ||
+           (type == GLM_TYPE_DOUBLE) ||
+           (type == GLM_TYPE_INT) ||
+           (type == GLM_TYPE_UINT) ||
+           (type == GLM_TYPE_BOOL);
+}
+
+bool GLM_FUNC_QUALIFIER
+IsVec1Type (type_t type)
+{
+    return (type == GLM_TYPE_VEC1)  ||
+           (type == GLM_TYPE_DVEC1) ||
+           (type == GLM_TYPE_IVEC1) ||
+           (type == GLM_TYPE_UVEC1) ||
+		   (type == GLM_TYPE_BVEC1);
+}
+
+bool GLM_FUNC_QUALIFIER
+IsVec2Type (type_t type)
+{
+    return (type == GLM_TYPE_VEC2)  ||
+           (type == GLM_TYPE_DVEC2) ||
+           (type == GLM_TYPE_IVEC2) ||
+           (type == GLM_TYPE_UVEC2) ||
+		   (type == GLM_TYPE_BVEC2);
+}
+
+bool GLM_FUNC_QUALIFIER
+IsVec3Type (type_t type)
+{
+    return (type == GLM_TYPE_VEC3)  ||
+           (type == GLM_TYPE_DVEC3) ||
+           (type == GLM_TYPE_IVEC3) ||
+           (type == GLM_TYPE_UVEC3) ||
+		   (type == GLM_TYPE_BVEC3);
+}
+
+bool GLM_FUNC_QUALIFIER
+IsVec4Type (type_t type)
+{
+    return (type == GLM_TYPE_VEC4)  ||
+           (type == GLM_TYPE_DVEC4) ||
+           (type == GLM_TYPE_IVEC4) ||
+           (type == GLM_TYPE_UVEC4) ||
+		   (type == GLM_TYPE_BVEC4);
+}
+
+bool GLM_FUNC_QUALIFIER
+IsVecLType (length_t L, type_t type)
+{
+	switch (L)
+	{
+		case 1: return IsVec1Type(type);
+		case 2: return IsVec2Type(type);
+		case 3: return IsVec3Type(type);
+		case 4: return IsVec4Type(type);
+	}
+}
+
+#include <stdarg.h>
+#include <stdint.h>
+
+#define GLM_DEFINE_VEC_CONSTRUCTOR(L, T)\
+vec(L, T) GLM_FUNC_QUALIFIER \
+GLM_CONCAT(v,T,L) (uint8_t n, ...) \
+{\
+    vec(L, T) v = {};\
+    type_t type;\
+    \
+    va_list ap;\
+    va_start(ap, n);\
+    \
+    if (n == 1)\
+    {\
+        type = va_arg(ap, type_t);\
+        if (IsScalarType(type))\
+        {\
+            float x;\
+            switch (t)\
+            {\
+                case GLM_TYPE_FLOAT:  x = va_arg(ap, float);  break;\
+                case GLM_TYPE_DOUBLE: x = va_arg(ap, double); break;\
+                case GLM_TYPE_INT:    x = va_arg(ap, int);    break;\
+                case GLM_TYPE_UINT:   x = va_arg(ap, uint);   break;\
+                case GLM_TYPE_BOOL:   x = va_arg(ap, bool);   break;\
+            }\
+    		length_t i = 0;\
+			while (i < L) v.e[i++] = x;\
+        }\
+        else if (IsVecLType(L, type))\
+        {\
+            switch (type)\
+            {\
+                case  GLM_TYPE_VEC ## L: v = GLM_FUNC_NAME(convert, vec(L, T), vec(L, float)) (va_arg(ap, vec(L, float))) break;\
+                case GLM_TYPE_DVEC ## L: v = GLM_FUNC_NAME(convert, vec(L, T), vec(L, double)) (va_arg(ap, vec(L, double))); break;\
+                case GLM_TYPE_IVEC ## L: v = GLM_FUNC_NAME(convert, vec(L, T), vec(L, int)) (va_arg(ap, vec(L, int))); break;\
+				case GLM_TYPE_UVEC ## L: v = GLM_FUNC_NAME(convert, vec(L, T), vec(L, uint)) (va_arg(ap, vec(L, uint))); break;\
+				case GLM_TYPE_BVEC ## L: v = GLM_FUNC_NAME(convert, vec(L, T), vec(L, bool)) (va_arg(ap, vec(L, bool))); break;\
+            }\
+		}\
+    }\
+	\
+    va_end(ap);\
+    return v;\
+}
 
 #endif /* GLM_DETAIL_QUALIFIER_H */

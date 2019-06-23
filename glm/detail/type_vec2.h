@@ -7,12 +7,12 @@
 
 #define GLM_TVEC2_DECL(T)\
 vec(2, T) GLM_FUNC_QUALIFIER \
-GLM_FUNC_NAME(create, vec(2, T), void)       (void), \
-GLM_FUNC_NAME(create, vec(2, T), T)          (const register T), \
-GLM_FUNC_NAME(create, vec(2, T), vec(2, T))  (const register vec(2, T)), \
-GLM_FUNC_NAME(create, vec(2, T), vec(3, T))  (const register vec(3, T)), \
-GLM_FUNC_NAME(create, vec(2, T), vec(4, T))  (const register vec(4, T)), \
-GLM_FUNC_NAME(create, vec(2, T), T, T)       (const register T, const register T);
+GLM_FUNC_NAME(create, vec(2, T), void)      (void), \
+GLM_FUNC_NAME(create, vec(2, T), T)         (const register T), \
+GLM_FUNC_NAME(create, vec(2, T), vec(2, T)) (const register vec(2, T)), \
+GLM_FUNC_NAME(create, vec(2, T), vec(3, T)) (const register vec(3, T)), \
+GLM_FUNC_NAME(create, vec(2, T), vec(4, T)) (const register vec(4, T)), \
+GLM_FUNC_NAME(create, vec(2, T), T, T)      (const register T, const register T);
 
 GLM_VEC_DECL(2, float)
 GLM_VEC_DECL(2, double)
@@ -151,7 +151,7 @@ GLM_CONVERT_VEC_FUNC_SELECT(3, T, 3), \
 GLM_CONVERT_VEC_FUNC_SELECT(4, T, 4) \
 )(a))
 
-#define _create_tvec2_2(T, x, y) GLM_FUNC_NAME(create, vec(2, T), T, T) (x, y)
+#define _create_tvec2_2(T, x, y) GLM_FUNC_NAME(create, vec(2, T), T, T)(x, y)
 
 #define _create_tvec2(T, a1, a2, N, ...) _create_tvec2_##N(T, a1, a2)
 

@@ -5,17 +5,14 @@
 #include <stdio.h>
 
 int main(int argc, char** argv) {
+	//vec3 v;
+	//vec2 a = vec2(0), b = vec2(0.5f, 2.5f), c = vec2(v), d = vec2(0.0f, v);
+
+	vec4 v = vec4(1.0f);
+	vec4 w = vec4(v);
+
+	printf("%f %f %f %f\n", v.x, v.y, v.z, v.w);
+	printf("%f %f %f %f\n", w.x, w.y, w.z, w.w);
 	
-	vec2 a = vec2(1.0f, 2.0f), b = vec2(2.0f);
-
-	vec2 c = add(a, b);
-	printf("%f, %f\n", c.e[0], c.e[1]);
-
-	c = mul(c, 2.0f);
-	printf("%f, %f\n", c.e[0], c.e[1]);
-
-	c = sub(10.0f, c);
-	printf("%f, %f\n", c.e[0], c.e[1]);
-
 	return 0;
 }
