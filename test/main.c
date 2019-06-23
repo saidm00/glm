@@ -1,6 +1,6 @@
-//#define GLM_FORCE_INTRINSICS
-#define GLM_FORCE_INLINE
-#include <glm/glm.h>
+#include "test.h"
+#include "test.h"
+#include "test.h"
 
 #include <stdio.h>
 
@@ -20,8 +20,21 @@ int main(int argc, char** argv) {
 	vec2 v1 = vec2(0.6f);
 	vec2 v2 = vec2(2.6f, 1.6f);
 
-	add(v1, v2);
+	vec2* pv1 = &v1;
+	vec2* pv2 = &v2;
 
-	
+	add(v1, v2);
+	mul(v1, v2);
+	div(v1, v2);
+
+	add(*pv1, *pv2);
+	mul(*pv1, *pv2);
+	div(*pv1, *pv2);
+
+	add(*pv1, 1.0f);
+	mul(*pv1, 1.0f);
+	div(*pv1, 1.0f);
+
+
 	return 0;
 }

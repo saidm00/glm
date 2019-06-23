@@ -381,8 +381,8 @@ vec(L2, bool):   GLM_FUNC_NAME(convert, vec(L1, T1), vec(L2, bool))
 #define GLM_BINARY_OPERATOR_VECTOR_FUNC_CASE(L, T, OPERATOR_NAME, ARG_2) \
 vec(L, T): \
 	_Generic(ARG_2, \
-	vec(L, T): GLM_FUNC_NAME(OPERATOR_NAME, vec(L, T), vec(L, T), vec(L, T)), \
-	default:   GLM_FUNC_NAME(OPERATOR_NAME, vec(L, T), vec(L, T), T))
+	vec(L, T): & GLM_FUNC_NAME(OPERATOR_NAME, vec(L, T), vec(L, T), vec(L, T)), \
+	default:   & GLM_FUNC_NAME(OPERATOR_NAME, vec(L, T), vec(L, T), T))
 
 
 #define GLM_BINARY_OPERATOR_VECTOR_FUNC_SELECT(L, OPERATOR_NAME, ARG_2) \
@@ -401,18 +401,18 @@ GLM_BINARY_OPERATOR_VECTOR_FUNC_CASE(L, bool,   OPERATOR_NAME, ARG_2)
 */
 
 
-#define GLM_GENERIC_BINARY_OPERATOR(OPERATOR_NAME, a, b)\
-_Generic(a, \
-GLM_BINARY_OPERATOR_VECTOR_FUNC_SELECT(2, OPERATOR_NAME, b), \
-GLM_BINARY_OPERATOR_VECTOR_FUNC_SELECT(3, OPERATOR_NAME, b), \
-GLM_BINARY_OPERATOR_VECTOR_FUNC_SELECT(4, OPERATOR_NAME, b) \
-)(a, b)
+#define GLM_GENERIC_BINARY_OPERATOR(OPERATOR_NAME, _1, _2) \
+_Generic(_1, \
+GLM_BINARY_OPERATOR_VECTOR_FUNC_SELECT(2, OPERATOR_NAME, _2), \
+GLM_BINARY_OPERATOR_VECTOR_FUNC_SELECT(3, OPERATOR_NAME, _2), \
+GLM_BINARY_OPERATOR_VECTOR_FUNC_SELECT(4, OPERATOR_NAME, _2) \
+)(_1, _2)
 
 
-#define add(a, b) GLM_GENERIC_BINARY_OPERATOR(add, a, b)
-#define sub(a, b) GLM_GENERIC_BINARY_OPERATOR(sub, a, b)
-#define mul(a, b) GLM_GENERIC_BINARY_OPERATOR(mul, a, b)
-#define div(a, b) GLM_GENERIC_BINARY_OPERATOR(div, a, b)
+#define add(_1, _2) GLM_GENERIC_BINARY_OPERATOR(add, _1, _2)
+#define sub(_1, _2) GLM_GENERIC_BINARY_OPERATOR(sub, _1, _2)
+#define mul(_1, _2) GLM_GENERIC_BINARY_OPERATOR(mul, _1, _2)
+#define div(_1, _2) GLM_GENERIC_BINARY_OPERATOR(div, _1, _2)
 
 
 //#define sub(a, b) _Generic(a, vec(2, float): GLM_CONCAT(sub, vec(2, float)) )
