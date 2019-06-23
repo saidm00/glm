@@ -13,6 +13,15 @@ int main(int argc, char** argv) {
 
 	printf("%f %f %f %f\n", v.x, v.y, v.z, v.w);
 	printf("%f %f %f %f\n", w.x, w.y, w.z, w.w);
+
+	vec4 z = add(v, w);
+
+
+	vec2 v1 = vec2(0.6f);
+	vec2 v2 = vec2(2.6f, 1.6f);
+
+	add(v1, v2);
+
 	
 	return 0;
 }

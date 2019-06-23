@@ -183,9 +183,10 @@ vec(3, bool):   GLM_FUNC_NAME(create, vec(4, T), vec(3, T), T)
 
 #define _create_tvec4_0(T, ...) GLM_FUNC_NAME(create, vec(4, T), void)()
 
-#define _create_tvec4_1(T, a, ...) v##T##4 ( 1, GLM_TYPEOF(a), a )
-/*
-#define _create_tvec4_1(T, a, ...)\
+//#define _create_tvec4_1(T, a, ...) v##T##4 ( 1, GLM_TYPEOF(a), a )
+
+
+#define _create_tvec4_1(T, a, ...) \
 _Generic(a, \
 float:  GLM_FUNC_NAME(create, vec(4, T), T), \
 double: GLM_FUNC_NAME(create, vec(4, T), T), \
@@ -197,7 +198,7 @@ GLM_CREATE_TVEC4_FUNC_SELECT1(4, T) \
 GLM_CONVERT_VEC_FUNC_SELECT(,T,), \
 GLM_CONVERT_VEC_FUNC_SELECT(4, T, 4) \
 )(a))
-*/
+
 
 #define _create_tvec4_2(T, a1, a2, ...)\
 _Generic(a1, \
