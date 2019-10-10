@@ -2,6 +2,11 @@
 #define GLM_DETAIL_SETUP_H
 
 #include <math.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <alloca.h>
+#include <string.h>
+#include <stdbool.h>
 
 #if defined(GLM_FORCE_INLINE)
 #	if GLM_COMPILER & GLM_COMPILER_VC
@@ -23,15 +28,14 @@
 #endif
 
 //#define GLM_FUNC_QUALIFIER static GLM_INLINE
-#define GLM_FUNC_QUALIFIER static GLM_NEVER_INLINE
+#define GLM_API static GLM_NEVER_INLINE
 
 #define GLM_ENABLE 1
 
 #define GLM_CONFIG_SIMD GLM_ENABLE
 
-#define true (1)
-#define false (0)
-typedef unsigned char bool;
+#undef bool
+typedef _Bool bool;
 typedef unsigned int uint;
 
 #endif /* GLM_DETAIL_SETUP_H */
