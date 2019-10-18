@@ -126,10 +126,11 @@ typedef bool glm_bool;
 ({\
 	__typeof__((v)) _v = (v);\
 	__typeof__((_v.e[0])) _sqsum = 0, _len;\
-	for(size_t _i = 0; _i < GLM_ELEM_COUNT(_v); ++_i) _sqsum += GLM_SQUARE(_v.e[_i]);\
+	size_t _n = GLM_ELEM_COUNT(_v), _i;\
+	for(_i = 0; _i < _n; ++_i) _sqsum += GLM_SQUARE(_v.e[_i]);\
 	_len = sqrt(_sqsum);\
 	\
-	for(size_t _i = 0; _i < GLM_ELEM_COUNT(_v); ++_i) _v.e[_i] /= _len;\
+	for(_i = 0; _i < _n; _v.e[++_i] /= _len);\
 	_v;\
 })
 
