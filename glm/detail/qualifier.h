@@ -130,7 +130,7 @@ typedef bool glm_bool;
 	for(_i = 0; _i < _n; ++_i) _sqsum += GLM_SQUARE(_v.e[_i]);\
 	_len = sqrt(_sqsum);\
 	\
-	for(_i = 0; _i < _n; _v.e[++_i] /= _len);\
+	for(_i = 0; _i < _n; ++_i) _v.e[_i] /= _len;\
 	_v;\
 })
 
