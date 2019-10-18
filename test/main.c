@@ -1,16 +1,30 @@
 #include <stdio.h>
-#include <glm/detail/type_scalar.h>
-#include <glm/detail/type_vec1.h>
+#include <glm/glm.h>
 
-int main(int argc, char** argv) {
-	//vec3 v;
-	//vec2 a = vec2(0), b = vec2(0.5f, 2.5f), c = vec2(v), d = vec2(0.0f, v);
+int main(int argc, char** argv)
+{
+	/*
+	{
+		glm_ivec4 v1 = {52, 0, 22, -24};
+		glm_bvec2 v2 = GLM_CONVERT_TVEC2(bool, v1);
 
-	glm_float s = glm_float(5);
-	glm_float1 v = glm_float1(s);
+		printf("bvec2(%d, %d)\n", v2.x, v2.y);
+	}
+	*/
+	{
+		glm_ivec1 v1 = {-25};
+		glm_vec2 v2 = glm_vec2(v1);
+		
+		printf("vec2(%f, %f)\n", v2.x, v2.y);
+	}
 	
+	{
+		glm_ivec1 v1 = {-25};
+		glm_vec2 v2 = {1.6f, -7.3f};
+		glm_dvec2 v3 = glm_dvec2(v1, v2);
+		
+		printf("dvec2(%lf, %lf)\n", v3.x, v3.y);
+	}
 	
-	printf("%f\n", s);
-
 	return 0;
 }

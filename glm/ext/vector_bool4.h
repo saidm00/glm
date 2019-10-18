@@ -3,9 +3,17 @@
 
 #include "../detail/type_vec4.h"
 
-GLM_TVEC4_DEF(bool)
+typedef union
+{
+	bool _data[4];
+	bool e[4];
+	
+	struct { bool x, y, z, w; };
+	struct { bool s, t, p, q; };
+	struct { bool r, g, b, a; };
+} glm_bool4, glm_bvec4;
 
-#define bool4(...) _tvec4(bool, __VA_ARGS__)
-#define bvec4 vec(4, bool)
+#define glm_bool4(...) glm_tvec4(bool, __VA_ARGS__)
+#define glm_bvec4(...) glm_tvec4(bool, __VA_ARGS__)
 
 #endif /* GLM_EXT_VECTOR_BOOL4_H */

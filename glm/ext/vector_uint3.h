@@ -3,9 +3,16 @@
 
 #include "../detail/type_vec3.h"
 
-GLM_TVEC3_DEF(uint)
+typedef union
+{
+	uint _data[3];
+	uint e[3];
+	struct { uint x, y, z; };
+	struct { uint s, t, p; };
+	struct { uint r, g, b; };
+} glm_uint3, glm_uvec3;
 
-#define uint3(...) _tvec3(uint, __VA_ARGS__)
-#define uvec3 vec(3, uint)
+#define glm_uint3(...) glm_tvec3(uint, __VA_ARGS__)
+#define glm_uvec3(...) glm_tvec3(uint, __VA_ARGS__)
 
 #endif /* GLM_EXT_VECTOR_UINT3_H */

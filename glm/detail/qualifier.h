@@ -32,13 +32,36 @@ typedef bool glm_bool;
 #define mat(C, R, T) glm_mat(C, R, T)
 #define quat(T) glm_quat(T)
 #endif /* GLM_USING_NAMESPACE */
-
+/*
 #define GLM_CREATE_VEC(L, T, ...)    GLM_CREATE_VEC##L (T, __VA_ARGS__)
 #define GLM_CREATE_MAT(C, R, T, ...) GLM_CREATE_MAT##C##X##R (T, __VA_ARGS__)
 #define GLM_CREATE_QUAT(T, ...)      GLM_CREATE_QUAT (T, __VA_ARGS__)
-
+*/
 #define GLM_AUTO_TYPE GLM_ENABLED
 #define glm_auto(identifier, expression) __typeof__((expression)) identifier = expression;
+
+#define GLM_VEC_DATA(L, T) T data[L]; T e[L];
+#define GLM_MAT_DATA(C, R, T) T data[C * R]; T e[R][C];
+
+#define GLM_CONVERT_VEC(L, T, IN)\
+({\
+	__typeof__((IN)) _in = (IN);\
+	glm_vec(L, T) _out;\
+	for(size_t i = 0; i < L; ++i) _out._data[i] = (T)_in._data[i];\
+	_out;\
+})
+
+#define GLM_CONVERT_TVEC(T, IN)\
+({\
+	__typeof__((IN)) _in = (IN);\
+	_Generic(\
+		(char(*)[sizeof _in._data / sizeof _in._data[0]])0,\
+		char(*)[1]: (glm_vec(1, T)) { _in._data[0] },\
+		char(*)[2]: (glm_vec(2, T)) { _in._data[0], _in._data[1] },\
+		char(*)[3]: (glm_vec(3, T)) { _in._data[0], _in._data[1], _in._data[2] },\
+		char(*)[4]: (glm_vec(4, T)) { _in._data[0], _in._data[1], _in._data[2], _in._data[3] }\
+	);\
+})
 
 typedef enum glm_type
 {
