@@ -65,5 +65,21 @@ int main(int argc, char** argv)
 		printf("vec3(%f, %f, %f)\n", res.x, res.y, res.z);
 	}
 	
+	{
+		/* length(vec3) */
+		glm_vec3 v = {27.4f, 13.0f, -8.2f};
+		
+		float len = glm_length(v);
+		printf("%f\n", len);
+	}
+	
+	{
+		/* normalize(vec3) */
+		glm_vec3 v = {1.4f, 3.0f, -1.0f};
+		
+		glm_vec3 v1 = glm_normalize(v);
+		printf("vec3(%f, %f, %f)\n", v1.x, v1.y, v1.z);
+	}
+	
 	return 0;
 }

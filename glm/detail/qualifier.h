@@ -64,10 +64,12 @@ typedef bool glm_bool;
 })
 
 #define GLM_ASSERT(x) assert(x)
+#define GLM_ELEM_COUNT(v) (sizeof((v).e) / sizeof((v).e[0]))
 #define GLM_DATA_COUNT(v) (sizeof((v)._data) / sizeof((v)._data[0]))
 #define GLM_MIN(x, y) ((x) < (y) ? (x) : (y))
 #define GLM_MAX(x, y) ((x) > (y) ? (x) : (y))
 #define GLM_CLAMP(x, a, b) GLM_MIN(GLM_MAX(x, a), b)
+#define GLM_SQUARE(x) ((x) * (x))
 
 #define GLM_VEC_BINARY_OP(OPERATOR, LHS, RHS)\
 ({\
@@ -111,6 +113,25 @@ typedef bool glm_bool;
 #define glm_sub(lhs, rhs) GLM_VEC_BINARY_OP(-, lhs, rhs)
 #define glm_mul(lhs, rhs) GLM_VEC_BINARY_OP(*, lhs, rhs)
 #define glm_div(lhs, rhs) GLM_VEC_BINARY_OP(/, lhs, rhs)
+
+#define glm_length(v)\
+({\
+	__typeof__((v)) _v = (v);\
+	__typeof__((_v.e[0])) _sqsum = 0;\
+	for(size_t _i = 0; _i < GLM_ELEM_COUNT(_v); ++_i) _sqsum += GLM_SQUARE(_v.e[_i]);\
+	sqrt(_sqsum);\
+})
+
+#define glm_normalize(v)\
+({\
+	__typeof__((v)) _v = (v);\
+	__typeof__((_v.e[0])) _sqsum = 0, _len;\
+	for(size_t _i = 0; _i < GLM_ELEM_COUNT(_v); ++_i) _sqsum += GLM_SQUARE(_v.e[_i]);\
+	_len = sqrt(_sqsum);\
+	\
+	for(size_t _i = 0; _i < GLM_ELEM_COUNT(_v); ++_i) _v.e[_i] /= _len;\
+	_v;\
+})
 
 typedef enum glm_type
 {
