@@ -1,6 +1,6 @@
 
 
-# *OpenGL Mathematics for C (GLM-C)*
+# *OpenGL Mathematics for C*
 
 
 [OpenGL Mathematics for C]([https://github.com/saidwho12/glm-c](https://github.com/saidwho12/glm-c)) (*GLM-C*) is a C11 GCC port of the C++ library [*GLM*](https://github.com/g-truc/glm).
