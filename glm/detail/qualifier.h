@@ -63,6 +63,55 @@ typedef bool glm_bool;
 	);\
 })
 
+#define GLM_ASSERT(x) assert(x)
+#define GLM_DATA_COUNT(v) (sizeof((v)._data) / sizeof((v)._data[0]))
+#define GLM_MIN(x, y) ((x) < (y) ? (x) : (y))
+#define GLM_MAX(x, y) ((x) > (y) ? (x) : (y))
+#define GLM_CLAMP(x, a, b) GLM_MIN(GLM_MAX(x, a), b)
+
+#define GLM_VEC_BINARY_OP(OPERATOR, LHS, RHS)\
+({\
+	__typeof__((LHS)) _lhs = (LHS);\
+	__typeof__((RHS)) _rhs = (RHS);\
+	\
+	__builtin_choose_expr(__builtin_types_compatible_p(__typeof__((_lhs._data[0])), __typeof__((_rhs._data[0]))),\
+		__builtin_choose_expr(GLM_DATA_COUNT(_lhs) == GLM_DATA_COUNT(_rhs),\
+			({\
+				__typeof__((_lhs)) _dst;\
+				for(size_t _i = 0; _i < GLM_DATA_COUNT(_lhs); ++_i)\
+					_dst._data[_i] = _lhs._data[_i] OPERATOR _rhs._data[_i];\
+				_dst;\
+			})\
+			,\
+			__builtin_choose_expr(GLM_DATA_COUNT(_lhs) > GLM_DATA_COUNT(_rhs) && GLM_DATA_COUNT(_rhs) == 1,\
+				({\
+					__typeof__((_lhs)) _dst;\
+					for(size_t _i = 0; _i < GLM_DATA_COUNT(_lhs); ++_i)\
+						_dst._data[_i] = _lhs._data[_i] OPERATOR _rhs._data[0];\
+					_dst;\
+				})\
+				,\
+				__builtin_choose_expr(GLM_DATA_COUNT(_rhs) > GLM_DATA_COUNT(_lhs) && GLM_DATA_COUNT(_lhs) == 1,\
+					({\
+						__typeof__((_rhs)) _dst;\
+						for(size_t _i = 0; _i < GLM_DATA_COUNT(_rhs); ++_i)\
+							_dst._data[_i] = _lhs._data[0] OPERATOR _rhs._data[_i];\
+						_dst;\
+					})\
+					,\
+					"Error 2"\
+				)\
+			)\
+		),\
+		"Error 1"\
+	);\
+})
+
+#define glm_add(lhs, rhs) GLM_VEC_BINARY_OP(+, lhs, rhs)
+#define glm_sub(lhs, rhs) GLM_VEC_BINARY_OP(-, lhs, rhs)
+#define glm_mul(lhs, rhs) GLM_VEC_BINARY_OP(*, lhs, rhs)
+#define glm_div(lhs, rhs) GLM_VEC_BINARY_OP(/, lhs, rhs)
+
 typedef enum glm_type
 {
     GLM_TYPE_FLOAT,
