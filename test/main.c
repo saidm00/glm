@@ -56,5 +56,14 @@ int main(int argc, char** argv)
 		printf("vec3(%f, %f, %f)\n", res.x, res.y, res.z);
 	}
 	
+	{
+		/* vec3 / vec1 */
+		glm_vec3 a = {25.0f, 1.0f, 100.0f};
+		glm_vec1 b = {5.0f};
+		
+		glm_vec3 res = glm_div(a, b);
+		printf("vec3(%f, %f, %f)\n", res.x, res.y, res.z);
+	}
+	
 	return 0;
 }
