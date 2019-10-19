@@ -9,12 +9,12 @@ The main purpose is to easily compose types using some macros shown below.
 
 Template-like macros for identifying types:
 ```c
-glm_vec(2, bool) // glm_bool2
-glm_tvec3(float) // glm_float3
-glm_vec(4, uint) // glm_uint4
+glm_vec(2, bool); // glm_bool2
+glm_tvec3(float); // glm_float3
+glm_vec(4, uint); // glm_uint4
 ```
 
-Macros for for constructing types:
+Macros for constructing types:
 ```c
 glm_vec3 v = glm_vec3(1.0f, 2.0f, 3.0f);
 glm_float3 v = glm_vec(3, float)(1.0f, 2.0f, 3.0f);
