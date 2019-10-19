@@ -61,4 +61,30 @@
 #define GLM_CREATE_TVEC4(T, _1, _2, _3, _4, N, ...) GLM_CREATE_TVEC4_##N(T, _1, _2, _3, _4)
 #define glm_tvec4(T, ...) GLM_CREATE_TVEC4(T, __VA_ARGS__, 4, 3, 2, 1, 0)
 
+#define GLM_SWIZZLE4(T, E0, E1, E2, E3)\
+union\
+{\
+	struct\
+	{\
+		glm_vec(1, T) E0;\
+		union\
+		{\
+			glm_vec(1, T) E1;\
+			union\
+			{\
+				glm_vec(1, T) E2;\
+				glm_vec(2, T) E2##E3;\
+			};\
+			glm_vec(2, T) E1##E2;\
+			glm_vec(3, T) E1##E2##E3;\
+		};\
+	};\
+	glm_vec(2, T) E0##E1;\
+	glm_vec(3, T) E0##E1##E2;\
+}
+
+#define GLM_SWIZZLE_XYZW(T) GLM_SWIZZLE4(T, x, y, z, w)
+#define GLM_SWIZZLE_STPQ(T) GLM_SWIZZLE4(T, s, t, p, q)
+#define GLM_SWIZZLE_RGBA(T) GLM_SWIZZLE4(T, r, g, b, a)
+
 #endif /* GLM_DETAIL_TYPE_VEC4_H */

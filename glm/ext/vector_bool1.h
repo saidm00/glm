@@ -5,9 +5,10 @@
 
 typedef union
 {
-	bool _data[1];
-	bool e[1];
-	bool x, r, s;
+	GLM_VEC_DEFAULT_BASE(1, bool);
+	GLM_SWIZZLE_X(bool);
+	GLM_SWIZZLE_S(bool);
+	GLM_SWIZZLE_R(bool);
 } glm_bool1, glm_bvec1;
 
 #define glm_bool1(...) glm_tvec1(bool, __VA_ARGS__)

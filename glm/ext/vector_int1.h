@@ -5,9 +5,10 @@
 
 typedef union
 {
-	int _data[1];
-	int e[1];
-	int x, r, s;
+	GLM_VEC_DEFAULT_BASE(1, int);
+	GLM_SWIZZLE_X(int);
+	GLM_SWIZZLE_S(int);
+	GLM_SWIZZLE_R(int);
 } glm_int1, glm_ivec1;
 
 #define glm_int1(...) glm_tvec1(int, __VA_ARGS__)

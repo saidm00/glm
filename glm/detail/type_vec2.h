@@ -35,4 +35,10 @@
 #define GLM_CREATE_TVEC2(T, _1, _2, N, ...) GLM_CREATE_TVEC2_##N(T, _1, _2)
 #define glm_tvec2(T, ...) GLM_CREATE_TVEC2(T, __VA_ARGS__, 2, 1, 0)
 
+#define GLM_SWIZZLE2(T, E0, E1) struct { glm_vec(1, T) E0, E1; }
+
+#define GLM_SWIZZLE_XY(T) GLM_SWIZZLE2(T, x, y)
+#define GLM_SWIZZLE_ST(T) GLM_SWIZZLE2(T, s, t)
+#define GLM_SWIZZLE_RG(T) GLM_SWIZZLE2(T, r, g)
+
 #endif /* GLM_DETAIL_TYPE_VEC2_H */

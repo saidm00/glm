@@ -40,8 +40,8 @@ typedef bool glm_bool;
 #define GLM_AUTO_TYPE GLM_ENABLED
 #define glm_auto(identifier, expression) __typeof__((expression)) identifier = expression;
 
-#define GLM_VEC_DATA(L, T) T data[L]; T e[L];
-#define GLM_MAT_DATA(C, R, T) T data[C * R]; T e[R][C];
+#define GLM_VEC_DEFAULT_BASE(L, T) union { T _data[L]; T e[L]; }
+#define GLM_MAT_DATA(C, R, T) T _data[C * R]; T e[R][C];
 
 #define GLM_CONVERT_VEC(L, T, IN)\
 ({\

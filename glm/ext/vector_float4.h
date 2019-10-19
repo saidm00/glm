@@ -2,18 +2,21 @@
 #define GLM_EXT_VECTOR_FLOAT4_H
 
 #include "../detail/type_vec4.h"
+#include "./vector_float1.h"
+#include "./vector_float2.h"
+#include "./vector_float3.h"
 
 typedef union
 {
-	float _data[4];
+	GLM_VEC_DEFAULT_BASE(4, float);
+	
+	GLM_SWIZZLE_XYZW(float);
+	GLM_SWIZZLE_STPQ(float);
+	GLM_SWIZZLE_RGBA(float);
+	
 #if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_SSE2_BIT
 	__m128 _simd;
 #endif
-
-	float e[4];
-	struct { float x, y, z, w; };
-	struct { float s, t, p, q; };
-	struct { float r, g, b, a; };
 } glm_float4, glm_vec4;
 
 #define glm_float4(...) glm_tvec4(float, __VA_ARGS__)

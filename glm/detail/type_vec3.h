@@ -47,4 +47,15 @@
 #define GLM_CREATE_TVEC3(T, _1, _2, _3, N, ...) GLM_CREATE_TVEC3_##N(T, _1, _2, _3)
 #define glm_tvec3(T, ...) GLM_CREATE_TVEC3(T, __VA_ARGS__, 3, 2, 1, 0)
 
+#define GLM_SWIZZLE3(T, E0, E1, E2)\
+union\
+{\
+	glm_vec(2, T) E0##E1;\
+	struct { glm_vec(1, T) E0; union { struct { glm_vec(1, T) E1, E2; }; glm_vec(2, T) E1##E2; }; };\
+}
+
+#define GLM_SWIZZLE_XYZ(T) GLM_SWIZZLE3(T, x, y, z)
+#define GLM_SWIZZLE_STP(T) GLM_SWIZZLE3(T, s, t, p)
+#define GLM_SWIZZLE_RGB(T) GLM_SWIZZLE3(T, r, g, b)
+
 #endif /* GLM_DETAIL_TYPE_VEC3_H */

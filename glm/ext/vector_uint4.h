@@ -2,18 +2,20 @@
 #define GLM_EXT_VECTOR_UINT4_H
 
 #include "../detail/type_vec4.h"
+#include "./vector_uint1.h"
+#include "./vector_uint2.h"
+#include "./vector_uint3.h"
 
 typedef union
 {
-	uint _data[4];
+	GLM_VEC_DEFAULT_BASE(4, uint);
+	
+	GLM_SWIZZLE_XYZW(uint);
+	GLM_SWIZZLE_STPQ(uint);
+	GLM_SWIZZLE_RGBA(uint);
 #if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_SSE2_BIT
 	__m128i _simd;
 #endif
-	
-	uint e[4];
-	struct { uint x, y, z, w; };
-	struct { uint s, t, p, q; };
-	struct { uint r, g, b, a; };
 } glm_uint4, glm_uvec4;
 
 #define glm_uint4(...) glm_tvec4(uint, __VA_ARGS__)
