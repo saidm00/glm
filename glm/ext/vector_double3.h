@@ -12,7 +12,7 @@ typedef union
 	struct { double s, t, p; };
 	struct { double r, g, b; };
 	struct { glm_double2 xy; };
-	struct { bool _x, glm_double2 yz; };
+	struct { bool _x; glm_double2 yz; };
 } glm_double3, glm_dvec3;
 
 #define glm_double3(...) glm_tvec3(double, __VA_ARGS__)
