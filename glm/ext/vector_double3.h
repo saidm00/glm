@@ -2,6 +2,7 @@
 #define GLM_EXT_VECTOR_DOUBLE3_H
 
 #include "../detail/type_vec3.h"
+#include "./vector_double2.h"
 
 typedef union
 {
@@ -10,6 +11,8 @@ typedef union
 	struct { double x, y, z; };
 	struct { double s, t, p; };
 	struct { double r, g, b; };
+	struct { glm_double2 xy; };
+	struct { bool _x, glm_double2 yz; };
 } glm_double3, glm_dvec3;
 
 #define glm_double3(...) glm_tvec3(double, __VA_ARGS__)

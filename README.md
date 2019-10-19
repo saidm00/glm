@@ -1,5 +1,3 @@
-
-
 # *OpenGL Mathematics for C*
 
 
