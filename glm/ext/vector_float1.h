@@ -1,5 +1,5 @@
-#ifndef GLM_EXT_VECTOR_FLOAT1
-#define GLM_EXT_VECTOR_FLOAT1
+#ifndef GLM_EXT_VECTOR_FLOAT1_H
+#define GLM_EXT_VECTOR_FLOAT1_H
 
 #include "../detail/type_vec1.h"
 
@@ -14,4 +14,4 @@ typedef union
 #define glm_float1(...) glm_tvec1(float, __VA_ARGS__)
 #define glm_vec1(...) glm_tvec1(float, __VA_ARGS__)
 
-#endif /* GLM_EXT_VECTOR_FLOAT1 */
+#endif /* GLM_EXT_VECTOR_FLOAT1_H */

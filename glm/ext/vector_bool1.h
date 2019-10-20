@@ -1,5 +1,5 @@
-#ifndef GLM_EXT_VECTOR_BOOL1
-#define GLM_EXT_VECTOR_BOOL1
+#ifndef GLM_EXT_VECTOR_BOOL1_H
+#define GLM_EXT_VECTOR_BOOL1_H
 
 #include "../detail/type_vec1.h"
 
@@ -14,4 +14,4 @@ typedef union
 #define glm_bool1(...) glm_tvec1(bool, __VA_ARGS__)
 #define glm_bvec1(...) glm_tvec1(bool, __VA_ARGS__)
 
-#endif /* GLM_EXT_VECTOR_BOOL1 */
+#endif /* GLM_EXT_VECTOR_BOOL1_H */

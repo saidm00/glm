@@ -1,5 +1,5 @@
-#ifndef GLM_EXT_VECTOR_DOUBLE1
-#define GLM_EXT_VECTOR_DOUBLE1
+#ifndef GLM_EXT_VECTOR_DOUBLE1_H
+#define GLM_EXT_VECTOR_DOUBLE1_H
 
 #include "../detail/type_vec1.h"
 
@@ -14,4 +14,4 @@ typedef union
 #define glm_double1(...) glm_tvec1(double, __VA_ARGS__)
 #define glm_dvec1(...) glm_tvec1(double, __VA_ARGS__)
 
-#endif /* GLM_EXT_VECTOR_DOUBLE1 */
+#endif /* GLM_EXT_VECTOR_DOUBLE1_H */

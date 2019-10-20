@@ -1,4 +1,3 @@
-
 #ifndef GLM_EXT_VECTOR_DOUBLE4_H
 #define GLM_EXT_VECTOR_DOUBLE4_H
 
