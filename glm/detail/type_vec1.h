@@ -1,7 +1,7 @@
 #ifndef GLM_DETAIL_TYPE_VEC1_H
 #define GLM_DETAIL_TYPE_VEC1_H
 
-#include "qualifier.h"
+#include "./qualifier.h"
 
 #define GLM_CONVERT_TVEC1(T, IN) GLM_CONVERT_VEC(1, T, IN)
 

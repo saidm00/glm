@@ -11,9 +11,9 @@
 ({\
 	__typeof__((_1)) _arg1 = (_1);\
 	_Generic(\
-		(char(*)[sizeof _arg1._data / sizeof _arg1._data[0]])0,\
-		char(*)[1]: (glm_vec(4, T)) { _arg1._data[0], _arg1._data[0], _arg1._data[0] },\
-		char(*)[4]: (glm_vec(4, T)) { _arg1._data[0], _arg1._data[1], _arg1._data[2] }\
+		(char(*)[sizeof(_arg1._data) / sizeof(_arg1._data[0])])0,\
+		char(*)[1]: (glm_vec(4, T)) { _arg1._data[0], _arg1._data[0], _arg1._data[0], , _arg1._data[0] },\
+		char(*)[4]: (glm_vec(4, T)) { _arg1._data[0], _arg1._data[1], _arg1._data[2], , _arg1._data[3] }\
 	);\
 })
 
@@ -64,23 +64,10 @@
 #define GLM_SWIZZLE4(T, E0, E1, E2, E3)\
 union\
 {\
-	struct\
-	{\
-		glm_vec(1, T) E0;\
-		union\
-		{\
-			glm_vec(1, T) E1;\
-			union\
-			{\
-				glm_vec(1, T) E2;\
-				glm_vec(2, T) E2##E3;\
-			};\
-			glm_vec(2, T) E1##E2;\
-			glm_vec(3, T) E1##E2##E3;\
-		};\
-	};\
-	glm_vec(2, T) E0##E1;\
+	struct { T E0, E1, E2, E3; };\
+	struct { glm_vec(2, T) E0##E1, E2##E3; };\
 	glm_vec(3, T) E0##E1##E2;\
+	struct { T _##E0; union { glm_vec(2, T) E1##E2; glm_vec(3, T) E1##E2##E3; }; };\
 }
 
 #define GLM_SWIZZLE_XYZW(T) GLM_SWIZZLE4(T, x, y, z, w)
