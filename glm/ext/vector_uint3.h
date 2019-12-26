@@ -5,7 +5,7 @@
 #include "./vector_uint1.h"
 #include "./vector_uint2.h"
 
-typedef union
+typedef union glm_uint3
 {
 	GLM_VEC_DEFAULT_BASE(3, uint);
 	GLM_SWIZZLE_XYZ(uint);

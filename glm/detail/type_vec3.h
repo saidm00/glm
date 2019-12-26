@@ -59,4 +59,8 @@ union\
 #define GLM_SWIZZLE_STP(T) GLM_SWIZZLE3(T, s, t, p)
 #define GLM_SWIZZLE_RGB(T) GLM_SWIZZLE3(T, r, g, b)
 
+#define glm_cross(a, b) glm_cross_float3(a, b)
+
+#define glm_radians(x) (((x) / 180.0f) * M_PI)
+
 #endif /* GLM_DETAIL_TYPE_VEC3_H */

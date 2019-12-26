@@ -4,7 +4,6 @@
 #include <math.h>
 #include <stdarg.h>
 #include <stdlib.h>
-#include <alloca.h>
 #include <string.h>
 #include <stdbool.h>
 
@@ -24,13 +23,14 @@
 #	endif
 #else
 #	define GLM_INLINE inline
-#	define GLM_NEVER_INLINE
+#	define GLM_NEVER_INLINE static
 #endif
 
 //#define GLM_FUNC_QUALIFIER static GLM_INLINE
-#define GLM_API static GLM_NEVER_INLINE
+#define GLM_API GLM_INLINE
 
 #define GLM_ENABLE 1
+#define GLM_RIGHT_HANDED
 
 #define GLM_CONFIG_SIMD GLM_ENABLE
 

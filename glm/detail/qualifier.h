@@ -134,6 +134,16 @@ typedef bool glm_bool;
 	_v;\
 })
 
+#define glm_dot(x, y) \
+({\
+	__typeof__((x)) _x = (x);\
+	__typeof__((y)) _y = (y);\
+	size_t _n = GLM_ELEM_COUNT(_x), _i;\
+	__typeof__((_x._data[0])) _s;\
+	for(_i = 0; _i < _n; ++_i) _s += _x.e[_i] * _y.e[_i];\
+	_s;\
+})
+
 typedef enum glm_type
 {
     GLM_TYPE_FLOAT,
@@ -263,5 +273,7 @@ glm_is_vec (glm_type T)
     glm_is_tvec3(T) ||
     glm_is_tvec4(T);
 }
+
+#define glm_max(x, y) (x < y ? y : x)
 
 #endif /* GLM_DETAIL_QUALIFIER_H */

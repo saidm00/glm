@@ -4,7 +4,7 @@
 #include "../detail/type_vec2.h"
 #include "./vector_float1.h"
 
-typedef union
+typedef union glm_float2
 {
 	GLM_VEC_DEFAULT_BASE(2, float);
 
