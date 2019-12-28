@@ -31,11 +31,6 @@
           "name": "CMAKE_CXX_COMPILER",
           "value": "C:\\cygwin64\\bin\\g++.exe",
           "type": "STRING"
-        },
-        {
-          "name": "CMAKE_BUILD_TYPE",
-          "value": "Debug",
-          "type": "STRING"
         }
       ],
       "intelliSenseMode": "linux-gcc-x64"
