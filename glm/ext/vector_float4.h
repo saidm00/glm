@@ -6,7 +6,7 @@
 #include "./vector_float2.h"
 #include "./vector_float3.h"
 
-typedef union
+typedef union glm_float4
 {
 	GLM_VEC_DEFAULT_BASE(4, float);
 	
@@ -21,5 +21,6 @@ typedef union
 
 #define glm_float4(...) glm_tvec4(float, __VA_ARGS__)
 #define glm_vec4(...) glm_tvec4(float, __VA_ARGS__)
+
 
 #endif /* GLM_EXT_VECTOR_FLOAT4_H */

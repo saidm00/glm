@@ -51,11 +51,11 @@
 		__typeof__((GLM_CONVERT_TVEC(T, _1))) src1;\
 		__typeof__((GLM_CONVERT_TVEC(T, _2))) src2;\
 		__typeof__((GLM_CONVERT_TVEC(T, _3))) src3;\
-		__typeof__((GLM_CONVERT_TVEC(T, _4))) src3;\
+		__typeof__((GLM_CONVERT_TVEC(T, _4))) src4;\
 	};\
 	\
 	glm_vec(4, T) dst;\
-}) { .src1 = GLM_CONVERT_TVEC(T, _1), .src2 = GLM_CONVERT_TVEC(T, _2), .src3 = GLM_CONVERT_TVEC(T, _3), .src3 = GLM_CONVERT_TVEC(T, _4) }).dst)
+}) { .src1 = GLM_CONVERT_TVEC(T, _1), .src2 = GLM_CONVERT_TVEC(T, _2), .src3 = GLM_CONVERT_TVEC(T, _3), .src4 = GLM_CONVERT_TVEC(T, _4) }).dst)
 
 
 #define GLM_CREATE_TVEC4(T, _1, _2, _3, _4, N, ...) GLM_CREATE_TVEC4_##N(T, _1, _2, _3, _4)

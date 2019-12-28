@@ -134,6 +134,22 @@ typedef bool glm_bool;
 	_v;\
 })
 
+#define glm_dot(x, y) \
+({\
+	__typeof__((x)) _x = (x);\
+	__typeof__((y)) _y = (y);\
+	size_t _n = GLM_ELEM_COUNT(_x), _i;\
+	__typeof__((_x._data[0])) _s;\
+	for(_i = 0; _i < _n; ++_i) _s += _x.e[_i] * _y.e[_i];\
+	_s;\
+})
+
+GLM_FUNC_QUALIFIER
+float glm_fract(float x)
+{
+	return fmodf(x, 1.0f);
+}
+
 typedef enum glm_type
 {
     GLM_TYPE_FLOAT,
@@ -199,8 +215,8 @@ glm_uint:  GLM_TYPE_UINT, \
 glm_bool:  GLM_TYPE_BOOL \
 ))
 
-bool GLM_API
-glm_is_scalar (glm_type T)
+GLM_FUNC_QUALIFIER
+bool glm_is_scalar (glm_type T)
 {
     return
     T == GLM_TYPE_FLOAT ||
@@ -210,8 +226,8 @@ glm_is_scalar (glm_type T)
     T == GLM_TYPE_BOOL;
 }
 
-bool GLM_API
-glm_is_tvec1 (glm_type T)
+GLM_FUNC_QUALIFIER
+bool glm_is_tvec1 (glm_type T)
 {
     return
     T == GLM_TYPE_FLOAT1 ||
@@ -221,8 +237,8 @@ glm_is_tvec1 (glm_type T)
     T == GLM_TYPE_BOOL1;
 }
 
-bool GLM_API
-glm_is_tvec2 (glm_type T)
+GLM_FUNC_QUALIFIER
+bool glm_is_tvec2 (glm_type T)
 {
     return
     T == GLM_TYPE_FLOAT2 ||
@@ -232,8 +248,8 @@ glm_is_tvec2 (glm_type T)
     T == GLM_TYPE_BOOL2;
 }
 
-bool GLM_API
-glm_is_tvec3 (glm_type T)
+GLM_FUNC_QUALIFIER
+bool glm_is_tvec3 (glm_type T)
 {
     return
     T == GLM_TYPE_FLOAT3 ||
@@ -243,8 +259,8 @@ glm_is_tvec3 (glm_type T)
     T == GLM_TYPE_BOOL3;
 }
 
-bool GLM_API
-glm_is_tvec4 (glm_type T)
+GLM_FUNC_QUALIFIER
+bool glm_is_tvec4 (glm_type T)
 {
     return
     T == GLM_TYPE_FLOAT4 ||
@@ -254,8 +270,8 @@ glm_is_tvec4 (glm_type T)
     T == GLM_TYPE_BOOL4;
 }
 
-bool GLM_API
-glm_is_vec (glm_type T)
+GLM_FUNC_QUALIFIER
+bool glm_is_vec (glm_type T)
 {
     return
     glm_is_tvec1(T) ||
@@ -263,5 +279,7 @@ glm_is_vec (glm_type T)
     glm_is_tvec3(T) ||
     glm_is_tvec4(T);
 }
+
+#define glm_max(x, y) (x < y ? y : x)
 
 #endif /* GLM_DETAIL_QUALIFIER_H */

@@ -3,7 +3,7 @@
 
 #include "../detail/type_vec1.h"
 
-typedef union
+typedef union glm_float1
 {
 	GLM_VEC_DEFAULT_BASE(1, float);
 	GLM_SWIZZLE_X(float);
