@@ -132,7 +132,7 @@ float glm_dot_vec4(glm_vec4 x, glm_vec4 y)
 GLM_FUNC_QUALIFIER
 float glm_length_vec4(glm_vec4 x)
 {
-	return sqrtf(x.e[0]*x.e[0] + x.e[1]*x.e[1] + x.e[2]*x.e[2] + x.e[3]*x.e[3]);
+	return (float)sqrt(x.e[0]*x.e[0] + x.e[1]*x.e[1] + x.e[2]*x.e[2] + x.e[3]*x.e[3]);
 }
 
 GLM_FUNC_QUALIFIER
@@ -176,7 +176,7 @@ glm_vec4 glm_refract_vec4(glm_vec4 I, glm_vec4 N, float eta)
 	}
 	else
 	{
-		result = glm_mul_vec4(glm_subs_vec4(glm_muls_vec4(I, eta), (eta * dotNI + sqrtf(k))), N);
+		result = glm_mul_vec4(glm_subs_vec4(glm_muls_vec4(I, eta), (eta * dotNI + (float)sqrt(k))), N);
 	}
 	
 	return result;

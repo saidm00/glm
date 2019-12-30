@@ -130,7 +130,7 @@ glm_vec3 glm_cross_vec3(glm_vec3 x, glm_vec3 y)
 GLM_FUNC_QUALIFIER
 float glm_length_vec3(glm_vec3 x)
 {
-	return sqrtf(x.e[0] * x.e[0] + x.e[1] * x.e[1] + x.e[2] * x.e[2]);
+	return (float)sqrt(x.e[0] * x.e[0] + x.e[1] * x.e[1] + x.e[2] * x.e[2]);
 }
 
 GLM_FUNC_QUALIFIER
@@ -172,7 +172,7 @@ glm_vec3 glm_refract_vec3(glm_vec3 I, glm_vec3 N, float eta)
 	}
 	else
 	{
-		result = glm_mul_vec3(glm_subs_vec3(glm_muls_vec3(I, eta), (eta * dotNI + sqrt(k))), N);
+		result = glm_mul_vec3(glm_subs_vec3(glm_muls_vec3(I, eta), (eta * dotNI + (float)sqrt(k))), N);
 	}
 	
 	return result;
