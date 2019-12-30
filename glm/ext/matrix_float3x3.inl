@@ -1,4 +1,5 @@
 
+GLM_FUNC_QUALIFIER
 glm_mat3 glm_transpose_mat3(glm_mat3 m)
 {
 	m.e[0][0] = m.e[0][0];
@@ -16,6 +17,7 @@ glm_mat3 glm_transpose_mat3(glm_mat3 m)
 	return m;	
 }
 
+GLM_FUNC_QUALIFIER
 glm_vec3 glm_mul_mat3_vec3(glm_mat3 m, glm_vec3 v)
 {
 	v.x = m.e[0][0] * v.x + m.e[1][0] * v.y + m.e[2][0] * v.z;
