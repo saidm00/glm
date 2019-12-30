@@ -36,7 +36,6 @@ typedef union glm_float4
 
 		Returns the sum of x and y
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_add_vec4(glm_vec4 x, glm_vec4 y);
 
 /*
@@ -53,7 +52,6 @@ glm_vec4 glm_add_vec4(glm_vec4 x, glm_vec4 y);
 
 		The difference of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_sub_vec4(glm_vec4 x, glm_vec4 y);
 
 /*
@@ -70,7 +68,6 @@ glm_vec4 glm_sub_vec4(glm_vec4 x, glm_vec4 y);
 
 		The product of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_mul_vec4(glm_vec4 x, glm_vec4 y);
 
 /*
@@ -87,7 +84,6 @@ glm_vec4 glm_mul_vec4(glm_vec4 x, glm_vec4 y);
 
 		The quotient of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_div_vec4(glm_vec4 x, glm_vec4 y);
 
 /*
@@ -104,7 +100,6 @@ glm_vec4 glm_div_vec4(glm_vec4 x, glm_vec4 y);
 
 		Returns the sum of x and y
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_adds_vec4(glm_vec4 x, float y);
 
 /*
@@ -121,7 +116,6 @@ glm_vec4 glm_adds_vec4(glm_vec4 x, float y);
 
 		The difference of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_subs_vec4(glm_vec4 x, float y);
 
 /*
@@ -138,7 +132,6 @@ glm_vec4 glm_subs_vec4(glm_vec4 x, float y);
 
 		The product of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_muls_vec4(glm_vec4 x, float y);
 
 /*
@@ -155,7 +148,6 @@ glm_vec4 glm_muls_vec4(glm_vec4 x, float y);
 
 		The quotient of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_divs_vec4(glm_vec4 x, float y);
 
 
@@ -171,7 +163,6 @@ glm_vec4 glm_divs_vec4(glm_vec4 x, float y);
 	Returns:
 		Returns y if x > y; otherwise it returns x.
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_min_vec4(glm_vec4 x, glm_vec4 y);
 
 /*
@@ -186,7 +177,6 @@ glm_vec4 glm_min_vec4(glm_vec4 x, glm_vec4 y);
 	Returns:
 		Returns y if x < y; otherwise it returns x.
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_max_vec4(glm_vec4 x, glm_vec4 y);
 
 /*
@@ -201,7 +191,6 @@ glm_vec4 glm_max_vec4(glm_vec4 x, glm_vec4 y);
 	Returns:
 		Returns min(max(x, minVal), maxVal). Results are undefined if minVal > maxVal.
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_clamp_vec4(glm_vec4 x, glm_vec4 minVal, glm_vec4 maxVal);
 
 /*
@@ -217,7 +206,6 @@ glm_vec4 glm_clamp_vec4(glm_vec4 x, glm_vec4 minVal, glm_vec4 maxVal);
 	Returns:
 		Returns the linear blend of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_mix_vec4(glm_vec4 x, glm_vec4 y, float a);
 
 /*
@@ -232,7 +220,6 @@ glm_vec4 glm_mix_vec4(glm_vec4 x, glm_vec4 y, float a);
 	Returns:
 		The dot product of x and y.
 */
-GLM_FUNC_QUALIFIER
 float glm_dot_vec4(glm_vec4 x, glm_vec4 y);
 
 /*
@@ -244,7 +231,6 @@ float glm_dot_vec4(glm_vec4 x, glm_vec4 y);
 	Returns:
 		A vector in the same direction as x but with a length of 1.
 */
-GLM_FUNC_QUALIFIER
 float glm_length_vec4(glm_vec4 x);
 
 /*
@@ -256,7 +242,6 @@ float glm_length_vec4(glm_vec4 x);
 	Returns:
 		A vector in the same direction as x but with a length of 1.
 */
-GLM_FUNC_QUALIFIER
 glm_vec4 glm_normalize_vec4(glm_vec4 x);
 
 /*

@@ -1,3 +1,4 @@
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_add_dvec3(glm_dvec3 x, glm_dvec3 y)
 {
 	glm_dvec3 s;
@@ -7,6 +8,7 @@ glm_dvec3 glm_add_dvec3(glm_dvec3 x, glm_dvec3 y)
 	return s;
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_sub_dvec3(glm_dvec3 x, glm_dvec3 y)
 {
 	glm_dvec3 s;
@@ -16,6 +18,7 @@ glm_dvec3 glm_sub_dvec3(glm_dvec3 x, glm_dvec3 y)
 	return s;
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_mul_dvec3(glm_dvec3 x, glm_dvec3 y)
 {
 	glm_dvec3 s;
@@ -25,6 +28,7 @@ glm_dvec3 glm_mul_dvec3(glm_dvec3 x, glm_dvec3 y)
 	return s;
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_div_dvec3(glm_dvec3 x, glm_dvec3 y)
 {
 	glm_dvec3 s;
@@ -34,6 +38,7 @@ glm_dvec3 glm_div_dvec3(glm_dvec3 x, glm_dvec3 y)
 	return s;
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_adds_dvec3(glm_dvec3 x, double y)
 {
 	x.e[0] += y;
@@ -42,6 +47,7 @@ glm_dvec3 glm_adds_dvec3(glm_dvec3 x, double y)
 	return x;
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_subs_dvec3(glm_dvec3 x, double y)
 {
 	x.e[0] -= y;
@@ -50,6 +56,7 @@ glm_dvec3 glm_subs_dvec3(glm_dvec3 x, double y)
 	return x;
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_muls_dvec3(glm_dvec3 x, double y)
 {
 	x.e[0] *= y;
@@ -58,6 +65,7 @@ glm_dvec3 glm_muls_dvec3(glm_dvec3 x, double y)
 	return x;
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_divs_dvec3(glm_dvec3 x, double y)
 {
 	x.e[0] /= y;
@@ -66,6 +74,7 @@ glm_dvec3 glm_divs_dvec3(glm_dvec3 x, double y)
 	return x;
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_min_dvec3(glm_dvec3 x, glm_dvec3 y)
 {
 	glm_dvec3 s;
@@ -75,6 +84,7 @@ glm_dvec3 glm_min_dvec3(glm_dvec3 x, glm_dvec3 y)
 	return s;
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_max_dvec3(glm_dvec3 x, glm_dvec3 y)
 {
 	glm_dvec3 s;
@@ -84,6 +94,7 @@ glm_dvec3 glm_max_dvec3(glm_dvec3 x, glm_dvec3 y)
 	return s;
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_clamp_dvec3(glm_dvec3 x, glm_dvec3 minVal, glm_dvec3 maxVal)
 {
 	glm_dvec3 s;
@@ -93,6 +104,7 @@ glm_dvec3 glm_clamp_dvec3(glm_dvec3 x, glm_dvec3 minVal, glm_dvec3 maxVal)
 	return s;
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_mix_dvec3(glm_dvec3 x, glm_dvec3 y, double a)
 {
 	glm_dvec3 s;
@@ -102,11 +114,13 @@ glm_dvec3 glm_mix_dvec3(glm_dvec3 x, glm_dvec3 y, double a)
 	return s;
 }
 
+GLM_FUNC_QUALIFIER
 double glm_dot_dvec3(glm_dvec3 x, glm_dvec3 y)
 {
 	return x.e[0] * y.e[0] + x.e[1] * y.e[1] + x.e[2] * y.e[2];
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_cross_dvec3(glm_dvec3 x, glm_dvec3 y)
 {
 	glm_dvec3 s;
@@ -116,11 +130,13 @@ glm_dvec3 glm_cross_dvec3(glm_dvec3 x, glm_dvec3 y)
 	return s;
 }
 
+GLM_FUNC_QUALIFIER
 double glm_length_dvec3(glm_dvec3 x)
 {
 	return sqrt(x.e[0] * x.e[0] + x.e[1] * x.e[1] + x.e[2] * x.e[2]);
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_normalize_dvec3(glm_dvec3 x)
 {
 	float len = glm_length_dvec3(x);
@@ -130,6 +146,7 @@ glm_dvec3 glm_normalize_dvec3(glm_dvec3 x)
 	return x;
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_reflect_dvec3(glm_dvec3 I, glm_dvec3 N)
 {
 	/*
@@ -138,6 +155,7 @@ glm_dvec3 glm_reflect_dvec3(glm_dvec3 I, glm_dvec3 N)
 	return glm_subs_dvec3(I, 2.0 * glm_dot_dvec3(N, I));
 }
 
+GLM_FUNC_QUALIFIER
 glm_dvec3 glm_refract_dvec3(glm_dvec3 I, glm_dvec3 N, double eta)
 {
 	glm_dvec3 result;

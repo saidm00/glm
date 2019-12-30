@@ -31,7 +31,6 @@ typedef union glm_double3
 
 		Returns the sum of x and y
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_add_dvec3(glm_dvec3 x, glm_dvec3 y);
 
 /*
@@ -48,7 +47,6 @@ glm_dvec3 glm_add_dvec3(glm_dvec3 x, glm_dvec3 y);
 
 		The difference of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_sub_dvec3(glm_dvec3 x, glm_dvec3 y);
 
 /*
@@ -65,7 +63,6 @@ glm_dvec3 glm_sub_dvec3(glm_dvec3 x, glm_dvec3 y);
 
 		The product of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_mul_dvec3(glm_dvec3 x, glm_dvec3 y);
 
 /*
@@ -82,7 +79,6 @@ glm_dvec3 glm_mul_dvec3(glm_dvec3 x, glm_dvec3 y);
 
 		The quotient of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_div_dvec3(glm_dvec3 x, glm_dvec3 y);
 
 /*
@@ -99,7 +95,6 @@ glm_dvec3 glm_div_dvec3(glm_dvec3 x, glm_dvec3 y);
 
 		Returns the sum of x and y
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_adds_dvec3(glm_dvec3 x, double y);
 
 /*
@@ -116,7 +111,6 @@ glm_dvec3 glm_adds_dvec3(glm_dvec3 x, double y);
 
 		The difference of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_subs_dvec3(glm_dvec3 x, double y);
 
 /*
@@ -133,7 +127,6 @@ glm_dvec3 glm_subs_dvec3(glm_dvec3 x, double y);
 
 		The product of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_muls_dvec3(glm_dvec3 x, double y);
 
 /*
@@ -150,7 +143,6 @@ glm_dvec3 glm_muls_dvec3(glm_dvec3 x, double y);
 
 		The quotient of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_divs_dvec3(glm_dvec3 x, double y);
 
 
@@ -166,7 +158,6 @@ glm_dvec3 glm_divs_dvec3(glm_dvec3 x, double y);
 	Returns:
 		Returns y if x > y; otherwise it returns x.
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_min_dvec3(glm_dvec3 x, glm_dvec3 y);
 
 /*
@@ -181,7 +172,6 @@ glm_dvec3 glm_min_dvec3(glm_dvec3 x, glm_dvec3 y);
 	Returns:
 		Returns y if x < y; otherwise it returns x.
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_max_dvec3(glm_dvec3 x, glm_dvec3 y);
 
 /*
@@ -196,7 +186,6 @@ glm_dvec3 glm_max_dvec3(glm_dvec3 x, glm_dvec3 y);
 	Returns:
 		Returns min(max(x, minVal), maxVal). Results are undefined if minVal > maxVal.
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_clamp_dvec3(glm_dvec3 x, glm_dvec3 minVal, glm_dvec3 maxVal);
 
 /*
@@ -212,7 +201,6 @@ glm_dvec3 glm_clamp_dvec3(glm_dvec3 x, glm_dvec3 minVal, glm_dvec3 maxVal);
 	Returns:
 		Returns the linear blend of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_mix_dvec3(glm_dvec3 x, glm_dvec3 y, double a);
 
 /*
@@ -227,7 +215,6 @@ glm_dvec3 glm_mix_dvec3(glm_dvec3 x, glm_dvec3 y, double a);
 	Returns:
 		The dot product of x and y.
 */
-GLM_FUNC_QUALIFIER
 double glm_dot_dvec3(glm_dvec3 x, glm_dvec3 y);
 
 /*
@@ -240,7 +227,6 @@ double glm_dot_dvec3(glm_dvec3 x, glm_dvec3 y);
 	Returns:
 		The cross product of x and y.
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_cross_dvec3(glm_dvec3 x, glm_dvec3 y);
 
 /*
@@ -252,7 +238,6 @@ glm_dvec3 glm_cross_dvec3(glm_dvec3 x, glm_dvec3 y);
 	Returns:
 		A vector in the same direction as x but with a length of 1.
 */
-GLM_FUNC_QUALIFIER
 double glm_length_dvec3(glm_dvec3 x);
 
 /*
@@ -264,7 +249,6 @@ double glm_length_dvec3(glm_dvec3 x);
 	Returns:
 		A vector in the same direction as x but with a length of 1.
 */
-GLM_FUNC_QUALIFIER
 glm_dvec3 glm_normalize_dvec3(glm_dvec3 x);
 
 /*
