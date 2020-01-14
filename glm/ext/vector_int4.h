@@ -13,7 +13,7 @@ typedef union
 	GLM_SWIZZLE_XYZW(int);
 	GLM_SWIZZLE_STPQ(int);
 	GLM_SWIZZLE_RGBA(int);
-#if GLM_CONFIG_SIMD == GLM_ENABLE && GLM_ARCH & GLM_ARCH_SSE2_BIT
+#if (GLM_CONFIG_SIMD == GLM_ENABLE) && (GLM_ARCH & GLM_ARCH_SSE3_BIT)
 	__m128i _simd;
 #endif
 } glm_int4, glm_ivec4;

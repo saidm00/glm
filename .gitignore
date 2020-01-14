@@ -1,3 +1,6 @@
 ./.vs/
 ./.out/
 ./Config/
+/.vs
+/Config
+/out/build

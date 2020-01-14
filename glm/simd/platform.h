@@ -237,17 +237,19 @@
 #define GLM_ARCH_SIMD_BIT	(0x00001000)
 
 #define GLM_ARCH_NEON_BIT	(0x00000001)
-#define GLM_ARCH_SSE_BIT	(0x00000002)
-#define GLM_ARCH_SSE2_BIT	(0x00000004)
-#define GLM_ARCH_SSE3_BIT	(0x00000008)
-#define GLM_ARCH_SSSE3_BIT	(0x00000010)
-#define GLM_ARCH_SSE41_BIT	(0x00000020)
-#define GLM_ARCH_SSE42_BIT	(0x00000040)
-#define GLM_ARCH_AVX_BIT	(0x00000080)
-#define GLM_ARCH_AVX2_BIT	(0x00000100)
+#define GLM_ARCH_XMM_BIT    (0x00000002)
+#define GLM_ARCH_SSE_BIT	(0x00000004)
+#define GLM_ARCH_SSE2_BIT	(0x00000008)
+#define GLM_ARCH_SSE3_BIT	(0x00000010)
+#define GLM_ARCH_SSSE3_BIT	(0x00000020)
+#define GLM_ARCH_SSE41_BIT	(0x00000040)
+#define GLM_ARCH_SSE42_BIT	(0x00000080)
+#define GLM_ARCH_AVX_BIT	(0x00000100)
+#define GLM_ARCH_AVX2_BIT	(0x00000200)
 
 #define GLM_ARCH_UNKNOWN	(0)
 #define GLM_ARCH_X86		(GLM_ARCH_X86_BIT)
+#define GLM_ARCH_XMM		(GLM_ARCH_XMM_BIT | GLM_ARCH_SIMD_BIT | GLM_ARCH_X86)
 #define GLM_ARCH_SSE		(GLM_ARCH_SSE_BIT | GLM_ARCH_SIMD_BIT | GLM_ARCH_X86)
 #define GLM_ARCH_SSE2		(GLM_ARCH_SSE2_BIT | GLM_ARCH_SSE)
 #define GLM_ARCH_SSE3		(GLM_ARCH_SSE3_BIT | GLM_ARCH_SSE2)
@@ -290,7 +292,7 @@
 #elif defined(GLM_FORCE_SSE)
 #	define GLM_ARCH (GLM_ARCH_SSE)
 #	define GLM_FORCE_INTRINSICS
-#elif defined(GLM_FORCE_INTRINSICS) && !defined(GLM_FORCE_XYZW_ONLY)
+#elif defined(GLM_FORCE_INTRINSICS)
 #	if defined(__AVX2__)
 #		define GLM_ARCH (GLM_ARCH_AVX2)
 #	elif defined(__AVX__)
@@ -305,6 +307,10 @@
 #		define GLM_ARCH (GLM_ARCH_SSE3)
 #	elif defined(__SSE2__) || defined(__x86_64__) || defined(_M_X64) || defined(_M_IX86_FP)
 #		define GLM_ARCH (GLM_ARCH_SSE2)
+#	elif defined(__SSE__) || defined(__x86_64__) || defined(_M_X64) || defined(_M_IX86_FP)
+#		define GLM_ARCH (GLM_ARCH_SSE)
+#	elif defined(__XMM__) || defined(__x86_64__) || defined(_M_X64) || defined(_M_IX86_FP)
+#		define GLM_ARCH (GLM_ARCH_XMM)
 #	elif defined(__i386__)
 #		define GLM_ARCH (GLM_ARCH_X86)
 #	elif defined(__ARM_NEON)
@@ -349,30 +355,10 @@
 #	include <pmmintrin.h>
 #elif GLM_ARCH & GLM_ARCH_SSE2_BIT
 #	include <emmintrin.h>
+#elif GLM_ARCH & GLM_ARCH_SSE_BIT
+#	include <xmmintrin.h>
+#elif GLM_ARCH & GLM_ARCH_XMM_BIT
+#	include <mmintrin.h>
 #endif//GLM_ARCH
-
-#if GLM_ARCH & GLM_ARCH_SSE2_BIT
-	typedef __m128			glm_f32vec4;
-	typedef __m128i			glm_i32vec4;
-	typedef __m128i			glm_u32vec4;
-	typedef __m128d			glm_f64vec2;
-	typedef __m128i			glm_i64vec2;
-	typedef __m128i			glm_u64vec2;
-
-	typedef glm_f32vec4		glm_vec4;
-	typedef glm_i32vec4		glm_ivec4;
-	typedef glm_u32vec4		glm_uvec4;
-	typedef glm_f64vec2		glm_dvec2;
-#endif
-
-#if GLM_ARCH & GLM_ARCH_AVX_BIT
-	typedef __m256d			glm_f64vec4;
-	typedef glm_f64vec4		glm_dvec4;
-#endif
-
-#if GLM_ARCH & GLM_ARCH_AVX2_BIT
-	typedef __m256i			glm_i64vec4;
-	typedef __m256i			glm_u64vec4;
-#endif
 
 #endif /* GLM_SIMD_PLATFORM_H */
