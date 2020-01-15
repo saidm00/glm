@@ -157,15 +157,16 @@ glm_vec2 glm_refract_vec2(const register glm_vec2 I, const register glm_vec2 N, 
 	register glm_vec2 v;
 
 	const register float cosT = glm_dot_vec2(N, I);
-	const register float k = 1 - eta * eta * (1 - cosT * cosT);
+	const register float k = 1.0f - eta * eta * (1.0f - cosT * cosT);
 	
-	v.e[0] = (float)0;
-	v.e[1] = (float)0;
-
-	if (k >= (float)0)
+	if (k < 0.0f)
 	{
-		v = glm_sub_vec2(glm_smul_vec2(I, eta),
-			glm_smul_vec2(N, eta * cosT + (float)1 / Q_rsqrt(k)));	
+		v.e[0] = 0.0f;
+		v.e[1] = 0.0f;
+	}
+	else
+	{
+		v = glm_sub_vec2(glm_smul_vec2(I, eta), glm_smul_vec2(N, eta * cosT + 1.0f / Q_rsqrt(k)));	
 	}
 	
 	return v;
