@@ -148,7 +148,7 @@ glm_vec2 glm_normalize_vec2(register glm_vec2 x)
 GLM_FUNC_QUALIFIER
 glm_vec2 glm_reflect_vec2(const register glm_vec2 I, const register glm_vec2 N)
 {
-	return glm_sub_vec2(I, glm_smul_vec2(N, 2 * glm_dot_vec2(N, I)));
+	return glm_sub_vec2(I, glm_smul_vec2(N, 2.0f * glm_dot_vec2(N, I)));
 }
 
 GLM_FUNC_QUALIFIER
