@@ -67,6 +67,7 @@ struct { glm_vec(2, T) E0##E1, E2##E3; };\
 struct { glm_vec(3, T) E0##E1##E2; };\
 struct { T _##E0; union { glm_vec(2, T) E1##E2; glm_vec(3, T) E1##E2##E3; }; };
 
+
 #define GLM_SWIZZLE_XYZW(T) GLM_SWIZZLE4(T, x, y, z, w)
 #define GLM_SWIZZLE_STPQ(T) GLM_SWIZZLE4(T, s, t, p, q)
 #define GLM_SWIZZLE_RGBA(T) GLM_SWIZZLE4(T, r, g, b, a)

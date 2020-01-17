@@ -33,6 +33,16 @@
 
 #define GLM_FUNC_DECL GLM_CUDA_FUNC_DECL
 #define GLM_FUNC_QUALIFIER GLM_INLINE
+#	define GLM_NEVER_INLINE static
+#endif
+
+//#define GLM_FUNC_QUALIFIER static GLM_INLINE
+#define GLM_API GLM_INLINE
+
+#define GLM_ENABLE 1
+#define GLM_RIGHT_HANDED
+
+#define GLM_CONFIG_SIMD GLM_ENABLE
 
 #undef bool
 typedef _Bool bool;
