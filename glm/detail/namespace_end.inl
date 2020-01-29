@@ -1,0 +1,17 @@
+#undef vec
+#undef length_t
+#undef bvec2
+#undef bvec3
+#undef bvec4
+#undef vec2
+#undef vec3
+#undef vec4
+#undef dvec2
+#undef dvec3
+#undef dvec4
+#undef ivec2
+#undef ivec3
+#undef ivec4
+#undef uvec2
+#undef uvec3
+#undef uvec4
