@@ -1,7 +1,11 @@
 #ifndef GLM_EXT_TYPE_DOUBLE2_H
 #define GLM_EXT_TYPE_DOUBLE2_H
 
-#include "../detail/qualifier.h"
+#include "../detail/type_vec.h"
+#include "../detail/type_vec2.h"
+#define glm_double2(...) glm_tvec2(double, defaultp, __VA_ARGS__)
+#define glm_dvec2(...)   glm_tvec2(double, defaultp, __VA_ARGS__)
+
 #include "type_bool2.h"
 #include "../detail/namespace_begin.inl"
 

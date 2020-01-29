@@ -1,7 +1,7 @@
 #ifndef GLM_EXT_TYPE_BOOL3_H
 #define GLM_EXT_TYPE_BOOL3_H
 
-#include "../detail/qualifier.h"
+#include "../detail/type_vec.h"
 #include "../detail/namespace_begin.inl"
 
 #define L 3

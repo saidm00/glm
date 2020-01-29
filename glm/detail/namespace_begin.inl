@@ -1,5 +1,6 @@
 #define vec(L, T, Q) glm_vec(L, T, Q)
 #define length_t glm_length_t
+#define type_t glm_type_t
 #define bvec2 glm_bvec2
 #define bvec3 glm_bvec3
 #define bvec4 glm_bvec4

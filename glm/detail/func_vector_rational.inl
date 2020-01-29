@@ -1,10 +1,10 @@
 /* namespace glm */
-#define lessThan            GLM_PASTE(glm_vec(L, T, Q), _lessThan)
-#define lessThanEqual       GLM_PASTE(glm_vec(L, T, Q), _lessThanEqual)
-#define greaterThan         GLM_PASTE(glm_vec(L, T, Q), _greaterThan)
-#define greaterThanEqual    GLM_PASTE(glm_vec(L, T, Q), _greaterThanEqual)
-#define equal               GLM_PASTE(glm_vec(L, T, Q), _equal)
-#define notEqual            GLM_PASTE(glm_vec(L, T, Q), _notEqual)
+#define lessThan            GLM_CALL_FUNC(glm_vec(L, T, Q), lessThan)
+#define lessThanEqual       GLM_CALL_FUNC(glm_vec(L, T, Q), lessThanEqual)
+#define greaterThan         GLM_CALL_FUNC(glm_vec(L, T, Q), greaterThan)
+#define greaterThanEqual    GLM_CALL_FUNC(glm_vec(L, T, Q), greaterThanEqual)
+#define equal               GLM_CALL_FUNC(glm_vec(L, T, Q), equal)
+#define notEqual            GLM_CALL_FUNC(glm_vec(L, T, Q), notEqual)
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, bool, Q)
 lessThan(vec(L, T, Q) const x, vec(L, T, Q) const y)

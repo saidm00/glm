@@ -1,7 +1,11 @@
 #ifndef GLM_EXT_TYPE_INT2_H
 #define GLM_EXT_TYPE_INT2_H
 
-#include "../detail/qualifier.h"
+#include "../detail/type_vec.h"
+#include "../detail/type_vec2.h"
+#define glm_int2(...)  glm_tvec2(int, defaultp, __VA_ARGS__)
+#define glm_ivec2(...) glm_tvec2(int, defaultp, __VA_ARGS__)
+
 #include "type_bool2.h"
 #include "../detail/namespace_begin.inl"
 

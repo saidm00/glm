@@ -1,7 +1,7 @@
 #ifndef GLM_EXT_TYPE_BOOL4_H
 #define GLM_EXT_TYPE_BOOL4_H
 
-#include "../detail/qualifier.h"
+#include "../detail/type_vec.h"
 #include "../detail/namespace_begin.inl"
 
 #define L 4

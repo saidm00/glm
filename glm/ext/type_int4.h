@@ -1,7 +1,7 @@
 #ifndef GLM_EXT_TYPE_INT4_H
 #define GLM_EXT_TYPE_INT4_H
 
-#include "../detail/qualifier.h"
+#include "../detail/type_vec.h"
 #include "type_bool4.h"
 #include "../detail/namespace_begin.inl"
 

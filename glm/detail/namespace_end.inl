@@ -1,5 +1,6 @@
 #undef vec
 #undef length_t
+#undef type_t
 #undef bvec2
 #undef bvec3
 #undef bvec4

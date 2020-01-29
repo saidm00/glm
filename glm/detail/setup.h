@@ -126,4 +126,21 @@ GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _log2(double x)
 	return log2(x);
 }
 
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _abs(double x)
+{
+	return abs(x);
+}
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _floor(double x)
+{
+	return floor(x);
+}
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _trunc(double x)
+{
+	return trunc(x);
+}
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _round(double x)
+{
+	return round(x);
+}
+
 #endif /* GLM_DETAIL_SETUP_H */
