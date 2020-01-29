@@ -1,18 +1,18 @@
-#ifndef GLM_EXT_TYPE_INT3_H
-#define GLM_EXT_TYPE_INT3_H
+#ifndef GLM_EXT_TYPE_INT1_H
+#define GLM_EXT_TYPE_INT1_H
 
 #include "../detail/type_vec.h"
-#include "../detail/type_vec3.h"
-#define glm_int3(...)  glm_tvec3(int, defaultp, __VA_ARGS__)
-#define glm_ivec3(...) glm_tvec3(int, defaultp, __VA_ARGS__)
+#include "../detail/type_vec1.h"
+#define glm_int1(...)  glm_tvec1(int, defaultp, __VA_ARGS__)
+#define glm_ivec1(...) glm_tvec1(int, defaultp, __VA_ARGS__)
 
-#include "type_bool3.h"
+#include "type_bool1.h"
 #include "../detail/namespace_begin.inl"
 
-#define L 3
+#define L 1
 #define T int
 #define Q defaultp
-#include "../detail/type_vec3.inl"
+#include "../detail/type_vec1.inl"
 #include "../detail/func_vector_common.inl"
 #include "../detail/func_vector_trigonometric.inl"
 #include "../detail/func_vector_exponential.inl"
@@ -21,8 +21,8 @@
 #undef T
 #undef Q
 
-typedef vec(3, int, defaultp) ivec3;
+typedef vec(1, int, defaultp) ivec1;
 
 #include "../detail/namespace_end.inl"
 
-#endif /* GLM_EXT_TYPE_INT3_H */
+#endif /* GLM_EXT_TYPE_INT1_H */

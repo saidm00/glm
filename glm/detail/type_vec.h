@@ -98,6 +98,167 @@ GLM_DEFINE_VEC4(uint, defaultp)
 #define L 1
 #define T bool
 #define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 2
+#define T bool
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 3
+#define T bool
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 4
+#define T bool
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 1
+#define T float
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 2
+#define T float
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 3
+#define T float
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 4
+#define T float
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 1
+#define T double
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 2
+#define T double
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 3
+#define T double
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 4
+#define T double
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 1
+#define T int
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 2
+#define T int
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 3
+#define T int
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 4
+#define T int
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 1
+#define T uint
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 2
+#define T uint
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 3
+#define T uint
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+#define L 4
+#define T uint
+#define Q defaultp
+#include "type_vec_decl.inl"
+#undef L
+#undef T
+#undef Q
+
+/* Impl */
+#define L 1
+#define T bool
+#define Q defaultp
 #include "type_vec.inl"
 #undef L
 #undef T
@@ -254,6 +415,7 @@ GLM_DEFINE_VEC4(uint, defaultp)
 #undef L
 #undef T
 #undef Q
+
 
 #include "namespace_end.inl"
 
