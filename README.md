@@ -75,7 +75,7 @@ Vectors also have array access using the `elem` member.
 ```c
 glm_vec3 v = glm_vec3(2);
 
-float x = v.elem[0] * v.elem[1] * v.elem[3]; /* 8 */
+float x = v.elem[0] * v.elem[1] * v.elem[2]; /* 8 */
 ```
 
 This is all I've written for now, if anyone wants to contribute to this feel free to contact me at saidwho12@gmail.com or send me a message on discord at saidwho12#3446.
