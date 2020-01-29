@@ -4,10 +4,7 @@ project(glm LANGUAGES C)
 
 #set(CMAKE_C_COMPILER "clang")
 
-if (CMAKE_BUILD_TYPE EQUAL "DEBUG")
-	set(CMAKE_C_FLAGS "-std=c17 -E /Z7 /Zi")
-elseif (CMAKE_BUILD_TYPE EQUAL "RELEASE")
-endif()
+#set(CMAKE_C_FLAGS "-std=c17 /Z7 /Zi")
 
 #set(CMAKE_C_STANDARD_REQUIRED 11)
 #set(CMAKE_C_STANDARD 11)

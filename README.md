@@ -1,10 +1,10 @@
 # *OpenGL Mathematics for C*
 
 
-[OpenGL Mathematics for C]([https://github.com/saidwho12/glm-c](https://github.com/saidwho12/glm-c)) (*GLM-C*) is a C11 GCC port of the C++ library [*GLM*](https://github.com/g-truc/glm).
+[*glm-c*]([https://github.com/saidwho12/glm-c](https://github.com/saidwho12/glm-c)) is a C11/C17 port of the C++ library [*glm*](https://github.com/g-truc/glm).
 It was made referencing the [The OpenGL® Shading Language, Version 4.60.7](https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.pdf) specification as well.
 
-The library types are internally written similarly to *HLSL*'s types (ie. `glm_uvec3` is internally written as `glm_uint3`).
+The library types are internally written similarly to *HLSL*'s types (i.e. `glm_uvec3` is internally written as `glm_uint3`).
 The main purpose is to easily compose types using some macros shown below.
 
 Template-like macros for identifying types:
@@ -47,13 +47,13 @@ float t = 5.8;
 t.x;
 ```
 
-In *GLM-C* you have to use `glm_vec1` or `glm_float1` as follows:
+In *glm-c* you have to use `glm_vec1` or `glm_float1` as follows:
 ```c
 glm_float1 t = { 5.8f };
 t.x;
 ```
 
-In *GLSL* it is known that you can subscript vectors with the `.` accessor. In *GLM-C* this is also possible but only for linear access. You can't for example do `v.yx`. Also a vector cannot access itself.
+In *GLSL* it is known that you can subscript vectors with the `.` accessor. In *glm-c* this is also possible but only for linear access. You can't for example do `v.yx`. Also a vector cannot access itself.
 The following snippet shows this.
 ```c
 glm_vec2 v = glm_vec2(1.0f, 2.0f);
@@ -62,11 +62,11 @@ v.xy; // doesn't work
 
 This is simply because a union cannot contain itself in C, even if you forward declare it.
 Though this would be possible using swizzle macros (Isn't yet implemented).
-Vectors also have array access using the `e` member.
+Vectors also have array access using the `elem` member.
 ```c
 glm_vec3 v = glm_vec3(2.0f);
 
-float x = v.e[0] * v.e[1] * v.e[3]; // 2 * 2 * 2 -> 8.0f
+float x = v.elem[0] * v.elem[1] * v.elem[3]; // 2.0f * 2.0f * 2.0f -> 8.0f
 ```
 
 This is all I've written for now, if anyone wants to contribute to this feel free to contact me at saidwho12@gmail.com or send me a message on discord at saidwho12#3446.
