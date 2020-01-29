@@ -1,7 +1,7 @@
 # *OpenGL Mathematics for C*
 
 
-[*glm-c*]([https://github.com/saidwho12/glm-c](https://github.com/saidwho12/glm-c)) is a C11/C17 port of the C++ library [*glm*](https://github.com/g-truc/glm).
+[*glm-c*](https://github.com/saidwho12/glm-c) is a C11/C17 port of the C++ library [*glm*](https://github.com/g-truc/glm).
 It was made referencing the [The OpenGL® Shading Language, Version 4.60.7](https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.pdf) specification as well.
 
 The library types are internally written similarly to *HLSL*'s types (i.e. `glm_uvec3` is internally written as `glm_uint3`).
