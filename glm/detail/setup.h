@@ -41,87 +41,87 @@ enum glm_qualifier
     defaultp
 };
 
-inline double _sin(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _sin(double x)
 {
 	return sin(x);
 }
 
-inline double _cos(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _cos(double x)
 {
 	return cos(x);
 }
 
-inline double _tan(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _tan(double x)
 {
 	return tan(x);
 }
 
-inline double _asin(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _asin(double x)
 {
 	return asin(x);
 }
 
-inline double _acos(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _acos(double x)
 {
 	return acos(x);
 }
 
-inline double _atan(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _atan(double x)
 {
 	return atan(x);
 }
 
-inline double _atan2(double y, double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _atan2(double y, double x)
 {
 	return atan2(y, x);
 }
 
-inline double _sinh(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _sinh(double x)
 {
 	return sinh(x);
 }
 
-inline double _cosh(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _cosh(double x)
 {
 	return cosh(x);
 }
 
-inline double _tanh(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _tanh(double x)
 {
 	return tanh(x);
 }
 
-inline double _sqrt(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _sqrt(double x)
 {
 	return sqrt(x);
 }
 
-inline double _inversesqrt(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _inversesqrt(double x)
 {
 	return 1.0 / sqrt(x);
 }
 
-inline double _pow(double x, double y)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _pow(double x, double y)
 {
 	return pow(x, y);
 }
 
-inline double _exp(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _exp(double x)
 {
 	return exp(x);
 }
 
-inline double _log(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _log(double x)
 {
 	return log(x);
 }
 
-inline double _exp2(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _exp2(double x)
 {
 	return exp2(x);
 }
 
-inline double _log2(double x)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _log2(double x)
 {
 	return log2(x);
 }
