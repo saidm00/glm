@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+<<<<<<< HEAD
 typedef float glm_float32;
 typedef double glm_float64;
 
@@ -21,6 +22,44 @@ typedef int glm_int32;
 typedef long glm_int64;
 
 typedef unsigned int uint;
+=======
+#define GLM_ENABLE 1
+#define GLM_RIGHT_HANDED
+
+#include "../simd/platform.h"
+
+#if defined(GLM_FORCE_INLINE)
+#	if GLM_COMPILER & GLM_COMPILER_VC
+#		define GLM_INLINE __forceinline
+#		define GLM_NEVER_INLINE __declspec((noinline))
+#	elif GLM_COMPILER & (GLM_COMPILER_GCC | GLM_COMPILER_CLANG)
+#		define GLM_INLINE inline __attribute__((__always_inline__))
+#		define GLM_NEVER_INLINE __attribute__((__noinline__))
+#	elif GLM_COMPILER & GLM_COMPILER_CUDA
+#		define GLM_INLINE __forceinline__
+#		define GLM_NEVER_INLINE __noinline__
+#	else
+#		define GLM_INLINE inline
+#		define GLM_NEVER_INLINE
+#	endif/*GLM_COMPILER*/
+#else
+#	define GLM_INLINE inline
+#	define GLM_NEVER_INLINE
+#endif/*defined(GLM_FORCE_INLINE)*/
+
+#define GLM_FUNC_DECL GLM_CUDA_FUNC_DECL
+#define GLM_FUNC_QUALIFIER GLM_INLINE
+#	define GLM_NEVER_INLINE static
+#endif
+
+//#define GLM_FUNC_QUALIFIER static GLM_INLINE
+#define GLM_API GLM_INLINE
+
+#define GLM_ENABLE 1
+#define GLM_RIGHT_HANDED
+
+#define GLM_CONFIG_SIMD GLM_ENABLE
+>>>>>>> 07172df52eedc227d46f7aa6adb083aeb7767f99
 
 #undef bool
 typedef _Bool bool;

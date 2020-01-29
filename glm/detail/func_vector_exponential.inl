@@ -82,3 +82,11 @@ inversesqrt(vec(L, T, Q) const x)
 
 	return Result;
 }
+
+#undef pow
+#undef exp
+#undef log
+#undef exp2
+#undef log2
+#undef sqrt
+#undef inversesqrt
