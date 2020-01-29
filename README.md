@@ -2,7 +2,7 @@
 
 
 [*glm-c*](https://github.com/saidwho12/glm-c) is a C11/C17 port of the C++ library [*glm*](https://github.com/g-truc/glm).
-It was made referencing the [GLSL specification](https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.pdf) as well.
+It was made referencing the [*GLSL* specification](https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.pdf) as well.
 
 Although this is meant to be used in C11/C17, you could use this no problem in ANSI C.
 You would only have to abandon constructors or the generic functions which are used.
@@ -75,7 +75,7 @@ Vectors also have array access using the `elem` member.
 ```c
 glm_vec3 v = glm_vec3(2);
 
-float x = v.elem[0] * v.elem[1] * v.elem[3]; /* 8 */
+float x = v.elem[0] * v.elem[1] * v.elem[2]; /* 8 */
 ```
 
 This is all I've written for now, if anyone wants to contribute to this feel free to contact me at saidwho12@gmail.com or send me a message on discord at saidwho12#3446.
