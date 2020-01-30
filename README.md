@@ -6,7 +6,7 @@ It was made referencing the [*GLSL* specification](https://www.khronos.org/regis
 
 Although this is meant to be used in C11/C17, you could use this no problem in ANSI C.
 You would only have to abandon constructors or the generic functions which are used,
-and declare local variables at the end of functions.
+and declare local variables at the start of functions.
 Also, the macro `glm_length()` for example would become `glm_float3_length()`,
 `glm_int2_length()`, etc...
 
