@@ -5,8 +5,9 @@
 It was made referencing the [*GLSL* specification](https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.pdf) as well.
 
 Although this is meant to be used in C11/C17, you could use this no problem in ANSI C.
-You would only have to abandon constructors or the generic functions which are used.
-The macro `glm_length()` for example would become `glm_float3_length()`,
+You would only have to abandon constructors or the generic functions which are used,
+and declare local variables at the end of functions.
+Also, the macro `glm_length()` for example would become `glm_float3_length()`,
 `glm_int2_length()`, etc...
 
 The library types are internally written similarly
