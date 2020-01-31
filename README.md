@@ -7,40 +7,36 @@ It was made referencing the [*GLSL* specification](https://www.khronos.org/regis
 Although this is meant to be used in C11/C17, you could use this no problem in ANSI C.
 You would only have to abandon constructors or the generic functions which are used,
 and declare local variables at the start of functions.
-Also, the macro `glm_length()` for example would become `glm_float3_length()`,
-`glm_int2_length()`, etc...
-
-The library types are internally written similarly
-to *HLSL*'s types (i.e. `glm_uvec3` is internally written as `glm_uint3`).
-The main purpose is to easily compose types using some macros shown below.
+Also, the macro `glm_length()` for example would become `glm_vec4_length()`,
+`glm_dvec3_length()`, etc...
 
 Template-like macros for identifying types:
 ```c
-/* glm_bool2 */
+/* glm_bvec2 */
 glm_vec(2, bool, defaultp) p;
-/* glm_float3_highp */
+/* glm_vec3_highp */
 glm_tvec3(float, highp) q;
-/* glm_uint4_lowp */
+/* glm_uvec4_lowp */
 glm_vec(4, uint, lowp) r;
 ```
 
 Macros for constructing types:
 ```c
 glm_vec3 v1 = glm_vec3(1, 2, 3);
-glm_float3 v2 = glm_vec(3, float, defaultp)(1, 2, 3);
+glm_vec3 v2 = glm_vec(3, float, defaultp)(1, 2, 3);
 ```
 
 Construction from vector arguments:
 ```c
 glm_float2 v1 = glm_vec2(1, 2);
-glm_tvec3(float, defaultp) v2 = glm_float3(v1, 3); /* vec3(1.0f,2.0f,3.0f) */
+glm_tvec3(float, defaultp) v2 = glm_vec3(v1, 3); /* vec3(1.0f,2.0f,3.0f) */
 ```
 
 Mixing vector types when calling constructor:
 
 ```c
 glm_tvec2(bool) v1 = glm_bvec2(false, true);
-glm_uvec2 v2 = glm_uint2(25, 47);
+glm_uvec2 v2 = glm_uvec2(25, 47);
 glm_vec4 v3 = glm_vec4(v1, v2); /* vec4(0.0f, 1.0f, 25.0f, 47.0f) */
 ```
 
@@ -57,9 +53,9 @@ float t = 5.8;
 t.x;
 ```
 
-In *glm-c* you have to use `glm_vec1` or `glm_float1` as follows:
+In *glm-c* you have to use `glm_vec1` as follows:
 ```c
-glm_vec1 t = glm_vec1(5.8f);
+glm_vec1 t = { 5.8f };
 t.x;
 ```
 
