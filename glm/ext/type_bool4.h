@@ -3,7 +3,6 @@
 
 #include "../detail/type_vec.h"
 #include "../detail/type_vec3.h"
-#define glm_bool4(...) glm_tvec4(bool, defaultp, __VA_ARGS__)
 #define glm_bvec4(...) glm_tvec4(bool, defaultp, __VA_ARGS__)
 
 #include "../detail/namespace_begin.inl"

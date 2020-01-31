@@ -3,7 +3,6 @@
 
 #include "../detail/type_vec.h"
 #include "../detail/type_vec3.h"
-#define glm_uint3(...) glm_tvec3(uint, defaultp, __VA_ARGS__)
 #define glm_uvec3(...) glm_tvec3(uint, defaultp, __VA_ARGS__)
 
 #include "type_bool3.h"

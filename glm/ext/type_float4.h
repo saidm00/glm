@@ -3,7 +3,6 @@
 
 #include "../detail/type_vec.h"
 #include "../detail/type_vec4.h"
-#define glm_float4(...) glm_tvec4(float, defaultp, __VA_ARGS__)
 #define glm_vec4(...)   glm_tvec4(float, defaultp, __VA_ARGS__)
 
 #include "type_bool4.h"
