@@ -285,7 +285,6 @@ negate(vec(L, T, Q) const x)
 	return Result;
 }
 
-
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
 addeqs(vec(L, T, Q) *lhs, T const rhs)
 {
