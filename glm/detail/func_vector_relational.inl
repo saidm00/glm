@@ -1,11 +1,3 @@
-/* namespace glm */
-#define lessThan            GLM_CALL_FUNC(glm_vec(L, T, Q), lessThan)
-#define lessThanEqual       GLM_CALL_FUNC(glm_vec(L, T, Q), lessThanEqual)
-#define greaterThan         GLM_CALL_FUNC(glm_vec(L, T, Q), greaterThan)
-#define greaterThanEqual    GLM_CALL_FUNC(glm_vec(L, T, Q), greaterThanEqual)
-#define equal               GLM_CALL_FUNC(glm_vec(L, T, Q), equal)
-#define notEqual            GLM_CALL_FUNC(glm_vec(L, T, Q), notEqual)
-
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, bool, Q)
 lessThan(vec(L, T, Q) const x, vec(L, T, Q) const y)
 {
@@ -71,11 +63,3 @@ notEqual(vec(L, T, Q) const x, vec(L, T, Q) const y)
 
     return Result;
 }
-
-/* end of namespace glm */
-#undef lessThan
-#undef lessThanEqual
-#undef greaterThan
-#undef greaterThanEqual
-#undef equal
-#undef notEqual

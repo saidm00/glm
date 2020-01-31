@@ -1,17 +1,3 @@
-#define sin   GLM_CALL_FUNC(vec(L, T, Q), sin)
-#define cos   GLM_CALL_FUNC(vec(L, T, Q), cos)
-#define tan   GLM_CALL_FUNC(vec(L, T, Q), tan)
-#define asin  GLM_CALL_FUNC(vec(L, T, Q), asin)
-#define acos  GLM_CALL_FUNC(vec(L, T, Q), acos)
-#define atan  GLM_CALL_FUNC(vec(L, T, Q), atan)
-#define atan2 GLM_CALL_FUNC(vec(L, T, Q), atan2)
-#define sinh  GLM_CALL_FUNC(vec(L, T, Q), sinh)
-#define cosh  GLM_CALL_FUNC(vec(L, T, Q), cosh)
-#define tanh  GLM_CALL_FUNC(vec(L, T, Q), tanh)
-#define asinh GLM_CALL_FUNC(vec(L, T, Q), asinh)
-#define acosh GLM_CALL_FUNC(vec(L, T, Q), acosh)
-#define atanh GLM_CALL_FUNC(vec(L, T, Q), atanh)
-
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 sin(vec(L, T, Q) const angle)
 {
@@ -167,17 +153,3 @@ atanh(vec(L, T, Q) const x)
 
 	return Result;
 }
-
-#undef sin
-#undef cos
-#undef tan
-#undef asin
-#undef acos
-#undef atan
-#undef atan2
-#undef sinh
-#undef cosh
-#undef tanh
-#undef asinh
-#undef acosh
-#undef atanh

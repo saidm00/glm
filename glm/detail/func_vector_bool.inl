@@ -1,10 +1,3 @@
-#define or  GLM_CALL_FUNC(vec(L, bool, Q), or)
-#define and GLM_CALL_FUNC(vec(L, bool, Q), and)
-#define xor GLM_CALL_FUNC(vec(L, bool, Q), xor)
-#define all GLM_CALL_FUNC(vec(L, bool, Q), all)
-#define any GLM_CALL_FUNC(vec(L, bool, Q), any)
-#define not GLM_CALL_FUNC(vec(L, bool, Q), not)
-
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, bool, Q)
 or(vec(L, bool, Q) const x, vec(L, bool, Q) const y)
 {
@@ -75,10 +68,3 @@ not(vec(L, bool, Q) const v)
     
     return Result;
 }
-
-#undef all
-#undef any
-#undef not
-#undef or
-#undef and
-#undef xor

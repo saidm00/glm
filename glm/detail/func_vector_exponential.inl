@@ -1,11 +1,3 @@
-#define pow         GLM_CALL_FUNC(vec(L, T, Q), pow)
-#define exp         GLM_CALL_FUNC(vec(L, T, Q), exp)
-#define log         GLM_CALL_FUNC(vec(L, T, Q), log)
-#define exp2        GLM_CALL_FUNC(vec(L, T, Q), exp2)
-#define log2        GLM_CALL_FUNC(vec(L, T, Q), log2)
-#define sqrt        GLM_CALL_FUNC(vec(L, T, Q), sqrt)
-#define inversesqrt GLM_CALL_FUNC(vec(L, T, Q), inversesqrt)
-
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 pow(vec(L, T, Q) const x, vec(L, T, Q) const y)
 {
@@ -82,11 +74,3 @@ inversesqrt(vec(L, T, Q) const x)
 
 	return Result;
 }
-
-#undef pow
-#undef exp
-#undef log
-#undef exp2
-#undef log2
-#undef sqrt
-#undef inversesqrt

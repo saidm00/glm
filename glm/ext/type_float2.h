@@ -16,7 +16,8 @@
 #include "../detail/func_vector_common.inl"
 #include "../detail/func_vector_trigonometric.inl"
 #include "../detail/func_vector_exponential.inl"
-#include "../detail/func_vector_rational.inl"
+#include "../detail/func_vector_relational.inl"
+#include "../detail/func_vector_geometric.inl"
 #undef L
 #undef T
 #undef Q

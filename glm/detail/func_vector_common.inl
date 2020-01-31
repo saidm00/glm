@@ -1,30 +1,3 @@
-#define abs                  GLM_CALL_FUNC(vec(L, T, Q), abs)
-#define sign                 GLM_CALL_FUNC(vec(L, T, Q), sign)
-#define floor                GLM_CALL_FUNC(vec(L, T, Q), floor)
-#define trunc                GLM_CALL_FUNC(vec(L, T, Q), trunc)
-#define round                GLM_CALL_FUNC(vec(L, T, Q), round)
-#define roundEven            GLM_CALL_FUNC(vec(L, T, Q), roundEven)
-#define ceil                 GLM_CALL_FUNC(vec(L, T, Q), ceil)
-#define fract                GLM_CALL_FUNC(vec(L, T, Q), fract)
-#define mod_vector           GLM_CALL_FUNC(vec(L, T, Q), mod_vector)
-#define mod_scalar           GLM_CALL_FUNC(vec(L, T, Q), mod_scalar)
-#define modf                 GLM_CALL_FUNC(vec(L, T, Q), modf)
-#define min_vector           GLM_CALL_FUNC(vec(L, T, Q), min_vector)
-#define min_scalar           GLM_CALL_FUNC(vec(L, T, Q), min_scalar)
-#define max_vector           GLM_CALL_FUNC(vec(L, T, Q), max_vector)
-#define max_scalar           GLM_CALL_FUNC(vec(L, T, Q), max_scalar)
-#define clamp_vector         GLM_CALL_FUNC(vec(L, T, Q), clamp_vector)
-#define clamp_scalar         GLM_CALL_FUNC(vec(L, T, Q), clamp_scalar)
-#define mix_vector           GLM_CALL_FUNC(vec(L, T, Q), mix_vector)
-#define mix_scalar           GLM_CALL_FUNC(vec(L, T, Q), mix_scalar)
-#define step_vector          GLM_CALL_FUNC(vec(L, T, Q), step_vector)
-#define step_scalar          GLM_CALL_FUNC(vec(L, T, Q), step_scalar)
-#define smoothstep_vector    GLM_CALL_FUNC(vec(L, T, Q), smoothstep_vector)
-#define smoothstep_scalar    GLM_CALL_FUNC(vec(L, T, Q), smoothstep_scalar)
-#define isnan                GLM_CALL_FUNC(vec(L, T, Q), isnan)
-#define isinf                GLM_CALL_FUNC(vec(L, T, Q), isinf)
-#define fma                  GLM_CALL_FUNC(vec(L, T, Q), fma)
-
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 abs(vec(L, T, Q) const x)
 {
@@ -320,31 +293,3 @@ uintBitsToFloat
 frexp
 ldexp
 */
-
-
-#undef abs
-#undef sign
-#undef floor
-#undef trunc
-#undef round
-#undef roundEven
-#undef ceil
-#undef fract
-#undef mod_vector
-#undef mod_scalar
-#undef modf
-#undef min_vector
-#undef min_scalar
-#undef max_vector
-#undef max_scalar
-#undef clamp_vector
-#undef clamp_scalar
-#undef mix_vector
-#undef mix_scalar
-#undef step_vector
-#undef step_scalar
-#undef smoothstep_vector
-#undef smoothstep_scalar
-#undef isnan
-#undef isinf
-#undef fma
