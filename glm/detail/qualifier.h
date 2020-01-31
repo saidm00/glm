@@ -5,33 +5,33 @@
 //#include "type_float.h"
 
 #define GLM_VECTOR_LENGTH(v) (sizeof(v)/sizeof(v.e[0]))
-
+/*
 #define glm_vec_(L, T, Q) glm_ ## T ## L
 #define glm_vec(...) glm_vec_(__VA_ARGS__)
+*/
+#define glm_typename_bool1 glm_bvec1
+#define glm_typename_bool2 glm_bvec2
+#define glm_typename_bool3 glm_bvec3
+#define glm_typename_bool4 glm_bvec4
+#define glm_typename_float1 glm_vec1
+#define glm_typename_float2 glm_vec2
+#define glm_typename_float3 glm_vec3
+#define glm_typename_float4 glm_vec4
+#define glm_typename_double1 glm_dvec1
+#define glm_typename_double2 glm_dvec2
+#define glm_typename_double3 glm_dvec3
+#define glm_typename_double4 glm_dvec4
+#define glm_typename_int1 glm_ivec1
+#define glm_typename_int2 glm_ivec2
+#define glm_typename_int3 glm_ivec3
+#define glm_typename_int4 glm_ivec4
+#define glm_typename_uint1 glm_uvec1
+#define glm_typename_uint2 glm_uvec2
+#define glm_typename_uint3 glm_uvec3
+#define glm_typename_uint4 glm_uvec4
 
-#define glm_nameof_bool1 glm_bvec1
-#define glm_nameof_bool2 glm_bvec2
-#define glm_nameof_bool3 glm_bvec3
-#define glm_nameof_bool4 glm_bvec4
-#define glm_nameof_float1 glm_vec1
-#define glm_nameof_float2 glm_vec2
-#define glm_nameof_float3 glm_vec3
-#define glm_nameof_float4 glm_vec4
-#define glm_nameof_double1 glm_dvec1
-#define glm_nameof_double2 glm_dvec2
-#define glm_nameof_double3 glm_dvec3
-#define glm_nameof_double4 glm_dvec4
-#define glm_nameof_int1 glm_ivec1
-#define glm_nameof_int2 glm_ivec2
-#define glm_nameof_int3 glm_ivec3
-#define glm_nameof_int4 glm_ivec4
-#define glm_nameof_uint1 glm_uvec1
-#define glm_nameof_uint2 glm_uvec2
-#define glm_nameof_uint3 glm_uvec3
-#define glm_nameof_uint4 glm_uvec4
-
-#define glm_nameof_vec_(L, T, Q) glm_nameof_ ## T ## L
-#define glm_nameof_vec(...) glm_nameof_vec_(__VA_ARGS__)
+#define glm_typename_vec_(L, T, Q) glm_typename_ ## T ## L
+#define glm_vec(...) glm_typename_vec_(__VA_ARGS__)/*glm_nameof_vec_(__VA_ARGS__)*/
 
 #define GLM_EVAL(...) __VA_ARGS__
 #define GLM_PASTE_(A, B) A ## B
