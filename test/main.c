@@ -28,9 +28,13 @@ int main(int argc, char *argv[])
 
 	printf("%f\n", len);
 
-	v4 =  glm_float4_normalize(v4);
+	v4 = glm_float4_normalize(v4);
 	
 	printf("%f, %f, %f, %f\n", v4.x, v4.y, v4.z, v4.w);
+
+	glm_vec1 v5 = { 5.2f };
+
+	printf("%f\n", v5.x);
 
     return 0;
 }
