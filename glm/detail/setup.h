@@ -5,22 +5,23 @@
 #include <math.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <stdbool.h>
 
 typedef float glm_float32;
 typedef double glm_float64;
 
-typedef unsigned char glm_uint8;
-typedef unsigned short glm_uint16;
-typedef unsigned int glm_uint32;
-typedef unsigned long glm_uint64;
+typedef uint8_t  glm_uint8;
+typedef uint16_t glm_uint16;
+typedef uint32_t glm_uint32;
+typedef uint64_t glm_uint64;
 
-typedef char glm_int8;
-typedef short glm_int16;
-typedef int glm_int32;
-typedef long glm_int64;
+typedef int8_t   glm_int8;
+typedef int16_t  glm_int16;
+typedef int32_t  glm_int32;
+typedef int64_t  glm_int64;
 
-typedef unsigned int uint;
+typedef glm_uint32 uint;
 
 #undef bool
 typedef _Bool bool;
