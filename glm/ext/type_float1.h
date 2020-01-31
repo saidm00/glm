@@ -12,7 +12,6 @@
 #define L 1
 #define T float
 #define Q defaultp
-#include "../detail/type_vec1.inl"
 #include "../detail/func_vector_common.inl"
 #include "../detail/func_vector_trigonometric.inl"
 #include "../detail/func_vector_exponential.inl"

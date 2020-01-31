@@ -12,7 +12,6 @@
 #define L 2
 #define T uint
 #define Q defaultp
-#include "../detail/type_vec2.inl"
 #include "../detail/func_vector_common.inl"
 #include "../detail/func_vector_trigonometric.inl"
 #include "../detail/func_vector_exponential.inl"

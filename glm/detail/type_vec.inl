@@ -285,47 +285,59 @@ negate(vec(L, T, Q) const x)
 	return Result;
 }
 
-/*
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-addeq_scalar(vec(L, T, Q) *x, T const y)
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+addeqs(vec(L, T, Q) *lhs, T const rhs)
 {
 	for(length_t i = 0; i < L; ++i)
-		x->elem[i] += y;
+		lhs->elem[i] += rhs;
 }
 
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-subeq_scalar(vec(L, T, Q) *x, T const y)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+subeqs(vec(L, T, Q) *lhs, T const rhs)
 {
 	for(length_t i = 0; i < L; ++i)
-		x->elem[i] -= y;
+		lhs->elem[i] -= rhs;
 }
 
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-muleq_scalar(vec(L, T, Q) *x, T const y)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+muleqs(vec(L, T, Q) *lhs, T const rhs)
 {
 	for(length_t i = 0; i < L; ++i)
-		x->elem[i] *= y;
+		lhs->elem[i] *= rhs;
 }
 
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-diveq_scalar(vec(L, T, Q) *x, T const y)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+diveqs(vec(L, T, Q) *lhs, T const rhs)
 {
 	for(length_t i = 0; i < L; ++i)
-		x->elem[i] /= y;
+		lhs->elem[i] /= rhs;
 }
 
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-addeq_vector(vec(L, T, Q) *lhs, vec(L, T, Q) const rhs)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+addeqv(vec(L, T, Q) *lhs, vec(L, T, Q) const rhs)
 {
 	for(length_t i = 0; i < L; ++i)
 		lhs->elem[i] += rhs.elem[i];
 }
 
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-subeq_pv
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+subeqv(vec(L, T, Q) *lhs, vec(L, T, Q) const rhs)
+{
+	for(length_t i = 0; i < L; ++i)
+		lhs->elem[i] -= rhs.elem[i];
+}
 
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-muleq_vector
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+muleqv(vec(L, T, Q) *lhs, vec(L, T, Q) const rhs)
+{
+	for(length_t i = 0; i < L; ++i)
+		lhs->elem[i] *= rhs.elem[i];
+}
 
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-diveq_vector*/
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+diveqv(vec(L, T, Q) *lhs, vec(L, T, Q) const rhs)
+{
+	for(length_t i = 0; i < L; ++i)
+		lhs->elem[i] /= rhs.elem[i];
+}

@@ -11,7 +11,6 @@
 #define L 1
 #define T bool
 #define Q defaultp
-#include "../detail/type_vec1.inl"
 #include "../detail/func_vector_bool.inl"
 #undef L
 #undef T

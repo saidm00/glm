@@ -65,7 +65,7 @@
 #undef reflect
 #undef refract
 
-/* Vector Rational Functions */
+/* Vector Relational Functions */
 #undef lessThan
 #undef lessThanEqual
 #undef greaterThan
