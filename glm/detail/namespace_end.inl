@@ -23,6 +23,22 @@
 #undef uvec4
 
 #undef negate
+#undef add
+#undef sub
+#undef mul
+#undef div
+#undef addeqs
+#undef subeqs
+#undef muleqs
+#undef diveqs
+#undef addeqv
+#undef subeqv
+#undef muleqv
+#undef diveqv
+#undef addeq
+#undef subeq
+#undef muleq
+#undef diveq
 
 /* Common Functions */
 #undef abs
