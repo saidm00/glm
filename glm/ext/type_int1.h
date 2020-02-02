@@ -3,6 +3,7 @@
 
 #include "../detail/type_vec.h"
 #include "../detail/type_vec1.h"
+
 #define glm_ivec1(...) glm_tvec1(int, defaultp, __VA_ARGS__)
 
 #include "type_bool1.h"
@@ -19,8 +20,6 @@
 #undef L
 #undef T
 #undef Q
-
-typedef vec(1, int, defaultp) ivec1;
 
 #include "../detail/namespace_end.inl"
 

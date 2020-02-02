@@ -419,7 +419,7 @@ GLM_DEFINE_VEC4(uint, defaultp)
 
 #include "namespace_end.inl"
 
-#define GLM_VEC_CONSTRUCTOR_ADDR(L, T, Q) GLM_CALL_FUNC(glm_vec(L, T, Q), constructor)
+#define GLM_VEC_CONSTRUCTOR_ADDR(L, T, Q) GLM_CALL_FUNC(constructor, GLM_VEC_NAME(L, T, Q))
 #define GLM_VARIADIC_PARAM_TYPE(A)\
 _Generic(A,\
 bool : GLM_TYPE_BOOL,\

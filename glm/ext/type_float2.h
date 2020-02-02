@@ -3,7 +3,8 @@
 
 #include "../detail/type_vec.h"
 #include "../detail/type_vec2.h"
-#define glm_vec2(...)   glm_tvec2(float, defaultp, __VA_ARGS__)
+
+#define glm_vec2(...) glm_tvec2(float, defaultp, __VA_ARGS__)
 
 #include "type_bool2.h"
 #include "../detail/namespace_begin.inl"
@@ -19,8 +20,6 @@
 #undef L
 #undef T
 #undef Q
-
-typedef vec(2, float, defaultp) vec2;
 
 #include "../detail/namespace_end.inl"
 

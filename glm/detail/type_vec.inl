@@ -1,4 +1,4 @@
-#define ptr_cast GLM_CALL_FUNC(vec(L, T, Q), ptr_cast)
+#define ptr_cast GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(L, T, Q))
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 ptr_cast(type_t srcElemType, void *srcAddr)
@@ -46,7 +46,7 @@ ptr_cast(type_t srcElemType, void *srcAddr)
 
 #undef ptr_cast
 
-#define constructor GLM_CALL_FUNC(vec(L, T, Q), constructor)
+#define constructor GLM_CALL_FUNC(constructor, GLM_VEC_NAME(L, T, Q))
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 constructor(length_t argc, ...)
 {
@@ -120,25 +120,25 @@ constructor(length_t argc, ...)
 			case GLM_TYPE_BOOL1:
 			{
 				vec(1, bool, Q) srcArg = va_arg(ap, vec(1, bool, Q));
-				*(vec(1, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(1, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(1, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(1, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_BOOL2:
 			{
 				vec(2, bool, Q) srcArg = va_arg(ap, vec(2, bool, Q));
-				*(vec(2, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(2, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(2, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(2, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_BOOL3:
 			{
 				vec(3, bool, Q) srcArg = va_arg(ap, vec(3, bool, Q));
-				*(vec(3, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(3, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(3, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(3, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_BOOL4:
 			{
 				vec(4, bool, Q) srcArg = va_arg(ap, vec(4, bool, Q));
-				*(vec(4, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(4, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(4, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(4, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_FLOAT:
@@ -149,25 +149,25 @@ constructor(length_t argc, ...)
 			case GLM_TYPE_FLOAT1:
 			{
 				vec(1, float, Q) srcArg = va_arg(ap, vec(1, float, Q));
-				*(vec(1, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(1, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(1, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(1, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_FLOAT2:
 			{
 				vec(2, float, Q) srcArg = va_arg(ap, vec(2, float, Q));
-				*(vec(2, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(2, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(2, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(2, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_FLOAT3:
 			{
 				vec(3, float, Q) srcArg = va_arg(ap, vec(3, float, Q));
-				*(vec(3, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(3, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(3, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(3, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_FLOAT4:
 			{
 				vec(4, float, Q) srcArg = va_arg(ap, vec(4, float, Q));
-				*(vec(4, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(4, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(4, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(4, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_DOUBLE:
@@ -178,25 +178,25 @@ constructor(length_t argc, ...)
 			case GLM_TYPE_DOUBLE1:
 			{
 				vec(1, double, Q) srcArg = va_arg(ap, vec(1, double, Q));
-				*(vec(1, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(1, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(1, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(1, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_DOUBLE2:
 			{
 				vec(2, double, Q) srcArg = va_arg(ap, vec(2, double, Q));
-				*(vec(2, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(2, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(2, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(2, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_DOUBLE3:
 			{
 				vec(3, double, Q) srcArg = va_arg(ap, vec(3, double, Q));
-				*(vec(3, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(3, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(3, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(3, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_DOUBLE4:
 			{
 				vec(4, double, Q) srcArg = va_arg(ap, vec(4, double, Q));
-				*(vec(4, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(4, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(4, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(4, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_INT:
@@ -207,25 +207,25 @@ constructor(length_t argc, ...)
 			case GLM_TYPE_INT1:
 			{
 				vec(1, int, Q) srcArg = va_arg(ap, vec(1, int, Q));
-				*(vec(1, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(1, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(1, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(1, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_INT2:
 			{
 				vec(2, int, Q) srcArg = va_arg(ap, vec(2, int, Q));
-				*(vec(2, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(2, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(2, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(2, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_INT3:
 			{
 				vec(3, int, Q) srcArg = va_arg(ap, vec(3, int, Q));
-				*(vec(3, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(3, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(3, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(3, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_INT4:
 			{
 				vec(4, int, Q) srcArg = va_arg(ap, vec(4, int, Q));
-				*(vec(4, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(4, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(4, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(4, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_UINT:
@@ -236,25 +236,25 @@ constructor(length_t argc, ...)
 			case GLM_TYPE_UINT1:
 			{
 				vec(1, uint, Q) srcArg = va_arg(ap, vec(1, uint, Q));
-				*(vec(1, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(1, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(1, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(1, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_UINT2:
 			{
 				vec(2, uint, Q) srcArg = va_arg(ap, vec(2, uint, Q));
-				*(vec(2, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(2, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(2, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(2, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_UINT3:
 			{
 				vec(3, uint, Q) srcArg = va_arg(ap, vec(3, uint, Q));
-				*(vec(3, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(3, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(3, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(3, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 			case GLM_TYPE_UINT4:
 			{
 				vec(4, uint, Q) srcArg = va_arg(ap, vec(4, uint, Q));
-				*(vec(4, T, Q)*)tmpArr = GLM_CALL_FUNC(vec(4, T, Q), ptr_cast)(srcElemType, (void *)&srcArg);
+				*(vec(4, T, Q)*)tmpArr = GLM_CALL_FUNC(ptr_cast, GLM_VEC_NAME(4, T, Q))(srcElemType, (void *)&srcArg);
 				break;
 			}
 		}

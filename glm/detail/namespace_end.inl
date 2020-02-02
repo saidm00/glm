@@ -1,26 +1,6 @@
 #undef vec
 #undef length_t
 #undef type_t
-#undef bvec1
-#undef bvec2
-#undef bvec3
-#undef bvec4
-#undef vec1
-#undef vec2
-#undef vec3
-#undef vec4
-#undef dvec1
-#undef dvec2
-#undef dvec3
-#undef dvec4
-#undef ivec1
-#undef ivec2
-#undef ivec3
-#undef ivec4
-#undef uvec1
-#undef uvec2
-#undef uvec3
-#undef uvec4
 
 #undef negate
 #undef add
@@ -108,3 +88,25 @@
 #undef asinh
 #undef acosh
 #undef atanh
+
+/*
+#undef bvec1
+#undef bvec2
+#undef bvec3
+#undef bvec4
+#undef vec1
+#undef vec2
+#undef vec3
+#undef vec4
+#undef dvec1
+#undef dvec2
+#undef dvec3
+#undef dvec4
+#undef ivec1
+#undef ivec2
+#undef ivec3
+#undef ivec4
+#undef uvec1
+#undef uvec2
+#undef uvec3
+#undef uvec4*/

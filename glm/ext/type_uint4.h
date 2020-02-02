@@ -3,6 +3,7 @@
 
 #include "../detail/type_vec.h"
 #include "../detail/type_vec4.h"
+
 #define glm_uvec4(...) glm_tvec4(uint, defaultp, __VA_ARGS__)
 
 #include "type_bool4.h"
@@ -19,8 +20,6 @@
 #undef L
 #undef T
 #undef Q
-
-typedef vec(4, uint, defaultp) uvec4;
 
 #include "../detail/namespace_end.inl"
 
