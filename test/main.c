@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 #include <glm/glm.h>
 
 int main(int argc, char *argv[])
@@ -15,30 +16,24 @@ int main(int argc, char *argv[])
 	glm_vec4 v4 = glm_vec4(5.67f, v1, v2);
 	printf("%f, %f, %f, %f\n", v4.x, v4.y, v4.z, v4.w);
 	
-	glm_vec4_addeqs(&v4, 5.0f);
-
+	glm_addeqs_vec4(&v4, 5.0f);
 	printf("%f, %f, %f, %f\n", v4.x, v4.y, v4.z, v4.w);
 	
-	glm_vec4_diveqs(&v4, 2.0f);
-
+	glm_diveqs_vec4(&v4, 2.0f);
 	printf("%f, %f, %f, %f\n", v4.x, v4.y, v4.z, v4.w);
 
-	float len = glm_vec4_length(v4);
-
+	float len = glm_length_vec4(v4);
 	printf("%f\n", len);
-
-	v4 = glm_vec4_normalize(v4);
 	
+	v4 = glm_normalize_vec4(v4);
+
 	printf("%f, %f, %f, %f\n", v4.x, v4.y, v4.z, v4.w);
 
 	glm_vec1 v5 = { 5.2f };
-
 	printf("%f\n", v5.x);
 
 	glm_ivec4 v6 = { 1, 2, 3, 4 };
-	
 	printf("%d, %d, %d, %d\n", v6.x, v6.y, v6.z, v6.w);
-	
 
     return 0;
 }
