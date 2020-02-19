@@ -7,6 +7,10 @@
 #undef sub
 #undef mul
 #undef div
+#undef adds
+#undef subs
+#undef muls
+#undef divs
 #undef addeqs
 #undef subeqs
 #undef muleqs

@@ -101,7 +101,8 @@ typedef enum glm_type_t
     GLM_TYPE_UINT4,
 } glm_type_t;
 
-inline size_t glm_sizeofElemType(glm_type_t type)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR size_t
+glm_sizeof_elem_type(glm_type_t type)
 {
     switch (type)
     {
@@ -126,7 +127,8 @@ inline size_t glm_sizeofElemType(glm_type_t type)
 	return 0;
 }
 
-inline void glm_vecTypeProps(glm_type_t vecType, glm_length_t *elemCount, glm_type_t *elemType)
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+glm_get_vec_type_info(glm_type_t vecType, glm_length_t *elemCount, glm_type_t *elemType)
 {
     switch (vecType)
     {

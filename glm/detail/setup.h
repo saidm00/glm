@@ -33,14 +33,14 @@ typedef float glm_highp_float;
 
 #define GLM_FUNC_QUALIFIER inline
 #define GLM_CONSTEXPR
-
+/*
 enum glm_qualifier
 {
     lowp,
     mediump,
     highp,
     defaultp
-};
+};*/
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR double _sin(double x)
 {

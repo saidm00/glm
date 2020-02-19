@@ -47,6 +47,7 @@ ptr_cast(type_t srcElemType, void *srcAddr)
 #undef ptr_cast
 
 #define constructor GLM_CALL_FUNC(constructor, GLM_VEC_NAME(L, T, Q))
+
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 constructor(length_t argc, ...)
 {
@@ -65,7 +66,7 @@ constructor(length_t argc, ...)
 	for (length_t i = 0; i < argc; ++i)
 	{
 		srcType = va_arg(ap, type_t);
-		glm_vecTypeProps(srcType, &srcElemCount, &srcElemType);
+		glm_get_vec_type_info(srcType, &srcElemCount, &srcElemType);
 
 		if (argc == 1 && srcElemCount == 1)
 		{
@@ -73,7 +74,7 @@ constructor(length_t argc, ...)
 			switch (srcType)
 			{
 				case GLM_TYPE_BOOL:
-					elem = (T)va_arg(ap, bool);
+					elem = (T)va_arg(ap, int);
 					break;
 				case GLM_TYPE_FLOAT:
 					elem = (T)va_arg(ap, double);
@@ -114,7 +115,7 @@ constructor(length_t argc, ...)
 		{
 			case GLM_TYPE_BOOL:
 			{
-				*(T*)tmpArr = (T)va_arg(ap, bool);
+				*(T*)tmpArr = (T)va_arg(ap, int);
 				break;
 			}
 			case GLM_TYPE_BOOL1:
@@ -274,6 +275,7 @@ finished_work:
 }
 
 #undef constructor
+
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 negate(vec(L, T, Q) const x)
 {
@@ -281,6 +283,94 @@ negate(vec(L, T, Q) const x)
 
 	for(length_t i = 0; i < L; ++i)
 		Result.elem[i] = -x.elem[i];
+
+	return Result;
+}
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
+add(vec(L, T, Q) const x, vec(L, T, Q) const y)
+{
+	vec(L, T, Q) Result;
+
+	for(length_t i = 0; i < L; ++i)
+		Result.elem[i] = x.elem[i] + y.elem[i];
+
+	return Result;
+}
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
+sub(vec(L, T, Q) const x, vec(L, T, Q) const y)
+{
+	vec(L, T, Q) Result;
+
+	for(length_t i = 0; i < L; ++i)
+		Result.elem[i] = x.elem[i] - y.elem[i];
+
+	return Result;
+}
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
+mul(vec(L, T, Q) const x, vec(L, T, Q) const y)
+{
+	vec(L, T, Q) Result;
+
+	for(length_t i = 0; i < L; ++i)
+		Result.elem[i] = x.elem[i] * y.elem[i];
+
+	return Result;
+}
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
+div(vec(L, T, Q) const x, vec(L, T, Q) const y)
+{
+	vec(L, T, Q) Result;
+
+	for(length_t i = 0; i < L; ++i)
+		Result.elem[i] = x.elem[i] / y.elem[i];
+
+	return Result;
+}
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
+adds(vec(L, T, Q) const x, T const y)
+{
+	vec(L, T, Q) Result;
+
+	for(length_t i = 0; i < L; ++i)
+		Result.elem[i] = x.elem[i] + y;
+
+	return Result;
+}
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
+subs(vec(L, T, Q) const x, T const y)
+{
+	vec(L, T, Q) Result;
+
+	for(length_t i = 0; i < L; ++i)
+		Result.elem[i] = x.elem[i] - y;
+
+	return Result;
+}
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
+muls(vec(L, T, Q) const x, T const y)
+{
+	vec(L, T, Q) Result;
+
+	for(length_t i = 0; i < L; ++i)
+		Result.elem[i] = x.elem[i] * y;
+
+	return Result;
+}
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
+divs(vec(L, T, Q) const x, T const y)
+{
+	vec(L, T, Q) Result;
+
+	for(length_t i = 0; i < L; ++i)
+		Result.elem[i] = x.elem[i] / y;
 
 	return Result;
 }

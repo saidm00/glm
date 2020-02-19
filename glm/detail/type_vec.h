@@ -11,6 +11,8 @@ struct vec(1, T, Q)\
     union\
     {\
         struct { T x; };\
+        struct { T r; };\
+        struct { T s; };\
         T elem[1];\
     };\
 };
@@ -21,6 +23,8 @@ struct vec(2, T, Q)\
     union\
     {\
         struct { T x, y; };\
+        struct { T r, g; };\
+        struct { T s, t; };\
         T elem[2];\
     };\
 };
@@ -31,6 +35,8 @@ struct vec(3, T, Q)\
     union\
     {\
         struct { T x, y, z; };\
+        struct { T r, g, b; };\
+        struct { T s, t, p; };\
         T elem[3];\
     };\
 };
@@ -41,6 +47,8 @@ struct vec(4, T, Q)\
     union\
     {\
         struct { T x, y, z, w; };\
+        struct { T r, g, b, a; };\
+        struct { T s, t, p, q; };\
         T elem[4];\
     };\
 };

@@ -7,15 +7,7 @@
 #define glm_bvec2(...) glm_tvec2(bool, defaultp, __VA_ARGS__)
 
 #include "../detail/namespace_begin.inl"
-
-#define L 2
-#define T bool
-#define Q defaultp
-#include "../detail/func_vector_bool.inl"
-#undef L
-#undef T
-#undef Q
-
+#include "type_bool2.c"
 #include "../detail/namespace_end.inl"
 
 #endif /* GLM_EXT_TYPE_BOOL2_H */

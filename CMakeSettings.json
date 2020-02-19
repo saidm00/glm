@@ -10,7 +10,13 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "clang_cl_x64" ],
-      "variables": [],
+      "variables": [
+        {
+          "name": "GLFW_INSTALL",
+          "value": "False",
+          "type": "BOOL"
+        }
+      ],
       "intelliSenseMode": "windows-clang-x64"
     }
   ]

@@ -90,7 +90,7 @@ fract(vec(L, T, Q) const x)
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-mod_vector(vec(L, T, Q) const x, vec(L, T, Q) const y)
+mod(vec(L, T, Q) const x, vec(L, T, Q) const y)
 {
 	vec(L, T, Q) Result;
 
@@ -101,7 +101,7 @@ mod_vector(vec(L, T, Q) const x, vec(L, T, Q) const y)
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-mod_scalar(vec(L, T, Q) const x, T const y)
+mods(vec(L, T, Q) const x, T const y)
 {
 	vec(L, T, Q) Result;
 
@@ -118,7 +118,7 @@ modf(vec(L, T, Q) const x, vec(L, T, Q) *y)
 }*/
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-min_vector(vec(L, T, Q) const x, vec(L, T, Q) const y)
+min(vec(L, T, Q) const x, vec(L, T, Q) const y)
 {
 	vec(L, T, Q) Result;
 
@@ -129,7 +129,7 @@ min_vector(vec(L, T, Q) const x, vec(L, T, Q) const y)
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-min_scalar(vec(L, T, Q) const x, T const y)
+mins(vec(L, T, Q) const x, T const y)
 {
 	vec(L, T, Q) Result;
 
@@ -140,7 +140,7 @@ min_scalar(vec(L, T, Q) const x, T const y)
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-max_vector(vec(L, T, Q) const x, vec(L, T, Q) const y)
+max(vec(L, T, Q) const x, vec(L, T, Q) const y)
 {
 	vec(L, T, Q) Result;
 
@@ -151,7 +151,7 @@ max_vector(vec(L, T, Q) const x, vec(L, T, Q) const y)
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-max_scalar(vec(L, T, Q) const x, T const y)
+maxs(vec(L, T, Q) const x, T const y)
 {
 	vec(L, T, Q) Result;
 
@@ -162,7 +162,7 @@ max_scalar(vec(L, T, Q) const x, T const y)
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-clamp_vector(vec(L, T, Q) const x, vec(L, T, Q) const minVal, vec(L, T, Q) const maxVal)
+clamp(vec(L, T, Q) const x, vec(L, T, Q) const minVal, vec(L, T, Q) const maxVal)
 {
 	vec(L, T, Q) Result;
 
@@ -176,7 +176,7 @@ clamp_vector(vec(L, T, Q) const x, vec(L, T, Q) const minVal, vec(L, T, Q) const
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-clamp_scalar(vec(L, T, Q) const x, T const minVal, T const maxVal)
+clamps(vec(L, T, Q) const x, T const minVal, T const maxVal)
 {
 	vec(L, T, Q) Result;
 
@@ -190,7 +190,7 @@ clamp_scalar(vec(L, T, Q) const x, T const minVal, T const maxVal)
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-mix_vector(vec(L, T, Q) const x, vec(L, T, Q) const y, vec(L, T, Q) const a)
+mix(vec(L, T, Q) const x, vec(L, T, Q) const y, vec(L, T, Q) const a)
 {
 	vec(L, T, Q) Result;
 
@@ -203,7 +203,7 @@ mix_vector(vec(L, T, Q) const x, vec(L, T, Q) const y, vec(L, T, Q) const a)
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-mix_scalar(vec(L, T, Q) const x, vec(L, T, Q) const y, T const a)
+mixs(vec(L, T, Q) const x, vec(L, T, Q) const y, T const a)
 {
 	vec(L, T, Q) Result;
 
@@ -216,7 +216,7 @@ mix_scalar(vec(L, T, Q) const x, vec(L, T, Q) const y, T const a)
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-step_vector(vec(L, T, Q) const edge, vec(L, T, Q) const x)
+step(vec(L, T, Q) const edge, vec(L, T, Q) const x)
 {
 	vec(L, T, Q) Result;
 
@@ -227,7 +227,7 @@ step_vector(vec(L, T, Q) const edge, vec(L, T, Q) const x)
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-step_scalar(T const edge, vec(L, T, Q) const x)
+steps(T const edge, vec(L, T, Q) const x)
 {
 	vec(L, T, Q) Result;
 
@@ -238,7 +238,7 @@ step_scalar(T const edge, vec(L, T, Q) const x)
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-smoothstep_vector(vec(L, T, Q) const edge0, vec(L, T, Q) const edge1, vec(L, T, Q) const x)
+smoothstep(vec(L, T, Q) const edge0, vec(L, T, Q) const edge1, vec(L, T, Q) const x)
 {
 	vec(L, T, Q) Result;
 
@@ -254,7 +254,7 @@ smoothstep_vector(vec(L, T, Q) const edge0, vec(L, T, Q) const edge1, vec(L, T, 
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-smoothstep_scalar(T const edge0, T const edge1, vec(L, T, Q) const x)
+smoothsteps(T const edge0, T const edge1, vec(L, T, Q) const x)
 {
 	vec(L, T, Q) Result;
 
