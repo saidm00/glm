@@ -196,7 +196,7 @@ mix(vec(L, T, Q) const x, vec(L, T, Q) const y, vec(L, T, Q) const a)
 
 	for(length_t i = 0; i < L; ++i)
 	{
-		Result.elem[i] = x.elem[i] * a.elem[i] + y.elem[i] * (1.0 - a.elem[i]);
+		Result.elem[i] = x.elem[i] * a.elem[i] + y.elem[i] * ((T)1 - a.elem[i]);
 	}
 
 	return Result;
@@ -209,7 +209,7 @@ mixs(vec(L, T, Q) const x, vec(L, T, Q) const y, T const a)
 
 	for(length_t i = 0; i < L; ++i)
 	{
-		Result.elem[i] = x.elem[i] * a + y.elem[i] * (1.0 - a);
+		Result.elem[i] = x.elem[i] * a + y.elem[i] * ((T)1 - a);
 	}
 
 	return Result;
