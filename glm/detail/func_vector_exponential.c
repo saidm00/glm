@@ -4,7 +4,7 @@ pow(vec(L, T, Q) const x, vec(L, T, Q) const y)
 	vec(L, T, Q) Result;
 
 	for (length_t i = 0; i < L; ++i)
-		Result.elem[i] = _pow(x.elem[i], y.elem[i]);
+		Result.elem[i] = compute_pow_scalar(T, Q)(x.elem[i], y.elem[i]);
 
 	return Result;
 }
@@ -15,7 +15,7 @@ exp(vec(L, T, Q) const x)
 	vec(L, T, Q) Result;
 
 	for (length_t i = 0; i < L; ++i)
-		Result.elem[i] = _exp(x.elem[i]);
+		Result.elem[i] = compute_exp_scalar(T, Q)(x.elem[i]);
 
 	return Result;
 }
@@ -26,7 +26,7 @@ log(vec(L, T, Q) const x)
 	vec(L, T, Q) Result;
 
 	for (length_t i = 0; i < L; ++i)
-		Result.elem[i] = _log(x.elem[i]);
+		Result.elem[i] = compute_log_scalar(T, Q)(x.elem[i]);
 
 	return Result;
 }
@@ -37,7 +37,7 @@ exp2(vec(L, T, Q) const x)
 	vec(L, T, Q) Result;
 
 	for (length_t i = 0; i < L; ++i)
-		Result.elem[i] = _exp2(x.elem[i]);
+		Result.elem[i] = compute_exp2_scalar(T, Q)(x.elem[i]);
 
 	return Result;
 }
@@ -48,7 +48,7 @@ log2(vec(L, T, Q) const x)
 	vec(L, T, Q) Result;
 
 	for (length_t i = 0; i < L; ++i)
-		Result.elem[i] = _log2(x.elem[i]);
+		Result.elem[i] = compute_log2_scalar(T, Q)(x.elem[i]);
 
 	return Result;
 }
@@ -59,7 +59,7 @@ sqrt(vec(L, T, Q) const x)
 	vec(L, T, Q) Result;
 
 	for (length_t i = 0; i < L; ++i)
-		Result.elem[i] = _sqrt(x.elem[i]);
+		Result.elem[i] = compute_sqrt_scalar(T, Q)(x.elem[i]);
 
 	return Result;
 }
@@ -70,7 +70,7 @@ inversesqrt(vec(L, T, Q) const x)
 	vec(L, T, Q) Result;
 
 	for (length_t i = 0; i < L; ++i)
-		Result.elem[i] = _rsqrt(x.elem[i]);
+		Result.elem[i] = compute_inversesqrt_scalar(T, Q)(x.elem[i]);
 
 	return Result;
 }

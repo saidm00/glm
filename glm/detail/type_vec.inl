@@ -38,7 +38,10 @@ ptr_cast(type_t srcElemType, void *srcAddr)
 			break;
 		}
 		default:
+		{
+			for (length_t i = 0; i < L; ++i) Result.elem[i] = (T)0;
 			break;
+		}
 	}
 	
 	return Result;

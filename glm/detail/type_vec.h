@@ -2,7 +2,8 @@
 #define GLM_DETAIL_TYPE_VEC_H
 
 #include "qualifier.h"
-#include "namespace_begin.inl"
+
+#include "namespace_begin.c"
 
 #define GLM_TYPEDEF_VEC(L, T, Q) typedef struct vec(L, T, Q) vec(L, T, Q)
 #define GLM_DEFINE_VEC1(T, Q) \
@@ -425,7 +426,7 @@ GLM_DEFINE_VEC4(uint, defaultp)
 #undef Q
 
 
-#include "namespace_end.inl"
+#include "namespace_end.c"
 
 #define GLM_VEC_CONSTRUCTOR_ADDR(L, T, Q) GLM_CALL_FUNC(constructor, GLM_VEC_NAME(L, T, Q))
 #define GLM_VARIADIC_PARAM_TYPE(A)\

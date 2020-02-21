@@ -29,9 +29,9 @@ glm_compute_acos_float64(glm_float64 x)
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR glm_float64
-glm_compute_atan_float64(glm_float64 x)
+glm_compute_atan_float64(glm_float64 y_over_x)
 {
-	return atan(x);
+	return atan(y_over_x);
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR glm_float64
@@ -122,4 +122,10 @@ GLM_FUNC_QUALIFIER GLM_CONSTEXPR glm_float64
 glm_compute_round_float64(glm_float64 x)
 {
 	return round(x);
+}
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR glm_float64
+glm_compute_mod_float64(glm_float64 x, glm_float64 y)
+{
+	return fmod(x, y);
 }

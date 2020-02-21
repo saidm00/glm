@@ -4,7 +4,7 @@ abs(vec(L, T, Q) const x)
 	vec(L, T, Q) Result;
 
 	for(length_t i = 0; i < L; ++i)
-		Result.elem[i] = _abs(x.elem[i]);
+		Result.elem[i] = compute_abs_scalar(T, Q)(x.elem[i]);
 
 	return Result;
 }
@@ -39,7 +39,7 @@ floor(vec(L, T, Q) const x)
 	vec(L, T, Q) Result;
 
 	for(length_t i = 0; i < L; ++i)
-		Result.elem[i] = _floor(x.elem[i]);
+		Result.elem[i] = compute_floor_scalar(T, Q)(x.elem[i]);
 
 	return Result;
 }
@@ -50,7 +50,7 @@ trunc(vec(L, T, Q) const x)
 	vec(L, T, Q) Result;
 
 	for(length_t i = 0; i < L; ++i)
-		Result.elem[i] = _trunc(x.elem[i]);
+		Result.elem[i] = compute_trunc_scalar(T, Q)(x.elem[i]);
 
 	return Result;
 }
@@ -61,22 +61,21 @@ round(vec(L, T, Q) const x)
 	vec(L, T, Q) Result;
 
 	for(length_t i = 0; i < L; ++i)
-		Result.elem[i] = _round(x.elem[i]);
+		Result.elem[i] = compute_round_scalar(T, Q)(x.elem[i]);
 
 	return Result;
 }
-
+/*
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 roundEven(vec(L, T, Q) const x)
 {
-	/* TODO */
 }
-
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 ceil(vec(L, T, Q) const x)
 {
 
 }
+*/
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 fract(vec(L, T, Q) const x)
@@ -84,7 +83,7 @@ fract(vec(L, T, Q) const x)
 	vec(L, T, Q) Result;
 
 	for(length_t i = 0; i < L; ++i)
-		Result.elem[i] = x.elem[i] - _floor(x.elem[i]);
+		Result.elem[i] = x.elem[i] - compute_floor_scalar(T, Q)(x.elem[i]);
 
 	return Result;
 }
@@ -95,7 +94,7 @@ mod(vec(L, T, Q) const x, vec(L, T, Q) const y)
 	vec(L, T, Q) Result;
 
 	for(length_t i = 0; i < L; ++i)
-		Result.elem[i] = _mod(x.elem[i], y);
+		Result.elem[i] = compute_mod_scalar(T, Q)(x.elem[i], y.elem[i]);
 
 	return Result;
 }
@@ -106,7 +105,7 @@ mods(vec(L, T, Q) const x, T const y)
 	vec(L, T, Q) Result;
 
 	for(length_t i = 0; i < L; ++i)
-		Result.elem[i] = _mod(x.elem[i], y);
+		Result.elem[i] = compute_mod_scalar(T, Q)(x.elem[i], y);
 
 	return Result;
 }

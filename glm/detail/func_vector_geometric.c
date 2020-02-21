@@ -5,7 +5,7 @@ length(vec(L, T, Q) const x)
 
 	for (length_t i = 0; i < L; ++i) tmp += x.elem[i] * x.elem[i];
 
-	return _sqrt(tmp);
+	return compute_sqrt_scalar(T, Q)(tmp);
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR T
@@ -19,7 +19,7 @@ distance(vec(L, T, Q) const x, vec(L, T, Q) const y)
 		tmp += delta * delta;
 	}
 
-	return _sqrt(tmp);
+	return compute_sqrt_scalar(T, Q)(tmp);
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR T
@@ -27,7 +27,8 @@ dot(vec(L, T, Q) const x, vec(L, T, Q) const y)
 {
 	T tmp = (T)0;
 
-	for (length_t i = 0; i < L; ++i) tmp += x.elem[i] * y.elem[i];
+	for (length_t i = 0; i < L; ++i)
+		tmp += x.elem[i] * y.elem[i];
 
 	return tmp;
 }
