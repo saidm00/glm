@@ -19,7 +19,7 @@ v = glm_mulv_mat4x4_highp(m, v);
 ```
 
 ### Macros for constructing types
-Macros for constructing types, these are unique not only to each type, such as `glm_vec4()` and `glm_uint2()`, but they also are defined for each qualifier variant. Except `defaultp` as that can be ignored. These work exactly as *GLSL* constructors but there is both a compile time cost, and run-time cost as it uses C11's `_Generic()` and variadic functions to parse through arguments.
+Macros for constructing types, these are unique not only to each type, such as `glm_vec4()` and `glm_uvec2()`, but they also are defined for each qualifier variant. Except `defaultp` as that can be ignored. These work exactly as *GLSL* constructors but there is both a compile time cost, and run-time cost as it uses C11's `_Generic()` and variadic functions to parse through arguments.
 
 ```c
 // Construct default precision vector of 3 unsigned integers.

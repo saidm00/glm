@@ -16,7 +16,7 @@ typedef uint32_t   glm_uint32;
 typedef int8_t     glm_int8;
 typedef int16_t    glm_int16;
 typedef int32_t    glm_int32;
-typedef glm_uint32 uint;
+typedef uint32_t   uint;
 
 #undef bool
 typedef _Bool bool;
@@ -29,6 +29,11 @@ typedef size_t glm_length_t;
 #define GLM_SCALAR_TYPENAME_float_highp      float32
 #define GLM_SCALAR_TYPENAME_float_mediump    float16
 #define GLM_SCALAR_TYPENAME_float_lowp   
+
+#define GLM_SCALAR_TYPENAME_bool_defaultp   bool
+#define GLM_SCALAR_TYPENAME_bool_highp      bool
+#define GLM_SCALAR_TYPENAME_bool_mediump    bool
+#define GLM_SCALAR_TYPENAME_bool_lowp   
 
 #define GLM_SCALAR_TYPENAME_double_defaultp  float64
 #define GLM_SCALAR_TYPENAME_double_highp     float64
@@ -47,10 +52,12 @@ typedef size_t glm_length_t;
 
 /*
     Macros for generating function calls, for both float32 and float64 for instance 
-    (T, Q) -> (Type, Qualifier) e.g (float, 32) -> float32
+    (T, Q) -> (Type, Qualifier) e.g (float, defaultp) -> float32
 */
-#define GLM_SCALAR_TYPENAME_(T, Q)              GLM_SCALAR_TYPENAME_ ## T ## _ ## Q
-#define GLM_SCALAR_TYPENAME(...)                GLM_SCALAR_TYPENAME_(__VA_ARGS__)
+#define GLM_SCALAR_TYPENAME_(T, Q) GLM_SCALAR_TYPENAME_ ## T ## _ ## Q
+#define GLM_SCALAR_TYPENAME(...) GLM_SCALAR_TYPENAME_(__VA_ARGS__)
+
+#define glm_scalar(T, Q) GLM_PREFIX(GLM_SCALAR_TYPENAME(T, Q))
 
 #define GLM_CALL_COMPUTE_FUNC_SCALAR(T, Q, F)   GLM_CALL_FUNC(F, GLM_SCALAR_TYPENAME(T, Q))
 
@@ -78,7 +85,7 @@ typedef size_t glm_length_t;
 #define glm_compute_round_scalar(T, Q)          GLM_CALL_COMPUTE_FUNC_SCALAR(T, Q, compute_round)
 #define glm_compute_mod_scalar(T, Q)            GLM_CALL_COMPUTE_FUNC_SCALAR(T, Q, compute_mod)
 
-#include "scalar_float32.c"
-#include "scalar_float64.c"
+#include "scalar_float32.inl"
+#include "scalar_float64.inl"
 
 #endif /* GLM_DETAIL_TYPE_SCALAR_H */

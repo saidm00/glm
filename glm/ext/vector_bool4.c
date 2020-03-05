@@ -1,4 +1,6 @@
-/*
+
+#include "../detail/namespace_begin.inl"
+#include "../detail/namespace_template_vector_begin.inl"
 #define L 4
 #define T bool
 #define Q defaultp
@@ -6,8 +8,10 @@
 #undef L
 #undef T
 #undef Q
-*/
+#include "../detail/namespace_template_vector_end.inl"
+#include "../detail/namespace_end.inl"
 
+/*
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR glm_bvec4
 glm_or_bvec4(vec(4, bool, defaultp) const x, vec(4, bool, defaultp) const y)
 {
@@ -77,4 +81,4 @@ glm_not_bvec4(vec(4, bool, defaultp) const v)
 		Result.elem[i] = !v.elem[i];
 
 	return Result;
-}
+}*/

@@ -1,4 +1,6 @@
-/*
+
+#include "../detail/namespace_begin.inl"
+#include "../detail/namespace_template_vector_begin.inl"
 #define L 1
 #define T bool
 #define Q defaultp
@@ -6,8 +8,10 @@
 #undef L
 #undef T
 #undef Q
-*/
+#include "../detail/namespace_template_vector_end.inl"
+#include "../detail/namespace_end.inl"
 
+/*
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(1, bool, defaultp)
 glm_or_bvec1(vec(1, bool, defaultp) const x, vec(1, bool, defaultp) const y)
 {
@@ -77,4 +81,4 @@ glm_not_bvec1(vec(1, bool, defaultp) const v)
 		Result.elem[i] = !v.elem[i];
 
 	return Result;
-}
+}*/
