@@ -1,6 +1,30 @@
 #include <stdio.h>
 #include <glm/glm.h>
 
+glm_mat4 glm_lookAtRH(glm_vec3 const eye, glm_vec3 const center, glm_vec3 const up)
+{
+	glm_mat4 Result = glm_mat4(1);	
+
+	glm_vec3 const f = glm_normalize_vec3( glm_sub_vec3(center, eye) );
+	glm_vec3 const s = glm_normalize_vec3( glm_cross_vec3(f, up) );
+	glm_vec3 const u = glm_cross_vec3(s, f);
+
+	Result.elem[0][0] = s.x;
+	Result.elem[1][0] = s.y;
+	Result.elem[2][0] = s.z;
+	Result.elem[0][1] = u.x;
+	Result.elem[1][1] = u.y;
+	Result.elem[2][1] = u.z;
+	Result.elem[0][2] = -f.x;
+	Result.elem[1][2] = -f.y;
+	Result.elem[2][2] = -f.z;
+	Result.elem[3][0] = -glm_dot_vec3(s, eye);
+	Result.elem[3][1] = -glm_dot_vec3(u, eye);
+	Result.elem[3][2] =  glm_dot_vec3(f, eye);
+
+	return Result;
+}
+
 int main(int argc, char *argv[])
 {
 	glm_dvec2 v1 = glm_dvec2(-25.0, 13.37);

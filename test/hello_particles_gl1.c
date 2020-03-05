@@ -51,14 +51,14 @@ glm_vec3 random_velocity(float magnitude)
 	float cosPhi = cosf(phi);
 	float r = (0.01f + 0.9f * U3) * magnitude;
 	glm_vec3 w = glm_vec3( sinPhi * sinTheta, sinPhi * cosTheta, cosPhi );
-	glm_addeqs_vec3(&w, r);
+	glm_muleqs_vec3(&w, r);
 	return w;
 }
 
 glm_vec3 color_hsv(float hue, float saturation, float value)
 {
 	glm_vec3 wave = glm_sin_vec3( glm_muls_vec3(glm_adds_vec3(glm_vec3(0,0.333f, 0.666f), hue), 2.0f * PI));
-    glm_vec3 rgb = glm_adds_vec3( glm_muls_vec3( wave, 0.5f ), 0.5f);
+	glm_vec3 rgb = glm_adds_vec3( glm_muls_vec3( wave, 0.5f ), 0.5f);
 	return glm_muls_vec3(glm_mixs_vec3( glm_vec3(1), rgb, saturation), value);
 }
 
@@ -69,15 +69,15 @@ void update_particle(particle *p, float dt)
 
 int main(int argc, char *argv[])
 {
-	srand(time(NULL));
-	particle particles[100];
+	srand( time(NULL) );
+	particle         particles[100];
 
-	for(unsigned int i = 0; i < 100; ++i)
+	for (unsigned int i = 0; i < 100; ++i)
 	{
-		particles[i].pos = glm_vec3(0.0, 0.0, 0.0);
-		particles[i].vel = random_velocity(0.8f);
+		particles[i].pos   = glm_vec3(0.0, 0.0, 0.0);
+		particles[i].vel   = random_velocity(0.8f);
 		particles[i].scale = 0.25f + 0.5f * random_uniform();
-		particles[i].col = color_hsv(random_uniform(), random_uniform(), random_uniform());
+		particles[i].col   = color_hsv(random_uniform(), random_uniform(), random_uniform());
 	}
 
 
