@@ -1,58 +1,3 @@
-#define ptr_cast GLM_CALL_FUNC(ptr_cast, GLM_VECTOR_TYPENAME(L, T, Q))
-
-/* Vector pointer cast implementation */
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-ptr_cast(type_t srcElemType, void *srcAddr)
-{
-	vec(L, T, Q) Result;
-
-	switch (srcElemType)
-	{
-		case GLM_TYPE_BOOL:
-		{
-			bool *elemArr = (bool *)srcAddr;
-			for (length_t i = 0; i < L; ++i) Result.elem[i] = (T) elemArr[i];
-			break;
-		}
-		case GLM_TYPE_FLOAT:
-		{
-			float *elemArr = (float *)srcAddr;
-			for (length_t i = 0; i < L; ++i) Result.elem[i] = (T) elemArr[i];
-			break;
-		}
-		case GLM_TYPE_DOUBLE:
-		{
-			double *elemArr = (double *)srcAddr;
-			for (length_t i = 0; i < L; ++i) Result.elem[i] = (T) elemArr[i];
-			break;
-		}
-		case GLM_TYPE_INT:
-		{
-			int *elemArr = (int *)srcAddr;
-			for (length_t i = 0; i < L; ++i) Result.elem[i] = (T) elemArr[i];
-			break;
-		}
-		case GLM_TYPE_UINT:
-		{
-			uint *elemArr = (uint *)srcAddr;
-			for (length_t i = 0; i < L; ++i) Result.elem[i] = (T) elemArr[i];
-			break;
-		}
-		default:
-		{
-			for (length_t i = 0; i < L; ++i) Result.elem[i] = (T)0;
-			break;
-		}
-	}
-	
-	return Result;
-}
-
-#undef ptr_cast
-
-/* Vector constructor implementation */
-#define constructor GLM_CALL_FUNC(constructor, GLM_VECTOR_TYPENAME(L, T, Q))
-
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 constructor(length_t argc, ...)
 {
@@ -68,7 +13,7 @@ constructor(length_t argc, ...)
 
 	length_t dstElemIdx = 0;
 		
-	for (length_t i = 0; i < argc; ++i)
+	for (length_t arg_idx = 0; arg_idx < argc; ++arg_idx)
 	{
 		srcType = va_arg(ap, type_t);
 
@@ -364,10 +309,14 @@ constructor(length_t argc, ...)
 		}
 
 		for (length_t j = 0; j < srcTypeInfo.elemCount && dstElemIdx + j < L; ++j)
+		{
 			Result.elem[dstElemIdx + j] = tmpArr[j];
+		}
 
 		if (dstElemIdx + srcTypeInfo.elemCount >= L)
+		{
 			goto finished_work;
+		}
 
 		dstElemIdx += srcTypeInfo.elemCount;
 	}
@@ -377,9 +326,6 @@ finished_work:
 	return Result;
 }
 
-#undef constructor
-
-/* Vector Operations */
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 negate(vec(L, T, Q) const x)
 {

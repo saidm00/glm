@@ -32,7 +32,7 @@
 
 #define GLM_VECTOR_TYPENAME_(L, T, Q) GLM_VECTOR_TYPENAME_ ## T ## L
 #define GLM_VECTOR_TYPENAME(...) GLM_VECTOR_TYPENAME_(__VA_ARGS__)
-#define GLM_VECTOR_CONSTRUCTOR_ADDR(L, T, Q) GLM_CALL_FUNC(constructor, GLM_VECTOR_TYPENAME(L, T, Q))
+#define GLM_VEC_CTOR_NAME(L, T, Q) GLM_CALL_FUNC(constructor, GLM_VECTOR_TYPENAME(L, T, Q))
 
 #define glm_vec(L, T, Q) GLM_PREFIX(GLM_VECTOR_TYPENAME(L, T, Q))
 
@@ -646,6 +646,27 @@ typedef vec(4, uint, defaultp) glm_uvec4;
 #undef T
 #undef Q
 
+#define glm_normalize(x) _Generic((x),\
+glm_vec(1, float, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
+glm_vec(2, float, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
+glm_vec(3, float, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+glm_vec(4, float, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(4, float, defaultp)),\
+glm_vec(1, double, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+glm_vec(2, double, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+glm_vec(3, double, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+glm_vec(4, double, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(4, double, defaultp))\
+)((x))
+
+#define glm_length(x) _Generic((x),\
+glm_vec(1, float, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
+glm_vec(2, float, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
+glm_vec(3, float, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+glm_vec(4, float, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(4, float, defaultp)),\
+glm_vec(1, double, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+glm_vec(2, double, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+glm_vec(3, double, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+glm_vec(4, double, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(4, double, defaultp))\
+)((x))
 
 #include "namespace_template_vector_begin.inl"
 #include "namespace_end.inl"

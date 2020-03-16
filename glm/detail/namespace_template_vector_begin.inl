@@ -1,3 +1,5 @@
+#define constructor GLM_CALL_FUNC(constructor, GLM_VECTOR_TYPENAME(L, T, Q))
+
 #define negate GLM_CALL_FUNC(negate, GLM_VECTOR_TYPENAME(L, T, Q))
 #define add    GLM_CALL_FUNC(add   , GLM_VECTOR_TYPENAME(L, T, Q))
 #define sub    GLM_CALL_FUNC(sub   , GLM_VECTOR_TYPENAME(L, T, Q))
