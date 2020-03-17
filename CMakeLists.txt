@@ -14,5 +14,5 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mcmodel=large -m64 -std=gnu17")
 #target_include_directories(teapot PRIVATE "${CMAKE_CURRENT_LIST_DIR}")
 #target_link_libraries(teapot PRIVATE glfw OpenGL32)
 
-add_executable(matrix_transform_test "./test/matrix_transform_test.c")
-target_include_directories(matrix_transform_test PRIVATE "${CMAKE_CURRENT_LIST_DIR}")
+add_executable(experiment_constructor "./test/experiment_constructor.c")
+target_include_directories(experiment_constructor PRIVATE "${CMAKE_CURRENT_LIST_DIR}")

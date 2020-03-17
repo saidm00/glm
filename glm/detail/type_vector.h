@@ -39,12 +39,18 @@
 #include "namespace_begin.inl"
 #include "namespace_template_vector_begin.inl"
 
+#define GLM_VECTOR_DATA(L, T, Q)\
+union {\
+scalar(T, Q) elem[L];\
+unsigned char _data[sizeof(scalar(T, Q)) * L];\
+}
+
 typedef
 struct vec(1, bool, defaultp)
 {
 	union
 	{
-		scalar(bool, defaultp) elem[1];
+		GLM_VECTOR_DATA(1, bool, defaultp);
 		struct { scalar(bool, defaultp) x; };
 		struct { scalar(bool, defaultp) r; };
 		struct { scalar(bool, defaultp) s; };
@@ -57,7 +63,7 @@ struct vec(2, bool, defaultp)
 {
 	union
 	{
-		scalar(bool, defaultp) elem[2];
+		GLM_VECTOR_DATA(2, bool, defaultp);
 		struct { scalar(bool, defaultp) x, y; };
 		struct { scalar(bool, defaultp) r, g; };
 		struct { scalar(bool, defaultp) s, t; };
@@ -70,7 +76,7 @@ struct vec(3, bool, defaultp)
 {
 	union
 	{
-		scalar(bool, defaultp) elem[3];
+		GLM_VECTOR_DATA(3, bool, defaultp);
 		struct { scalar(bool, defaultp) x, y, z; };
 		struct { scalar(bool, defaultp) r, g, b; };
 		struct { scalar(bool, defaultp) s, t, p; };
@@ -83,7 +89,7 @@ struct vec(4, bool, defaultp)
 {
 	union
 	{
-		scalar(bool, defaultp) elem[4];
+		GLM_VECTOR_DATA(4, bool, defaultp);
 		struct { scalar(bool, defaultp) x, y, z, w; };
 		struct { scalar(bool, defaultp) r, g, b, a; };
 		struct { scalar(bool, defaultp) s, t, p, q; };
@@ -96,7 +102,7 @@ struct vec(1, float, defaultp)
 {
 	union
 	{
-		scalar(float, defaultp) elem[1];
+		GLM_VECTOR_DATA(1, float, defaultp);
 		struct { scalar(float, defaultp) x; };
 		struct { scalar(float, defaultp) r; };
 		struct { scalar(float, defaultp) s; };
@@ -109,7 +115,7 @@ struct vec(2, float, defaultp)
 {
 	union
 	{
-		scalar(float, defaultp) elem[2];
+		GLM_VECTOR_DATA(2, float, defaultp);
 		struct { scalar(float, defaultp) x, y; };
 		struct { scalar(float, defaultp) r, g; };
 		struct { scalar(float, defaultp) s, t; };
@@ -122,7 +128,7 @@ struct vec(3, float, defaultp)
 {
 	union
 	{
-		scalar(float, defaultp) elem[3];
+		GLM_VECTOR_DATA(3, float, defaultp);
 		struct { scalar(float, defaultp) x, y, z; };
 		struct { scalar(float, defaultp) r, g, b; };
 		struct { scalar(float, defaultp) s, t, p; };
@@ -135,7 +141,7 @@ struct vec(4, float, defaultp)
 {
 	union
 	{
-		scalar(float, defaultp) elem[4];
+		GLM_VECTOR_DATA(4, float, defaultp);
 		struct { scalar(float, defaultp) x, y, z, w; };
 		struct { scalar(float, defaultp) r, g, b, a; };
 		struct { scalar(float, defaultp) s, t, p, q; };
@@ -148,7 +154,7 @@ struct vec(1, double, defaultp)
 {
 	union
 	{
-		scalar(double, defaultp) elem[1];
+		GLM_VECTOR_DATA(1, double, defaultp);
 		struct { scalar(double, defaultp) x; };
 		struct { scalar(double, defaultp) r; };
 		struct { scalar(double, defaultp) s; };
@@ -161,7 +167,7 @@ struct vec(2, double, defaultp)
 {
 	union
 	{
-		scalar(double, defaultp) elem[2];
+		GLM_VECTOR_DATA(2, double, defaultp);
 		struct { scalar(double, defaultp) x, y; };
 		struct { scalar(double, defaultp) r, g; };
 		struct { scalar(double, defaultp) s, t; };
@@ -174,7 +180,7 @@ struct vec(3, double, defaultp)
 {
 	union
 	{
-		scalar(double, defaultp) elem[3];
+		GLM_VECTOR_DATA(3, double, defaultp);
 		struct { scalar(double, defaultp) x, y, z; };
 		struct { scalar(double, defaultp) r, g, b; };
 		struct { scalar(double, defaultp) s, t, p; };
@@ -187,7 +193,7 @@ struct vec(4, double, defaultp)
 {
 	union
 	{
-		scalar(double, defaultp) elem[4];
+		GLM_VECTOR_DATA(4, double, defaultp);
 		struct { scalar(double, defaultp) x, y, z, w; };
 		struct { scalar(double, defaultp) r, g, b, a; };
 		struct { scalar(double, defaultp) s, t, p, q; };
@@ -200,7 +206,7 @@ struct vec(1, int, defaultp)
 {
 	union
 	{
-		scalar(int, defaultp) elem[1];
+		GLM_VECTOR_DATA(1, int, defaultp);
 		struct { scalar(int, defaultp) x; };
 		struct { scalar(int, defaultp) r; };
 		struct { scalar(int, defaultp) s; };
@@ -213,7 +219,7 @@ struct vec(2, int, defaultp)
 {
 	union
 	{
-		scalar(int, defaultp) elem[2];
+		GLM_VECTOR_DATA(2, int, defaultp);
 		struct { scalar(int, defaultp) x, y; };
 		struct { scalar(int, defaultp) r, g; };
 		struct { scalar(int, defaultp) s, t; };
@@ -226,7 +232,7 @@ struct vec(3, int, defaultp)
 {
 	union
 	{
-		scalar(int, defaultp) elem[3];
+		GLM_VECTOR_DATA(3, int, defaultp);
 		struct { scalar(int, defaultp) x, y, z; };
 		struct { scalar(int, defaultp) r, g, b; };
 		struct { scalar(int, defaultp) s, t, p; };
@@ -239,7 +245,7 @@ struct vec(4, int, defaultp)
 {
 	union
 	{
-		scalar(int, defaultp) elem[4];
+		GLM_VECTOR_DATA(4, int, defaultp);
 		struct { scalar(int, defaultp) x, y, z, w; };
 		struct { scalar(int, defaultp) r, g, b, a; };
 		struct { scalar(int, defaultp) s, t, p, q; };
@@ -252,7 +258,7 @@ struct vec(1, uint, defaultp)
 {
 	union
 	{
-		scalar(uint, defaultp) elem[1];
+		GLM_VECTOR_DATA(1, uint, defaultp);
 		struct { scalar(uint, defaultp) x; };
 		struct { scalar(uint, defaultp) r; };
 		struct { scalar(uint, defaultp) s; };
@@ -265,7 +271,7 @@ struct vec(2, uint, defaultp)
 {
 	union
 	{
-		scalar(uint, defaultp) elem[2];
+		GLM_VECTOR_DATA(2, uint, defaultp);
 		struct { scalar(uint, defaultp) x, y; };
 		struct { scalar(uint, defaultp) r, g; };
 		struct { scalar(uint, defaultp) s, t; };
@@ -278,7 +284,7 @@ struct vec(3, uint, defaultp)
 {
 	union
 	{
-		scalar(uint, defaultp) elem[3];
+		GLM_VECTOR_DATA(3, uint, defaultp);
 		struct { scalar(uint, defaultp) x, y, z; };
 		struct { scalar(uint, defaultp) r, g, b; };
 		struct { scalar(uint, defaultp) s, t, p; };
@@ -291,7 +297,7 @@ struct vec(4, uint, defaultp)
 {
 	union
 	{
-		scalar(int, defaultp) elem[4];
+		GLM_VECTOR_DATA(4, uint, defaultp);
 		struct { scalar(uint, defaultp) x, y, z, w; };
 		struct { scalar(uint, defaultp) r, g, b, a; };
 		struct { scalar(uint, defaultp) s, t, p, q; };
@@ -667,6 +673,15 @@ glm_vec(2, double, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(2, doubl
 glm_vec(3, double, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
 glm_vec(4, double, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(4, double, defaultp))\
 )((x))
+
+#define glm_add(x, y) _Generic((x), )((x))
+#define glm_sub(x, y) _Generic((x), )((x))
+#define glm_mul(x, y) _Generic((x), )((x))
+#define glm_div(x, y) _Generic((x), )((x))
+#define glm_addeq(lhs, rhs) _Generic((lhs), )
+#define glm_subeq(lhs, rhs) _Generic((lhs), )
+#define glm_muleq(lhs, rhs) _Generic((lhs), )
+#define glm_diveq(lhs, rhs) _Generic((lhs), )
 
 #include "namespace_template_vector_begin.inl"
 #include "namespace_end.inl"
