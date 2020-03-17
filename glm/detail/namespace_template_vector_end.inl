@@ -1,5 +1,7 @@
 #undef constructor
+#undef load1
 
+#undef variadic_add
 #undef negate
 #undef add
 #undef sub

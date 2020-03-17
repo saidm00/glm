@@ -32,13 +32,14 @@
 
 #define GLM_VECTOR_TYPENAME_(L, T, Q) GLM_VECTOR_TYPENAME_ ## T ## L
 #define GLM_VECTOR_TYPENAME(...) GLM_VECTOR_TYPENAME_(__VA_ARGS__)
-#define GLM_VEC_CTOR_NAME(L, T, Q) GLM_CALL_FUNC(constructor, GLM_VECTOR_TYPENAME(L, T, Q))
+#define GLM_VECTOR_CONSTRUCTOR_NAME(L, T, Q) GLM_CALL_FUNC(constructor, GLM_VECTOR_TYPENAME(L, T, Q))
 
 #define glm_vec(L, T, Q) GLM_PREFIX(GLM_VECTOR_TYPENAME(L, T, Q))
 
 #include "namespace_begin.inl"
 #include "namespace_template_vector_begin.inl"
 
+/* Align arrays to 1-byte boundaries */
 #define GLM_VECTOR_DATA(L, T, Q)\
 union {\
 scalar(T, Q) elem[L];\
@@ -652,7 +653,7 @@ typedef vec(4, uint, defaultp) glm_uvec4;
 #undef T
 #undef Q
 
-#define glm_normalize(x) _Generic((x),\
+#define glm_normalize(x) _Generic(x,\
 glm_vec(1, float, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
 glm_vec(2, float, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
 glm_vec(3, float, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
@@ -663,7 +664,8 @@ glm_vec(3, double, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(3, do
 glm_vec(4, double, defaultp): GLM_CALL_FUNC(normalize, GLM_VECTOR_TYPENAME(4, double, defaultp))\
 )((x))
 
-#define glm_length(x) _Generic((x),\
+/* */
+#define glm_length(x) _Generic(x,\
 glm_vec(1, float, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
 glm_vec(2, float, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
 glm_vec(3, float, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
@@ -674,14 +676,261 @@ glm_vec(3, double, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(3, doubl
 glm_vec(4, double, defaultp): GLM_CALL_FUNC(length, GLM_VECTOR_TYPENAME(4, double, defaultp))\
 )((x))
 
-#define glm_add(x, y) _Generic((x), )((x))
-#define glm_sub(x, y) _Generic((x), )((x))
-#define glm_mul(x, y) _Generic((x), )((x))
-#define glm_div(x, y) _Generic((x), )((x))
-#define glm_addeq(lhs, rhs) _Generic((lhs), )
-#define glm_subeq(lhs, rhs) _Generic((lhs), )
-#define glm_muleq(lhs, rhs) _Generic((lhs), )
-#define glm_diveq(lhs, rhs) _Generic((lhs), )
+#define glm_lessThan(x, y) _Generic(x,\
+glm_vec(1, float, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
+glm_vec(2, float, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
+glm_vec(3, float, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+glm_vec(4, float, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(4, float, defaultp)),\
+glm_vec(1, double, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+glm_vec(2, double, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+glm_vec(3, double, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+glm_vec(4, double, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(4, double, defaultp)),\
+glm_vec(1, int, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(1, int, defaultp)),\
+glm_vec(2, int, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(2, int, defaultp)),\
+glm_vec(3, int, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(3, int, defaultp)),\
+glm_vec(4, int, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(4, int, defaultp)),\
+glm_vec(1, uint, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(1, uint, defaultp)),\
+glm_vec(2, uint, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(2, uint, defaultp)),\
+glm_vec(3, uint, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(3, uint, defaultp)),\
+glm_vec(4, uint, defaultp): GLM_CALL_FUNC(lessThan, GLM_VECTOR_TYPENAME(4, uint, defaultp))\
+)(x, y)
+
+#define glm_greaterThan(x, y) _Generic(x,\
+glm_vec(1, float, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
+glm_vec(2, float, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
+glm_vec(3, float, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+glm_vec(4, float, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(4, float, defaultp)),\
+glm_vec(1, double, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+glm_vec(2, double, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+glm_vec(3, double, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+glm_vec(4, double, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(4, double, defaultp)),\
+glm_vec(1, int, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(1, int, defaultp)),\
+glm_vec(2, int, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(2, int, defaultp)),\
+glm_vec(3, int, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(3, int, defaultp)),\
+glm_vec(4, int, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(4, int, defaultp)),\
+glm_vec(1, uint, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(1, uint, defaultp)),\
+glm_vec(2, uint, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(2, uint, defaultp)),\
+glm_vec(3, uint, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(3, uint, defaultp)),\
+glm_vec(4, uint, defaultp): GLM_CALL_FUNC(greaterThan, GLM_VECTOR_TYPENAME(4, uint, defaultp))\
+)(x, y)
+
+#define glm_lessThanEqual(x, y) _Generic(x,\
+glm_vec(1, float, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
+glm_vec(2, float, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
+glm_vec(3, float, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+glm_vec(4, float, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(4, float, defaultp)),\
+glm_vec(1, double, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+glm_vec(2, double, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+glm_vec(3, double, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+glm_vec(4, double, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(4, double, defaultp)),\
+glm_vec(1, int, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(1, int, defaultp)),\
+glm_vec(2, int, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(2, int, defaultp)),\
+glm_vec(3, int, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(3, int, defaultp)),\
+glm_vec(4, int, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(4, int, defaultp)),\
+glm_vec(1, uint, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(1, uint, defaultp)),\
+glm_vec(2, uint, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(2, uint, defaultp)),\
+glm_vec(3, uint, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(3, uint, defaultp)),\
+glm_vec(4, uint, defaultp): GLM_CALL_FUNC(lessThanEqual, GLM_VECTOR_TYPENAME(4, uint, defaultp))\
+)(x, y)
+
+#define glm_greaterThanEqual(x, y) _Generic(x,\
+glm_vec(1, float, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
+glm_vec(2, float, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
+glm_vec(3, float, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+glm_vec(4, float, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(4, float, defaultp)),\
+glm_vec(1, double, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+glm_vec(2, double, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+glm_vec(3, double, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+glm_vec(4, double, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(4, double, defaultp)),\
+glm_vec(1, int, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(1, int, defaultp)),\
+glm_vec(2, int, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(2, int, defaultp)),\
+glm_vec(3, int, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(3, int, defaultp)),\
+glm_vec(4, int, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(4, int, defaultp)),\
+glm_vec(1, uint, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(1, uint, defaultp)),\
+glm_vec(2, uint, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(2, uint, defaultp)),\
+glm_vec(3, uint, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(3, uint, defaultp)),\
+glm_vec(4, uint, defaultp): GLM_CALL_FUNC(greaterThanEqual, GLM_VECTOR_TYPENAME(4, uint, defaultp))\
+)(x, y)
+
+#define glm_equal(x, y) _Generic(x,\
+glm_vec(1, float, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
+glm_vec(2, float, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
+glm_vec(3, float, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+glm_vec(4, float, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(4, float, defaultp)),\
+glm_vec(1, double, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+glm_vec(2, double, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+glm_vec(3, double, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+glm_vec(4, double, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(4, double, defaultp)),\
+glm_vec(1, int, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(1, int, defaultp)),\
+glm_vec(2, int, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(2, int, defaultp)),\
+glm_vec(3, int, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(3, int, defaultp)),\
+glm_vec(4, int, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(4, int, defaultp)),\
+glm_vec(1, uint, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(1, uint, defaultp)),\
+glm_vec(2, uint, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(2, uint, defaultp)),\
+glm_vec(3, uint, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(3, uint, defaultp)),\
+glm_vec(4, uint, defaultp): GLM_CALL_FUNC(equal, GLM_VECTOR_TYPENAME(4, uint, defaultp))\
+)(x, y)
+
+#define glm_notEqual(x, y) _Generic(x,\
+glm_vec(1, float, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
+glm_vec(2, float, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
+glm_vec(3, float, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+glm_vec(4, float, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(4, float, defaultp)),\
+glm_vec(1, double, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+glm_vec(2, double, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+glm_vec(3, double, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+glm_vec(4, double, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(4, double, defaultp)),\
+glm_vec(1, int, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(1, int, defaultp)),\
+glm_vec(2, int, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(2, int, defaultp)),\
+glm_vec(3, int, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(3, int, defaultp)),\
+glm_vec(4, int, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(4, int, defaultp)),\
+glm_vec(1, uint, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(1, uint, defaultp)),\
+glm_vec(2, uint, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(2, uint, defaultp)),\
+glm_vec(3, uint, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(3, uint, defaultp)),\
+glm_vec(4, uint, defaultp): GLM_CALL_FUNC(notEqual, GLM_VECTOR_TYPENAME(4, uint, defaultp))\
+)(x, y)
+
+
+/* Elem count of vectors of both float and double */
+/*
+#define GLM_VEC_ELEM_COUNT(x) _Generic((x),\
+glm_vec(1, float, defaultp): 1,\
+glm_vec(2, float, defaultp): 2,\
+glm_vec(3, float, defaultp): 3,\
+glm_vec(4, float, defaultp): 4,\
+glm_vec(1, double, defaultp): 1,\
+glm_vec(2, double, defaultp): 2,\
+glm_vec(3, double, defaultp): 3,\
+glm_vec(4, double, defaultp): 4,\
+glm_vec(1, int, defaultp): 1,\
+glm_vec(2, int, defaultp): 2,\
+glm_vec(3, int, defaultp): 3,\
+glm_vec(4, int, defaultp): 4,\
+glm_vec(1, uint, defaultp): 1,\
+glm_vec(2, uint, defaultp): 2,\
+glm_vec(3, uint, defaultp): 3,\
+glm_vec(4, uint, defaultp): 4,\
+glm_vec(1, bool, defaultp): 1,\
+glm_vec(2, bool, defaultp): 2,\
+glm_vec(3, bool, defaultp): 3,\
+glm_vec(4, bool, defaultp): 4\
+)*/
+
+#define GLM_VEC_ELEM_COUNT(x) sizeof(x.elem)/sizeof(x.elem[0])
+
+/* Determines whether x or y is bigger, and sets the order of parameters of the function being called accordingly (biggest, smallest) */
+/*
+#define GLM_BINARY_OPERATOR(OP, x, y) _Generic( (char(*)[GLM_VEC_ELEM_COUNT(x)>GLM_VEC_ELEM_COUNT(y)?GLM_TYPEOF(x):GLM_TYPEOF(y)])0,\
+char(*)[GLM_TYPE_BOOL1]:   GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(1, bool,   defaultp)),\
+char(*)[GLM_TYPE_BOOL2]:   GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(2, bool,   defaultp)),\
+char(*)[GLM_TYPE_BOOL3]:   GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(3, bool,   defaultp)),\
+char(*)[GLM_TYPE_BOOL4]:   GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(4, bool,   defaultp)),\
+char(*)[GLM_TYPE_FLOAT1]:  GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(1, float,  defaultp)),\
+char(*)[GLM_TYPE_FLOAT2]:  GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(2, float,  defaultp)),\
+char(*)[GLM_TYPE_FLOAT3]:  GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(3, float,  defaultp)),\
+char(*)[GLM_TYPE_FLOAT4]:  GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(4, float,  defaultp)),\
+char(*)[GLM_TYPE_DOUBLE1]: GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+char(*)[GLM_TYPE_DOUBLE2]: GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+char(*)[GLM_TYPE_DOUBLE3]: GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+char(*)[GLM_TYPE_DOUBLE4]: GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(4, double, defaultp)),\
+char(*)[GLM_TYPE_INT1]:    GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(1, int,    defaultp)),\
+char(*)[GLM_TYPE_INT2]:    GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(2, int,    defaultp)),\
+char(*)[GLM_TYPE_INT3]:    GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(3, int,    defaultp)),\
+char(*)[GLM_TYPE_INT4]:    GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(4, int,    defaultp)),\
+char(*)[GLM_TYPE_UINT1]:   GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(1, uint,   defaultp)),\
+char(*)[GLM_TYPE_UINT2]:   GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(2, uint,   defaultp)),\
+char(*)[GLM_TYPE_UINT3]:   GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(3, uint,   defaultp)),\
+char(*)[GLM_TYPE_UINT4]:   GLM_CALL_FUNC(variadic_##OP, GLM_VECTOR_TYPENAME(4, uint,   defaultp))\
+)(2, GLM_TYPEOF(x), x, GLM_TYPEOF(y), y)
+*/
+/*
+#define GLM_BINARY_OPERATOR(OP, x, y)\
+_Generic( (char(*)[GLM_VEC_ELEM_COUNT(x) > GLM_VEC_ELEM_COUNT(y)][GLM_VEC_ELEM_COUNT(x) > GLM_VEC_ELEM_COUNT(y) ? GLM_TYPEOF(x) : GLM_TYPEOF(y)])0,\
+char(*)[0][GLM_TYPE_FLOAT1]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
+char(*)[0][GLM_TYPE_FLOAT2]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
+char(*)[0][GLM_TYPE_FLOAT3]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+char(*)[0][GLM_TYPE_FLOAT4]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(4, float, defaultp)),\
+char(*)[0][GLM_TYPE_DOUBLE1]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+char(*)[0][GLM_TYPE_DOUBLE2]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+char(*)[0][GLM_TYPE_DOUBLE3]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+char(*)[0][GLM_TYPE_DOUBLE4]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(4, double, defaultp)),\
+char(*)[0][GLM_TYPE_INT1]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(1, int, defaultp)),\
+char(*)[0][GLM_TYPE_INT2]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(2, int, defaultp)),\
+char(*)[0][GLM_TYPE_INT3]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(3, int, defaultp)),\
+char(*)[0][GLM_TYPE_INT4]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(4, int, defaultp)),\
+char(*)[0][GLM_TYPE_UINT1]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(1, uint, defaultp)),\
+char(*)[0][GLM_TYPE_UINT2]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(2, uint, defaultp)),\
+char(*)[0][GLM_TYPE_UINT3]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(3, uint, defaultp)),\
+char(*)[0][GLM_TYPE_UINT4]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(4, uint, defaultp)),\
+char(*)[1][GLM_TYPE_FLOAT1]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
+char(*)[1][GLM_TYPE_FLOAT2]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
+char(*)[1][GLM_TYPE_FLOAT3]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+char(*)[1][GLM_TYPE_FLOAT4]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(4, float, defaultp)),\
+char(*)[1][GLM_TYPE_DOUBLE1]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+char(*)[1][GLM_TYPE_DOUBLE2]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+char(*)[1][GLM_TYPE_DOUBLE3]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+char(*)[1][GLM_TYPE_DOUBLE4]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(4, double, defaultp)),\
+char(*)[1][GLM_TYPE_INT1]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(1, int, defaultp)),\
+char(*)[1][GLM_TYPE_INT2]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(2, int, defaultp)),\
+char(*)[1][GLM_TYPE_INT3]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(3, int, defaultp)),\
+char(*)[1][GLM_TYPE_INT4]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(4, int, defaultp)),\
+char(*)[1][GLM_TYPE_UINT1]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(1, uint, defaultp)),\
+char(*)[1][GLM_TYPE_UINT2]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(2, uint, defaultp)),\
+char(*)[1][GLM_TYPE_UINT3]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(3, uint, defaultp)),\
+char(*)[1][GLM_TYPE_UINT4]: GLM_CALL_FUNC(OP, GLM_VECTOR_TYPENAME(4, uint, defaultp))\
+)\
+(\
+	_Generic( (char(*)[ GLM_VEC_ELEM_COUNT(y)>GLM_VEC_ELEM_COUNT(x)][GLM_TYPEOF(y) ])0,\
+		char(*)[1][GLM_TYPE_FLOAT1]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(1, float, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_FLOAT2]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(2, float, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_FLOAT3]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(3, float, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_FLOAT4]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(4, float, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_DOUBLE1]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(1, double, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_DOUBLE2]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(2, double, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_DOUBLE3]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(3, double, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_DOUBLE4]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(4, double, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_INT1]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(1, int, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_INT2]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(2, int, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_INT3]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(3, int, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_INT4]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(4, int, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_UINT1]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(1, uint, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_UINT2]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(2, uint, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_UINT3]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(3, uint, defaultp))(x.elem[0]),\
+		char(*)[1][GLM_TYPE_UINT4]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(4, uint, defaultp))(x.elem[0]),\
+		default: x\
+	),\
+	_Generic( (char(*)[ GLM_VEC_ELEM_COUNT(x)>GLM_VEC_ELEM_COUNT(y)][GLM_TYPEOF(x)])0,\
+		char(*)[1][GLM_TYPE_FLOAT1]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(1, float, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_FLOAT2]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(2, float, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_FLOAT3]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(3, float, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_FLOAT4]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(4, float, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_DOUBLE1]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(1, double, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_DOUBLE2]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(2, double, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_DOUBLE3]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(3, double, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_DOUBLE4]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(4, double, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_INT1]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(1, int, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_INT2]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(2, int, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_INT3]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(3, int, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_INT4]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(4, int, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_UINT1]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(1, uint, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_UINT2]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(2, uint, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_UINT3]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(3, uint, defaultp))(y.elem[0]),\
+		char(*)[1][GLM_TYPE_UINT4]: GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(4, uint, defaultp))(y.elem[0]),\
+		default: y\
+	)\
+)
+*/
+
+/* Adds two vectors 
+#define glm_add(x, y) GLM_BINARY_OPERATOR(add, x, y)
+#define glm_sub(x, y) GLM_BINARY_OPERATOR(sub, x, y)
+#define glm_mul(x, y) GLM_BINARY_OPERATOR(mul, x, y)
+#define glm_div(x, y) GLM_BINARY_OPERATOR(div, x, y)
+#define glm_addeq(lhs, rhs)
+#define glm_subeq(lhs, rhs)
+#define glm_muleq(lhs, rhs)
+#define glm_diveq(lhs, rhs)
+*/
 
 #include "namespace_template_vector_begin.inl"
 #include "namespace_end.inl"

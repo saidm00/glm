@@ -1,5 +1,5 @@
 #include "../detail/namespace_begin.inl"
-#include "../detail/namespace_template_vector_end.inl"
+#include "../detail/namespace_template_vector_begin.inl"
 #define L 1
 #define T int
 #define Q defaultp

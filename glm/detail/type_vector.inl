@@ -327,6 +327,27 @@ finished_work:
 }
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
+load1(const T x)
+{
+	vec(L, T, Q) Result;
+
+	for (length_t i = 0; i < L; ++i)
+		Result.elem[i] = x;
+
+	return Result;
+}
+
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
+variadic_add(length_t argc, ...)
+{
+	vec(L, T, Q) Result;
+
+
+	return Result;
+}
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 negate(vec(L, T, Q) const x)
 {
 	vec(L, T, Q) Result;
@@ -336,6 +357,7 @@ negate(vec(L, T, Q) const x)
 
 	return Result;
 }
+
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 add(vec(L, T, Q) const x, vec(L, T, Q) const y)
@@ -347,6 +369,7 @@ add(vec(L, T, Q) const x, vec(L, T, Q) const y)
 
 	return Result;
 }
+
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 sub(vec(L, T, Q) const x, vec(L, T, Q) const y)
@@ -380,7 +403,7 @@ div(vec(L, T, Q) const x, vec(L, T, Q) const y)
 
 	return Result;
 }
-
+/*
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 adds(vec(L, T, Q) const x, T const y)
 {
@@ -424,7 +447,8 @@ divs(vec(L, T, Q) const x, T const y)
 
 	return Result;
 }
-
+*/
+/*
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
 addeqs(vec(L, T, Q) *lhs, T const rhs)
 {
@@ -480,3 +504,4 @@ diveqv(vec(L, T, Q) *lhs, vec(L, T, Q) const rhs)
 	for(length_t i = 0; i < L; ++i)
 		lhs->elem[i] /= rhs.elem[i];
 }
+*/

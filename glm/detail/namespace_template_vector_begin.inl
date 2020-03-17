@@ -1,4 +1,7 @@
 #define constructor GLM_CALL_FUNC(constructor, GLM_VECTOR_TYPENAME(L, T, Q))
+#define load1 GLM_CALL_FUNC(load1, GLM_VECTOR_TYPENAME(L, T, Q))
+
+#define variadic_add GLM_CALL_FUNC(variadic_add, GLM_VECTOR_TYPENAME(L, T, Q))
 
 #define negate GLM_CALL_FUNC(negate, GLM_VECTOR_TYPENAME(L, T, Q))
 #define add    GLM_CALL_FUNC(add   , GLM_VECTOR_TYPENAME(L, T, Q))

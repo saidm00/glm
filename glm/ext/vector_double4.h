@@ -10,4 +10,4 @@
 
 #include "vector_double4.c"
 
-#endif /* GLM_EXT_VECTOR_DOUBLE4 */
+#endif /* GLM_EXT_VECTOR_DOUBLE4_H */

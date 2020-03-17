@@ -71,25 +71,25 @@ typedef enum glm_type
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR size_t
 glm_sizeof_elem_type(glm_type_t type)
 {
-    switch (type)
-    {
-        case GLM_TYPE_BOOL:
-            return sizeof(bool);
-            break;
-        case GLM_TYPE_FLOAT:
-            return sizeof(float);
-            break;
-        case GLM_TYPE_DOUBLE:
-            return sizeof(double);
-            break;
-        case GLM_TYPE_INT:
-            return sizeof(int);
-            break;
-        case GLM_TYPE_UINT:
-            return sizeof(uint);
-            break;
+	switch (type)
+	{
+		case GLM_TYPE_BOOL:
+			return sizeof(bool);
+			break;
+		case GLM_TYPE_FLOAT:
+			return sizeof(float);
+			break;
+		case GLM_TYPE_DOUBLE:
+			return sizeof(double);
+			break;
+		case GLM_TYPE_INT:
+			return sizeof(int);
+			break;
+		case GLM_TYPE_UINT:
+			return sizeof(uint);
+			break;
 		default: return 0;
-    }
+	}
 
 	return 0;
 }
@@ -114,31 +114,31 @@ glm_get_type_info(glm_type_t type, glm_type_info_t *info)
 		info->elemType = GLM_TYPE_FLOAT;
 		info->elemCol = 2;
 		info->elemRow = 2;
-        info->elemCount = 4;
+		info->elemCount = 4;
 		/* info->elemQualifier = ;*/
 		break;
-    case GLM_TYPE_FLOAT2X3:
+	case GLM_TYPE_FLOAT2X3:
 		info->elemType = GLM_TYPE_FLOAT;
 		info->elemCol = 2;
 		info->elemRow = 3;
-        info->elemCount = 6;
+		info->elemCount = 6;
 		/* info->elemQualifier = ;*/
 		break;
-    case GLM_TYPE_FLOAT2X4:
+	case GLM_TYPE_FLOAT2X4:
 		info->elemType = GLM_TYPE_FLOAT;
 		info->elemCol = 2;
 		info->elemRow = 4;
-        info->elemCount = 8;
+		info->elemCount = 8;
 		/* info->elemQualifier = ;*/
 		break;
-    case GLM_TYPE_FLOAT3X2:
+	case GLM_TYPE_FLOAT3X2:
 		info->elemType = GLM_TYPE_FLOAT;
 		info->elemCol = 3;
 		info->elemRow = 2;
 		info->elemCount = 6;
 		/* info->elemQualifier = ;*/
 		break;
-    case GLM_TYPE_FLOAT3X3:
+	case GLM_TYPE_FLOAT3X3:
 		info->elemType = GLM_TYPE_FLOAT3X3;
 		info->elemCol = 3;
 		info->elemRow = 3;
@@ -163,14 +163,14 @@ glm_get_type_info(glm_type_t type, glm_type_info_t *info)
 		info->elemType = GLM_TYPE_FLOAT;
 		info->elemCol = 4;
 		info->elemRow = 3;
-        info->elemCount = 12;
+		info->elemCount = 12;
 		/* info->elemQualifier = ;*/
 		break;
 	case GLM_TYPE_FLOAT4X4:
 		info->elemType = GLM_TYPE_FLOAT;
 		info->elemCol = 4;
 		info->elemRow = 4;
-        info->elemCount = 16;
+		info->elemCount = 16;
 		/* info->elemQualifier = ;*/
 		break;
 	case GLM_TYPE_DOUBLE2X2:
@@ -180,60 +180,60 @@ glm_get_type_info(glm_type_t type, glm_type_info_t *info)
 		info->elemCount = 4;
 		/* info->elemQualifier = ;*/
 		break;
-    case GLM_TYPE_DOUBLE2X3:
+	case GLM_TYPE_DOUBLE2X3:
 		info->elemType = GLM_TYPE_DOUBLE;
 		info->elemCol = 2;
 		info->elemRow = 3;
-        info->elemCount = 6;
+		info->elemCount = 6;
 		/* info->elemQualifier = ;*/
 		break;
-    case GLM_TYPE_DOUBLE2X4:
+	case GLM_TYPE_DOUBLE2X4:
 		info->elemType = GLM_TYPE_DOUBLE;
 		info->elemCol = 2;
 		info->elemRow = 4;
-        info->elemCount = 8;
+		info->elemCount = 8;
 		/* info->elemQualifier = ;*/
 		break;
-    case GLM_TYPE_DOUBLE3X2:
+	case GLM_TYPE_DOUBLE3X2:
 		info->elemType = GLM_TYPE_DOUBLE;
 		info->elemCol = 3;
 		info->elemRow = 2;
-        info->elemCount = 6;
+		info->elemCount = 6;
 		/* info->elemQualifier = ;*/
 		break;
-    case GLM_TYPE_DOUBLE3X3:
+	case GLM_TYPE_DOUBLE3X3:
 		info->elemType = GLM_TYPE_DOUBLE;
 		info->elemCol = 3;
 		info->elemRow = 3;
-        info->elemCount = 9;
+		info->elemCount = 9;
 		/* info->elemQualifier = ;*/
 		break;
-    case GLM_TYPE_DOUBLE3X4:
+	case GLM_TYPE_DOUBLE3X4:
 		info->elemType = GLM_TYPE_DOUBLE;
 		info->elemCol = 3;
 		info->elemRow = 4;
-        info->elemCount = 12;
+		info->elemCount = 12;
 		/* info->elemQualifier = ;*/
 		break;
-    case GLM_TYPE_DOUBLE4X2:
+	case GLM_TYPE_DOUBLE4X2:
 		info->elemType = GLM_TYPE_DOUBLE;
 		info->elemCol = 4;
 		info->elemRow = 2;
-        info->elemCount = 8;
+		info->elemCount = 8;
 		/* info->elemQualifier = ;*/
 		break;
-    case GLM_TYPE_DOUBLE4X3:
+	case GLM_TYPE_DOUBLE4X3:
 		info->elemType = GLM_TYPE_DOUBLE;
 		info->elemCol = 4;
 		info->elemRow = 3;
-        info->elemCount = 12;
+		info->elemCount = 12;
 		/* info->elemQualifier = ;*/
 		break;
-    case GLM_TYPE_DOUBLE4X4:
+	case GLM_TYPE_DOUBLE4X4:
 		info->elemType = GLM_TYPE_DOUBLE;
 		info->elemCol = 4;
 		info->elemRow = 4;
-        info->elemCount = 16;
+		info->elemCount = 16;
 		/* info->elemQualifier = ;*/
 		break;
 	case GLM_TYPE_BOOL:
@@ -483,5 +483,52 @@ glm_cast_array(void *dstArr, glm_type_t dstType, const void *srcArr, glm_type_t 
 
 #define GLM_TYPE_SCALAR_(T) GLM_TYPEOF_SCALAR_ ## T
 #define GLM_TYPEOF_SCALAR(...) GLM_TYPE_SCALAR_(__VA_ARGS__)
+
+#define GLM_TYPEOF(x)\
+_Generic((x),\
+bool : GLM_TYPE_BOOL,\
+float : GLM_TYPE_FLOAT,\
+double : GLM_TYPE_DOUBLE,\
+int : GLM_TYPE_INT,\
+uint : GLM_TYPE_UINT,\
+glm_vec(1, bool, defaultp): GLM_TYPE_BOOL1,\
+glm_vec(2, bool, defaultp): GLM_TYPE_BOOL2,\
+glm_vec(3, bool, defaultp): GLM_TYPE_BOOL3,\
+glm_vec(4, bool, defaultp): GLM_TYPE_BOOL4,\
+glm_vec(1, float, defaultp): GLM_TYPE_FLOAT1,\
+glm_vec(2, float, defaultp): GLM_TYPE_FLOAT2,\
+glm_vec(3, float, defaultp): GLM_TYPE_FLOAT3,\
+glm_vec(4, float, defaultp): GLM_TYPE_FLOAT4,\
+glm_vec(1, double, defaultp): GLM_TYPE_DOUBLE1,\
+glm_vec(2, double, defaultp): GLM_TYPE_DOUBLE2,\
+glm_vec(3, double, defaultp): GLM_TYPE_DOUBLE3,\
+glm_vec(4, double, defaultp): GLM_TYPE_DOUBLE4,\
+glm_vec(1, int, defaultp): GLM_TYPE_INT1,\
+glm_vec(2, int, defaultp): GLM_TYPE_INT2,\
+glm_vec(3, int, defaultp): GLM_TYPE_INT3,\
+glm_vec(4, int, defaultp): GLM_TYPE_INT4,\
+glm_vec(1, uint, defaultp): GLM_TYPE_UINT1,\
+glm_vec(2, uint, defaultp): GLM_TYPE_UINT2,\
+glm_vec(3, uint, defaultp): GLM_TYPE_UINT3,\
+glm_vec(4, uint, defaultp): GLM_TYPE_UINT4,\
+glm_mat(2, 2, float, defaultp): GLM_TYPE_FLOAT2X2,\
+glm_mat(2, 3, float, defaultp): GLM_TYPE_FLOAT2X3,\
+glm_mat(2, 4, float, defaultp): GLM_TYPE_FLOAT2X4,\
+glm_mat(3, 2, float, defaultp): GLM_TYPE_FLOAT3X2,\
+glm_mat(3, 3, float, defaultp): GLM_TYPE_FLOAT3X3,\
+glm_mat(3, 4, float, defaultp): GLM_TYPE_FLOAT3X4,\
+glm_mat(4, 2, float, defaultp): GLM_TYPE_FLOAT4X2,\
+glm_mat(4, 3, float, defaultp): GLM_TYPE_FLOAT4X3,\
+glm_mat(4, 4, float, defaultp): GLM_TYPE_FLOAT4X4,\
+glm_mat(2, 2, double, defaultp): GLM_TYPE_DOUBLE2X2,\
+glm_mat(2, 3, double, defaultp): GLM_TYPE_DOUBLE2X3,\
+glm_mat(2, 4, double, defaultp): GLM_TYPE_DOUBLE2X4,\
+glm_mat(3, 2, double, defaultp): GLM_TYPE_DOUBLE3X2,\
+glm_mat(3, 3, double, defaultp): GLM_TYPE_DOUBLE3X3,\
+glm_mat(3, 4, double, defaultp): GLM_TYPE_DOUBLE3X4,\
+glm_mat(4, 2, double, defaultp): GLM_TYPE_DOUBLE4X2,\
+glm_mat(4, 3, double, defaultp): GLM_TYPE_DOUBLE4X3,\
+glm_mat(4, 4, double, defaultp): GLM_TYPE_DOUBLE4X4\
+)
 
 #endif /* GLM_DETAIL_QUALIFIER_H */
