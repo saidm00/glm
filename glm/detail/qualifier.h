@@ -2,278 +2,533 @@
 #define GLM_DETAIL_QUALIFIER_H
 
 #include "setup.h"
+#include "type_scalar.h"
 
-/*
-    anything starting with _glm_ is private namespace
-    anything starting with glm_ is public namespace
-    
-*/
+typedef enum glm_qualifier
+{
+	GLM_QUALIFIER_LOWP,
+	GLM_QUALIFIER_MEDIUMP,
+	GLM_QUALIFIER_HIGHP,
+	GLM_QUALIFIER_DEFAULTP = GLM_QUALIFIER_HIGHP
+} glm_qualifier_t;
 
-typedef float glm_float;
-typedef double glm_double;
-typedef int glm_int;
-typedef unsigned int glm_uint;
-typedef bool glm_bool;
+typedef enum glm_type_category
+{
+	GLM_TYPE_CATEGORY_SCALAR,
+	GLM_TYPE_CATEGORY_VECTOR,
+	GLM_TYPE_CATEGORY_MATRIX
+} glm_type_category_t;
 
-#define _GLM4(_1, _2, _3, _4) glm_ ## _1 ## _ ## _2 ## _ ## _3 ## _ ## _4
-#define _GLM3(_1, _2, _3, _4) glm_ ## _1 ## _ ## _2 ## _ ## _3
-#define _GLM2(_1, _2, _3, _4) glm_ ## _1 ## _ ## _2
-#define _GLM1(_1, _2, _3, _4) glm_ ## _1
-
-#define _GLMN(_1, _2, _3, _4, N, ...) _GLM##N(_1, _2, _3, _4)
-#define glm(...) _GLMN(__VA_ARGS__, 4, 3, 2, 1, 0)
-
-#define glm_vec(L, T) glm(T##L)
-#define glm_mat(C, R, T) glm(T##C##x##R)
-#define glm_quat(T) glm(quat_##T)
-
-#ifdef USING_NAMESPACE_GLM
-#define vec(L, T) glm_vec(L, T)
-#define mat(C, R, T) glm_mat(C, R, T)
-#define quat(T) glm_quat(T)
-#endif /* GLM_USING_NAMESPACE */
-/*
-#define GLM_CREATE_VEC(L, T, ...)    GLM_CREATE_VEC##L (T, __VA_ARGS__)
-#define GLM_CREATE_MAT(C, R, T, ...) GLM_CREATE_MAT##C##X##R (T, __VA_ARGS__)
-#define GLM_CREATE_QUAT(T, ...)      GLM_CREATE_QUAT (T, __VA_ARGS__)
-*/
-#define GLM_AUTO_TYPE GLM_ENABLED
-#define glm_auto(identifier, expression) __typeof__((expression)) identifier = expression;
-
-#define GLM_VEC_DEFAULT_BASE(L, T) union { T _data[L]; T e[L]; }
-#define GLM_MAT_DATA(C, R, T) T _data[C * R]; T e[R][C];
-
-#define GLM_CONVERT_VEC(L, T, IN)\
-({\
-	__typeof__((IN)) _in = (IN);\
-	glm_vec(L, T) _out;\
-	for(size_t i = 0; i < L; ++i) _out._data[i] = (T)_in._data[i];\
-	_out;\
-})
-
-#define GLM_CONVERT_TVEC(T, IN)\
-({\
-	__typeof__((IN)) _in = (IN);\
-	_Generic(\
-		(char(*)[sizeof _in._data / sizeof _in._data[0]])0,\
-		char(*)[1]: (glm_vec(1, T)) { _in._data[0] },\
-		char(*)[2]: (glm_vec(2, T)) { _in._data[0], _in._data[1] },\
-		char(*)[3]: (glm_vec(3, T)) { _in._data[0], _in._data[1], _in._data[2] },\
-		char(*)[4]: (glm_vec(4, T)) { _in._data[0], _in._data[1], _in._data[2], _in._data[3] }\
-	);\
-})
-
-#define GLM_ASSERT(x) assert(x)
-#define GLM_ELEM_COUNT(v) (sizeof((v).e) / sizeof((v).e[0]))
-#define GLM_DATA_COUNT(v) (sizeof((v)._data) / sizeof((v)._data[0]))
-#define GLM_MIN(x, y) ((x) < (y) ? (x) : (y))
-#define GLM_MAX(x, y) ((x) > (y) ? (x) : (y))
-#define GLM_CLAMP(x, a, b) GLM_MIN(GLM_MAX(x, a), b)
-#define GLM_SQUARE(x) ((x) * (x))
-
-#define GLM_VEC_BINARY_OP(OPERATOR, LHS, RHS)\
-({\
-	__typeof__((LHS)) _lhs = (LHS);\
-	__typeof__((RHS)) _rhs = (RHS);\
-	\
-	__builtin_choose_expr(__builtin_types_compatible_p(__typeof__((_lhs._data[0])), __typeof__((_rhs._data[0]))),\
-		__builtin_choose_expr(GLM_DATA_COUNT(_lhs) == GLM_DATA_COUNT(_rhs),\
-			({\
-				__typeof__((_lhs)) _dst;\
-				for(size_t _i = 0; _i < GLM_DATA_COUNT(_lhs); ++_i)\
-					_dst._data[_i] = _lhs._data[_i] OPERATOR _rhs._data[_i];\
-				_dst;\
-			})\
-			,\
-			__builtin_choose_expr(GLM_DATA_COUNT(_lhs) > GLM_DATA_COUNT(_rhs) && GLM_DATA_COUNT(_rhs) == 1,\
-				({\
-					__typeof__((_lhs)) _dst;\
-					for(size_t _i = 0; _i < GLM_DATA_COUNT(_lhs); ++_i)\
-						_dst._data[_i] = _lhs._data[_i] OPERATOR _rhs._data[0];\
-					_dst;\
-				})\
-				,\
-				__builtin_choose_expr(GLM_DATA_COUNT(_rhs) > GLM_DATA_COUNT(_lhs) && GLM_DATA_COUNT(_lhs) == 1,\
-					({\
-						__typeof__((_rhs)) _dst;\
-						for(size_t _i = 0; _i < GLM_DATA_COUNT(_rhs); ++_i)\
-							_dst._data[_i] = _lhs._data[0] OPERATOR _rhs._data[_i];\
-						_dst;\
-					})\
-					,\
-					"Error 2"\
-				)\
-			)\
-		),\
-		"Error 1"\
-	);\
-})
-
-#define glm_add(lhs, rhs) GLM_VEC_BINARY_OP(+, lhs, rhs)
-#define glm_sub(lhs, rhs) GLM_VEC_BINARY_OP(-, lhs, rhs)
-#define glm_mul(lhs, rhs) GLM_VEC_BINARY_OP(*, lhs, rhs)
-#define glm_div(lhs, rhs) GLM_VEC_BINARY_OP(/, lhs, rhs)
-
-#define glm_length(v)\
-({\
-	__typeof__((v)) _v = (v);\
-	__typeof__((_v.e[0])) _sqsum = 0;\
-	for(size_t _i = 0; _i < GLM_ELEM_COUNT(_v); ++_i) _sqsum += GLM_SQUARE(_v.e[_i]);\
-	sqrt(_sqsum);\
-})
-
-#define glm_normalize(v)\
-({\
-	__typeof__((v)) _v = (v);\
-	__typeof__((_v.e[0])) _sqsum = 0, _len;\
-	size_t _n = GLM_ELEM_COUNT(_v), _i;\
-	for(_i = 0; _i < _n; ++_i) _sqsum += GLM_SQUARE(_v.e[_i]);\
-	_len = sqrt(_sqsum);\
-	\
-	for(_i = 0; _i < _n; ++_i) _v.e[_i] /= _len;\
-	_v;\
-})
-
-#define glm_dot(x, y) \
-({\
-	__typeof__((x)) _x = (x);\
-	__typeof__((y)) _y = (y);\
-	size_t _n = GLM_ELEM_COUNT(_x), _i;\
-	__typeof__((_x._data[0])) _s;\
-	for(_i = 0; _i < _n; ++_i) _s += _x.e[_i] * _y.e[_i];\
-	_s;\
-})
-
+/* Enums of all GLM-C typenames */
 typedef enum glm_type
 {
-    GLM_TYPE_FLOAT,
-    GLM_TYPE_FLOAT1,
-    GLM_TYPE_FLOAT2,
-    GLM_TYPE_FLOAT3,
-    GLM_TYPE_FLOAT4,
-    GLM_TYPE_DOUBLE,
-    GLM_TYPE_DOUBLE1,
-    GLM_TYPE_DOUBLE2,
-    GLM_TYPE_DOUBLE3,
-    GLM_TYPE_DOUBLE4,
-    GLM_TYPE_INT,
-    GLM_TYPE_INT1,
-    GLM_TYPE_INT2,
-    GLM_TYPE_INT3,
-    GLM_TYPE_INT4,
-    GLM_TYPE_UINT,
-    GLM_TYPE_UINT1,
-    GLM_TYPE_UINT2,
-    GLM_TYPE_UINT3,
-    GLM_TYPE_UINT4,
-    GLM_TYPE_BOOL,
-    GLM_TYPE_BOOL1,
-    GLM_TYPE_BOOL2,
-    GLM_TYPE_BOOL3,
-    GLM_TYPE_BOOL4,
-} glm_type;
+	GLM_TYPE_BOOL,
+	GLM_TYPE_FLOAT,
+	GLM_TYPE_DOUBLE,
+	GLM_TYPE_INT,
+	GLM_TYPE_UINT,
+	GLM_TYPE_BOOL1,
+	GLM_TYPE_BOOL2,
+	GLM_TYPE_BOOL3,
+	GLM_TYPE_BOOL4,
+	GLM_TYPE_FLOAT1,
+	GLM_TYPE_FLOAT2,
+	GLM_TYPE_FLOAT3,
+	GLM_TYPE_FLOAT4,
+	GLM_TYPE_DOUBLE1,
+	GLM_TYPE_DOUBLE2,
+	GLM_TYPE_DOUBLE3,
+	GLM_TYPE_DOUBLE4,
+	GLM_TYPE_INT1,
+	GLM_TYPE_INT2,
+	GLM_TYPE_INT3,
+	GLM_TYPE_INT4,
+	GLM_TYPE_UINT1,
+	GLM_TYPE_UINT2,
+	GLM_TYPE_UINT3,
+	GLM_TYPE_UINT4,
+	GLM_TYPE_FLOAT2X2,
+	GLM_TYPE_FLOAT2X3,
+	GLM_TYPE_FLOAT2X4,
+	GLM_TYPE_FLOAT3X2,
+	GLM_TYPE_FLOAT3X3,
+	GLM_TYPE_FLOAT3X4,
+	GLM_TYPE_FLOAT4X2,
+	GLM_TYPE_FLOAT4X3,
+	GLM_TYPE_FLOAT4X4,
+	GLM_TYPE_DOUBLE2X2,
+	GLM_TYPE_DOUBLE2X3,
+	GLM_TYPE_DOUBLE2X4,
+	GLM_TYPE_DOUBLE3X2,
+	GLM_TYPE_DOUBLE3X3,
+	GLM_TYPE_DOUBLE3X4,
+	GLM_TYPE_DOUBLE4X2,
+	GLM_TYPE_DOUBLE4X3,
+	GLM_TYPE_DOUBLE4X4
+} glm_type_t;
 
-/*
-#define GLM_TYPE_VEC1 GLM_TYPE_FLOAT1
-#define GLM_TYPE_VEC2 GLM_TYPE_FLOAT2
-#define GLM_TYPE_VEC3 GLM_TYPE_FLOAT3
-#define GLM_TYPE_VEC4 GLM_TYPE_FLOAT4
-#define GLM_TYPE_DVEC1 GLM_TYPE_DOUBLE1
-#define GLM_TYPE_DVEC2 GLM_TYPE_DOUBLE2
-#define GLM_TYPE_DVEC3 GLM_TYPE_DOUBLE3
-#define GLM_TYPE_DVEC4 GLM_TYPE_DOUBLE4
-#define GLM_TYPE_IVEC1 GLM_TYPE_INT1
-#define GLM_TYPE_IVEC2 GLM_TYPE_INT2
-#define GLM_TYPE_IVEC3 GLM_TYPE_INT3
-#define GLM_TYPE_IVEC4 GLM_TYPE_INT4
-#define GLM_TYPE_UVEC1 GLM_TYPE_UINT1
-#define GLM_TYPE_UVEC2 GLM_TYPE_UINT2
-#define GLM_TYPE_UVEC3 GLM_TYPE_UINT3
-#define GLM_TYPE_UVEC4 GLM_TYPE_UINT4
-#define GLM_TYPE_BVEC1 GLM_TYPE_BOOL1
-#define GLM_TYPE_BVEC2 GLM_TYPE_BOOL2
-#define GLM_TYPE_BVEC3 GLM_TYPE_BOOL3
-#define GLM_TYPE_BVEC4 GLM_TYPE_BOOL4
-*/
-
-/*
-*   Define glm_type_t members from internal convention to external.
-*/
-
-#define GLM_TYPEOF(x) \
-(_Generic(x, \
-glm_float:  GLM_TYPE_FLOAT, \
-glm_double:  GLM_TYPE_DOUBLE, \
-glm_int:  GLM_TYPE_INT, \
-glm_uint:  GLM_TYPE_UINT, \
-glm_bool:  GLM_TYPE_BOOL \
-))
-
-bool GLM_API
-glm_is_scalar (glm_type T)
+/* Return size of GLM-C types */
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR size_t
+glm_sizeof_elem_type(glm_type_t type)
 {
-    return
-    T == GLM_TYPE_FLOAT ||
-    T == GLM_TYPE_DOUBLE ||
-    T == GLM_TYPE_INT ||
-    T == GLM_TYPE_UINT ||
-    T == GLM_TYPE_BOOL;
+	switch (type)
+	{
+		case GLM_TYPE_BOOL:
+			return sizeof(bool);
+			break;
+		case GLM_TYPE_FLOAT:
+			return sizeof(float);
+			break;
+		case GLM_TYPE_DOUBLE:
+			return sizeof(double);
+			break;
+		case GLM_TYPE_INT:
+			return sizeof(int);
+			break;
+		case GLM_TYPE_UINT:
+			return sizeof(uint);
+			break;
+		default: return 0;
+	}
+
+	return 0;
 }
 
-bool GLM_API
-glm_is_tvec1 (glm_type T)
+struct glm_type_info
 {
-    return
-    T == GLM_TYPE_FLOAT1 ||
-    T == GLM_TYPE_DOUBLE1 ||
-    T == GLM_TYPE_INT1 ||
-    T == GLM_TYPE_UINT1 ||
-    T == GLM_TYPE_BOOL1;
+	glm_type_category_t typeCategory;
+	glm_type_t elemType;
+	glm_length_t elemCol, elemRow;
+	glm_length_t elemCount; // C * R for matrices, and L for vectors
+	glm_qualifier_t elemQualifier;
+};
+
+typedef struct glm_type_info glm_type_info_t;
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+glm_get_type_info(glm_type_t type, glm_type_info_t *info)
+{
+	switch (type)
+	{
+	case GLM_TYPE_FLOAT2X2:
+		info->elemType = GLM_TYPE_FLOAT;
+		info->elemCol = 2;
+		info->elemRow = 2;
+		info->elemCount = 4;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_FLOAT2X3:
+		info->elemType = GLM_TYPE_FLOAT;
+		info->elemCol = 2;
+		info->elemRow = 3;
+		info->elemCount = 6;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_FLOAT2X4:
+		info->elemType = GLM_TYPE_FLOAT;
+		info->elemCol = 2;
+		info->elemRow = 4;
+		info->elemCount = 8;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_FLOAT3X2:
+		info->elemType = GLM_TYPE_FLOAT;
+		info->elemCol = 3;
+		info->elemRow = 2;
+		info->elemCount = 6;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_FLOAT3X3:
+		info->elemType = GLM_TYPE_FLOAT3X3;
+		info->elemCol = 3;
+		info->elemRow = 3;
+		info->elemCount = 9;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_FLOAT3X4:
+		info->elemType = GLM_TYPE_FLOAT;
+		info->elemCol = 3;
+		info->elemRow = 4;
+		info->elemCount = 12;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_FLOAT4X2:
+		info->elemType = GLM_TYPE_FLOAT;
+		info->elemCol = 4;
+		info->elemRow = 2;
+		info->elemCount = 8;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_FLOAT4X3:
+		info->elemType = GLM_TYPE_FLOAT;
+		info->elemCol = 4;
+		info->elemRow = 3;
+		info->elemCount = 12;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_FLOAT4X4:
+		info->elemType = GLM_TYPE_FLOAT;
+		info->elemCol = 4;
+		info->elemRow = 4;
+		info->elemCount = 16;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_DOUBLE2X2:
+		info->elemType = GLM_TYPE_DOUBLE;
+		info->elemCol = 2;
+		info->elemRow = 2;
+		info->elemCount = 4;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_DOUBLE2X3:
+		info->elemType = GLM_TYPE_DOUBLE;
+		info->elemCol = 2;
+		info->elemRow = 3;
+		info->elemCount = 6;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_DOUBLE2X4:
+		info->elemType = GLM_TYPE_DOUBLE;
+		info->elemCol = 2;
+		info->elemRow = 4;
+		info->elemCount = 8;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_DOUBLE3X2:
+		info->elemType = GLM_TYPE_DOUBLE;
+		info->elemCol = 3;
+		info->elemRow = 2;
+		info->elemCount = 6;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_DOUBLE3X3:
+		info->elemType = GLM_TYPE_DOUBLE;
+		info->elemCol = 3;
+		info->elemRow = 3;
+		info->elemCount = 9;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_DOUBLE3X4:
+		info->elemType = GLM_TYPE_DOUBLE;
+		info->elemCol = 3;
+		info->elemRow = 4;
+		info->elemCount = 12;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_DOUBLE4X2:
+		info->elemType = GLM_TYPE_DOUBLE;
+		info->elemCol = 4;
+		info->elemRow = 2;
+		info->elemCount = 8;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_DOUBLE4X3:
+		info->elemType = GLM_TYPE_DOUBLE;
+		info->elemCol = 4;
+		info->elemRow = 3;
+		info->elemCount = 12;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_DOUBLE4X4:
+		info->elemType = GLM_TYPE_DOUBLE;
+		info->elemCol = 4;
+		info->elemRow = 4;
+		info->elemCount = 16;
+		/* info->elemQualifier = ;*/
+		break;
+	case GLM_TYPE_BOOL:
+		info->elemType  = GLM_TYPE_BOOL;
+		info->elemCount = 1;
+		break;
+	case GLM_TYPE_BOOL1:
+		info->elemType  = GLM_TYPE_BOOL;
+		info->elemCount = 1;
+		break;
+	case GLM_TYPE_BOOL2:
+		info->elemType  = GLM_TYPE_BOOL;
+		info->elemCount = 2;
+		break;
+	case GLM_TYPE_BOOL3:
+		info->elemType  = GLM_TYPE_BOOL;
+		info->elemCount = 3;
+		break;
+	case GLM_TYPE_BOOL4:
+		info->elemType  = GLM_TYPE_BOOL;
+		info->elemCount = 4;
+		break;
+	case GLM_TYPE_FLOAT:
+		info->elemType  = GLM_TYPE_FLOAT;
+		info->elemCount = 1;
+		break;
+	case GLM_TYPE_FLOAT1:
+		info->elemType  = GLM_TYPE_FLOAT;
+		info->elemCount = 1;
+		break;
+	case GLM_TYPE_FLOAT2:
+		info->elemType  = GLM_TYPE_FLOAT;
+		info->elemCount = 2;
+		break;
+	case GLM_TYPE_FLOAT3:
+		info->elemType  = GLM_TYPE_FLOAT;
+		info->elemCount = 3;
+		break;
+	case GLM_TYPE_FLOAT4:
+		info->elemType  = GLM_TYPE_FLOAT;
+		info->elemCount = 4;
+		break;
+	case GLM_TYPE_DOUBLE:
+		info->elemType  = GLM_TYPE_DOUBLE;
+		info->elemCount = 1;
+		break;
+	case GLM_TYPE_DOUBLE1:
+		info->elemType  = GLM_TYPE_DOUBLE;
+		info->elemCount = 1;
+		break;
+	case GLM_TYPE_DOUBLE2:
+		info->elemType  = GLM_TYPE_DOUBLE;
+		info->elemCount = 2;
+		break;
+	case GLM_TYPE_DOUBLE3:
+		info->elemType  = GLM_TYPE_DOUBLE;
+		info->elemCount = 3;
+		break;
+	case GLM_TYPE_DOUBLE4:
+		info->elemType  = GLM_TYPE_DOUBLE;
+		info->elemCount = 4;
+		break;
+	case GLM_TYPE_INT:
+		info->elemType  = GLM_TYPE_INT;
+		info->elemCount = 1;
+		break;
+	case GLM_TYPE_INT1:
+		info->elemType  = GLM_TYPE_INT;
+		info->elemCount = 1;
+		break;
+	case GLM_TYPE_INT2:
+		info->elemType  = GLM_TYPE_INT;
+		info->elemCount = 2;
+		break;
+	case GLM_TYPE_INT3:
+		info->elemType  = GLM_TYPE_INT;
+		info->elemCount = 3;
+		break;
+	case GLM_TYPE_INT4:
+		info->elemType  = GLM_TYPE_INT;
+		info->elemCount = 4;
+		break;
+	case GLM_TYPE_UINT:
+		info->elemType  = GLM_TYPE_UINT;
+		info->elemCount = 1;
+		break;
+	case GLM_TYPE_UINT1:
+		info->elemType  = GLM_TYPE_UINT;
+		info->elemCount = 1;
+		break;
+	case GLM_TYPE_UINT2:
+		info->elemType  = GLM_TYPE_UINT;
+		info->elemCount = 2;
+		break;
+	case GLM_TYPE_UINT3:
+		info->elemType  = GLM_TYPE_UINT;
+		info->elemCount = 3;
+		break;
+	case GLM_TYPE_UINT4:
+		info->elemType  = GLM_TYPE_UINT;
+		info->elemCount = 4;
+		break;
+	default:
+		break;
+	}
 }
 
-bool GLM_API
-glm_is_tvec2 (glm_type T)
+/* Handles type-casting of vectors and matrices */
+GLM_FUNC_QUALIFIER void
+glm_cast_array(void *dstArr, glm_type_t dstType, const void *srcArr, glm_type_t srcType, glm_length_t arrLen)
 {
-    return
-    T == GLM_TYPE_FLOAT2 ||
-    T == GLM_TYPE_DOUBLE2 ||
-    T == GLM_TYPE_INT2 ||
-    T == GLM_TYPE_UINT2 ||
-    T == GLM_TYPE_BOOL2;
+	switch (srcType)
+	{
+		case GLM_TYPE_BOOL:
+			switch(dstType)
+			{
+				case GLM_TYPE_BOOL:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(bool, defaultp)*)dstArr)[i] = ((glm_scalar(bool, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_FLOAT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(float, defaultp)*)dstArr)[i] = ((glm_scalar(bool, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_DOUBLE:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(double, defaultp)*)dstArr)[i] = ((glm_scalar(bool, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_INT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(int, defaultp)*)dstArr)[i] = ((glm_scalar(bool, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_UINT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(uint, defaultp)*)dstArr)[i] = ((glm_scalar(bool, defaultp)*)srcArr)[i];
+					break;
+			}
+			break;
+		case GLM_TYPE_FLOAT:
+			switch(dstType)
+			{
+				case GLM_TYPE_BOOL:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(bool, defaultp)*)dstArr)[i] = ((glm_scalar(float, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_FLOAT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(float, defaultp)*)dstArr)[i] = ((glm_scalar(float, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_DOUBLE:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(double, defaultp)*)dstArr)[i] = ((glm_scalar(float, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_INT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(int, defaultp)*)dstArr)[i] = ((glm_scalar(float, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_UINT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(uint, defaultp)*)dstArr)[i] = ((glm_scalar(float, defaultp)*)srcArr)[i];
+					break;
+			}
+			break;
+		case GLM_TYPE_DOUBLE:
+			switch(dstType)
+			{
+				case GLM_TYPE_BOOL:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(bool, defaultp)*)dstArr)[i] = ((glm_scalar(double, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_FLOAT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(float, defaultp)*)dstArr)[i] = ((glm_scalar(double, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_DOUBLE:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(double, defaultp)*)dstArr)[i] = ((glm_scalar(double, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_INT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(int, defaultp)*)dstArr)[i] = ((glm_scalar(double, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_UINT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(uint, defaultp)*)dstArr)[i] = ((glm_scalar(double, defaultp)*)srcArr)[i];
+					break;
+			}
+			break;
+		case GLM_TYPE_INT:
+			switch(dstType)
+			{
+				case GLM_TYPE_BOOL:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(bool, defaultp)*)dstArr)[i] = ((glm_scalar(int, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_FLOAT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(float, defaultp)*)dstArr)[i] = ((glm_scalar(int, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_DOUBLE:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(double, defaultp)*)dstArr)[i] = ((glm_scalar(int, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_INT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(int, defaultp)*)dstArr)[i] = ((glm_scalar(int, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_UINT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(uint, defaultp)*)dstArr)[i] = ((glm_scalar(int, defaultp)*)srcArr)[i];
+					break;
+			}
+			break;
+		case GLM_TYPE_UINT:
+			switch(dstType)
+			{
+				case GLM_TYPE_BOOL:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(bool, defaultp)*)dstArr)[i] = ((glm_scalar(uint, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_FLOAT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(float, defaultp)*)dstArr)[i] = ((glm_scalar(uint, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_DOUBLE:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(double, defaultp)*)dstArr)[i] = ((glm_scalar(uint, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_INT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(int, defaultp)*)dstArr)[i] = ((glm_scalar(uint, defaultp)*)srcArr)[i];
+					break;
+				case GLM_TYPE_UINT:
+					for(glm_length_t i = 0; i < arrLen; ++i)
+						((glm_scalar(uint, defaultp)*)dstArr)[i] = ((glm_scalar(uint, defaultp)*)srcArr)[i];
+					break;
+			}
+			break;
+	}
 }
 
-bool GLM_API
-glm_is_tvec3 (glm_type T)
-{
-    return
-    T == GLM_TYPE_FLOAT3 ||
-    T == GLM_TYPE_DOUBLE3 ||
-    T == GLM_TYPE_INT3 ||
-    T == GLM_TYPE_UINT3 ||
-    T == GLM_TYPE_BOOL3;
-}
+#define GLM_TYPEOF_SCALAR_bool		GLM_TYPE_BOOL
+#define GLM_TYPEOF_SCALAR_float		GLM_TYPE_FLOAT
+#define GLM_TYPEOF_SCALAR_double	GLM_TYPE_DOUBLE
+#define GLM_TYPEOF_SCALAR_int		GLM_TYPE_INT
+#define GLM_TYPEOF_SCALAR_uint		GLM_TYPE_UINT
 
-bool GLM_API
-glm_is_tvec4 (glm_type T)
-{
-    return
-    T == GLM_TYPE_FLOAT4 ||
-    T == GLM_TYPE_DOUBLE4 ||
-    T == GLM_TYPE_INT4 ||
-    T == GLM_TYPE_UINT4 ||
-    T == GLM_TYPE_BOOL4;
-}
+#define GLM_TYPE_SCALAR_(T) GLM_TYPEOF_SCALAR_ ## T
+#define GLM_TYPEOF_SCALAR(...) GLM_TYPE_SCALAR_(__VA_ARGS__)
 
-bool GLM_API
-glm_is_vec (glm_type T)
-{
-    return
-    glm_is_tvec1(T) ||
-    glm_is_tvec2(T) ||
-    glm_is_tvec3(T) ||
-    glm_is_tvec4(T);
-}
-
-#define glm_max(x, y) (x < y ? y : x)
+#define GLM_TYPEOF(x)\
+_Generic((x),\
+bool : GLM_TYPE_BOOL,\
+float : GLM_TYPE_FLOAT,\
+double : GLM_TYPE_DOUBLE,\
+int : GLM_TYPE_INT,\
+uint : GLM_TYPE_UINT,\
+glm_vec(1, bool, defaultp): GLM_TYPE_BOOL1,\
+glm_vec(2, bool, defaultp): GLM_TYPE_BOOL2,\
+glm_vec(3, bool, defaultp): GLM_TYPE_BOOL3,\
+glm_vec(4, bool, defaultp): GLM_TYPE_BOOL4,\
+glm_vec(1, float, defaultp): GLM_TYPE_FLOAT1,\
+glm_vec(2, float, defaultp): GLM_TYPE_FLOAT2,\
+glm_vec(3, float, defaultp): GLM_TYPE_FLOAT3,\
+glm_vec(4, float, defaultp): GLM_TYPE_FLOAT4,\
+glm_vec(1, double, defaultp): GLM_TYPE_DOUBLE1,\
+glm_vec(2, double, defaultp): GLM_TYPE_DOUBLE2,\
+glm_vec(3, double, defaultp): GLM_TYPE_DOUBLE3,\
+glm_vec(4, double, defaultp): GLM_TYPE_DOUBLE4,\
+glm_vec(1, int, defaultp): GLM_TYPE_INT1,\
+glm_vec(2, int, defaultp): GLM_TYPE_INT2,\
+glm_vec(3, int, defaultp): GLM_TYPE_INT3,\
+glm_vec(4, int, defaultp): GLM_TYPE_INT4,\
+glm_vec(1, uint, defaultp): GLM_TYPE_UINT1,\
+glm_vec(2, uint, defaultp): GLM_TYPE_UINT2,\
+glm_vec(3, uint, defaultp): GLM_TYPE_UINT3,\
+glm_vec(4, uint, defaultp): GLM_TYPE_UINT4,\
+glm_mat(2, 2, float, defaultp): GLM_TYPE_FLOAT2X2,\
+glm_mat(2, 3, float, defaultp): GLM_TYPE_FLOAT2X3,\
+glm_mat(2, 4, float, defaultp): GLM_TYPE_FLOAT2X4,\
+glm_mat(3, 2, float, defaultp): GLM_TYPE_FLOAT3X2,\
+glm_mat(3, 3, float, defaultp): GLM_TYPE_FLOAT3X3,\
+glm_mat(3, 4, float, defaultp): GLM_TYPE_FLOAT3X4,\
+glm_mat(4, 2, float, defaultp): GLM_TYPE_FLOAT4X2,\
+glm_mat(4, 3, float, defaultp): GLM_TYPE_FLOAT4X3,\
+glm_mat(4, 4, float, defaultp): GLM_TYPE_FLOAT4X4,\
+glm_mat(2, 2, double, defaultp): GLM_TYPE_DOUBLE2X2,\
+glm_mat(2, 3, double, defaultp): GLM_TYPE_DOUBLE2X3,\
+glm_mat(2, 4, double, defaultp): GLM_TYPE_DOUBLE2X4,\
+glm_mat(3, 2, double, defaultp): GLM_TYPE_DOUBLE3X2,\
+glm_mat(3, 3, double, defaultp): GLM_TYPE_DOUBLE3X3,\
+glm_mat(3, 4, double, defaultp): GLM_TYPE_DOUBLE3X4,\
+glm_mat(4, 2, double, defaultp): GLM_TYPE_DOUBLE4X2,\
+glm_mat(4, 3, double, defaultp): GLM_TYPE_DOUBLE4X3,\
+glm_mat(4, 4, double, defaultp): GLM_TYPE_DOUBLE4X4\
+)
 
 #endif /* GLM_DETAIL_QUALIFIER_H */

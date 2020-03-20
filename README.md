@@ -1,72 +1,83 @@
+
 # *OpenGL Mathematics for C*
 
+[*glm-c*](https://github.com/sizeof-voidp/glm-c) is a C alternative of the C++ library [*glm*](https://github.com/g-truc/glm).
+It was made referencing the [*GLSL specification*](https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.pdf) as well. This is meant to be used in C11/C17, you could use this no problem in C99/C89 with a smaller feature set though.
 
-[OpenGL Mathematics for C]([https://github.com/saidwho12/glm-c](https://github.com/saidwho12/glm-c)) (*GLM-C*) is a C11 GCC port of the C++ library [*GLM*](https://github.com/g-truc/glm).
-It was made referencing the [The OpenGL® Shading Language, Version 4.60.7](https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.pdf) specification as well.
-
-The library types are internally written similarly to *HLSL*'s types (ie. `glm_uvec3` is internally written as `glm_uint3`).
-The main purpose is to easily compose types using some macros shown below.
-
-Template-like macros for identifying types:
-```c
-glm_vec(2, bool); // glm_bool2
-glm_tvec3(float); // glm_float3
-glm_vec(4, uint); // glm_uint4
-```
-
-Macros for constructing types:
-```c
-glm_vec3 v = glm_vec3(1.0f, 2.0f, 3.0f);
-glm_float3 v = glm_vec(3, float)(1.0f, 2.0f, 3.0f);
-```
-
-Construction from vector arguments:
-```c
-glm_float2 v1 = glm_vec2(1.0f, 2.0f);
-glm_tvec3(float) v3 = glm_float3(v1, 3.0f); // glm_vec3(1.0f, 2.0f, 3.0f)
-```
-
-Mixing vector types when calling constructor:
+### Macros for generating typenames
+In *glm-c* you have a few macros which are meant for use as template replacement, they are used to generate typenames.
+The common ones are `glm_scalar(T, Q)`, `glm_vec(L, T, Q)` and `glm_mat(C, R, T, Q)`. 
+As an example `glm_vec(3, float, defaultp)` would become `glm_vec3` after the preprocessing step.
 
 ```c
-glm_tvec2(bool) v1 = glm_bvec2(false, true);
-glm_uvec2 v2 = glm_uint2(25, 47);
-glm_vec4 v3 = glm_vec4(v1, v2); // glm_vec4(0.0f, 1.0f, 25.0f, 47.0f)
+
+glm_mat(4, 4, float, highp) m = ...;
+glm_vec(4, float, highp) v = ...;
+
+v = glm_mulv_mat4x4_highp(m, v);
+
 ```
 
-Extra elements are discarded from construction:
+### Macros for constructing types
+Macros for constructing types, these are unique not only to each type, such as `glm_vec4()` and `glm_uvec2()`, but they also are defined for each qualifier variant. Except `defaultp` as that can be ignored. These work exactly as *GLSL* constructors but there is both a compile time cost, and run-time cost as it uses C11's `_Generic()` and variadic functions to parse through arguments.
+
 ```c
-glm_tvec2(float) v1 = glm_float2(1.0f, 2.0f);
-glm_vec(4, uint) v2 = glm_uvec4(3, 4, 5, 6);
-glm_vec3 v3 = glm_vec3(v1, v2); // glm_vec3(1.0f, 2.0f, 3.0f)
+// Construct default precision vector of 3 unsigned integers.
+glm_uvec3 co = glm_uvec3('F', 0x47FC, 12.5f);
+
+// You can construct a vector, from another of the same length.
+// Effectively all this does is a cast, but it's less direct.
+// You can either manually type out the constructor macro's name, or use the
+// template-like macro for generating the typename.
+// All function-like macros which construct types (constructors), have the same name
+// as those types.
+glm_uvec3_lowp cp = glm_vec(3, uint, lowp)(co);
 ```
 
-In *GLSL* you can do the following:
-```glsl
-float t = 5.8;
-t.x;
-```
 
-In *GLM-C* you have to use `glm_vec1` or `glm_float1` as follows:
+You can mix and match types, qualifiers, and lengths, just like in *GLSL*.
 ```c
-glm_float1 t = { 5.8f };
-t.x;
+glm_uvec2 v1 = ...;
+glm_bvec2 v2 = ...;
+
+glm_vec4 v = glm_vec4(v1, v2);
 ```
 
-In *GLSL* it is known that you can subscript vectors with the `.` accessor. In *GLM-C* this is also possible but only for linear access. You can't for example do `v.yx`. Also a vector cannot access itself.
-The following snippet shows this.
+You can even give the constructor macro more elements than the destination vector.
+And so the argument elements will be truncated or excess elements are thrown away.
+Note that this is something even the official C++ [*glm*](https://github.com/g-truc/glm) library doesn't do.
 ```c
-glm_vec2 v = glm_vec2(1.0f, 2.0f);
-v.xy; // doesn't work
+glm_float a = ...;
+glm_uvec2 b = ...;
+glm_bvec3 c = ...;
+
+// Last two elements of `c` get ignored, while the first one is used.
+// Again as you can see, you can pass a variety of types and lengths to these macros.
+// No problem at all!
+glm_ivec4 v = glm_ivec4(a, b, c);
 ```
 
-This is simply because a union cannot contain itself in C, even if you forward declare it.
-Though this would be possible using swizzle macros (Isn't yet implemented).
-Vectors also have array access using the `e` member.
+You can construct any type from a combination of any other, so you could construct for example
+a `glm_vec4` from a `glm_mat2x2`. The following should be perfectly valid. 
 ```c
-glm_vec3 v = glm_vec3(2.0f);
-
-float x = v.e[0] * v.e[1] * v.e[3]; // 2 * 2 * 2 -> 8.0f
+glm_mat2x2 m = ...;
+glm_vec4 v = glm_vec4(m);
 ```
 
-This is all I've written for now, if anyone wants to contribute to this feel free to contact me at saidwho12@gmail.com or send me a message on discord at saidwho12#3446.
+### Features
+
+- [x] All 38 *GLSL* types, and their related functions.
+- [x] Exact *GLSL* constructor syntax.
+- [x] Exact *GLSL* internal function syntax.
+- [x] Zero cost swizzling for contiguous combinations of elements. (i.e. xy, gb)
+- [x] All 20 *GLSL* vector types.
+- [x] All 18 *GLSL* matrix types.
+- [ ] Camera helper functions.
+- [ ] Quaternions.
+- [x] Static asserts for valid code generation.
+- [ ] Inline code generated by macros for all types.
+- [ ] Swizzling functionality.
+- [ ] *FMV* (Function Multi-Versioning) system for run-time optimization.
+- [ ] Manually optimize versions of common vector or matrix operations using inline assembly. (Intel SSE, Arm NEON, etc..)
+- [ ] Precision Qualifiers.
+- [ ] Ability to build *glm-c* as a shared or a static library.

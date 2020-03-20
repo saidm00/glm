@@ -1,6 +1,18 @@
 ﻿{
   "configurations": [
     {
+      "name": "x64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "-v",
+      "ctestCommandArgs": "",
+      "variables": []
+    },
+    {
       "name": "Mingw64-Debug",
       "generator": "Ninja",
       "configurationType": "Debug",
@@ -24,17 +36,12 @@
       "variables": [
         {
           "name": "CMAKE_C_COMPILER",
-          "value": "C:\\cygwin64\\bin\\gcc.exe",
+          "value": "${env.BIN_ROOT}\\gcc.exe",
           "type": "STRING"
         },
         {
           "name": "CMAKE_CXX_COMPILER",
-          "value": "C:\\cygwin64\\bin\\g++.exe",
-          "type": "STRING"
-        },
-        {
-          "name": "CMAKE_BUILD_TYPE",
-          "value": "Debug",
+          "value": "${env.BIN_ROOT}\\g++.exe",
           "type": "STRING"
         }
       ],

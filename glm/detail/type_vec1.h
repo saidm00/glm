@@ -1,20 +1,16 @@
 #ifndef GLM_DETAIL_TYPE_VEC1_H
 #define GLM_DETAIL_TYPE_VEC1_H
 
-#include "./qualifier.h"
+#include "variadic_param.h"
 
-#define GLM_CONVERT_TVEC1(T, IN) GLM_CONVERT_VEC(1, T, IN)
+#define GLM_VEC1_RSEQ() 1,0
 
-#define GLM_CREATE_TVEC1_0(T, ...) ((glm_vec(1, T)) { 0 })
-#define GLM_CREATE_TVEC1_1(T, _1, ...) ((glm_vec(1, T)) { _1._data[0] })
+#define GLM_VEC1_CONSTRUCTOR_PARAMS_0(A1)  
+#define GLM_VEC1_CONSTRUCTOR_PARAMS_1(A1) GLM_VARIADIC_PARAM(A1)
+#define GLM_VEC1_CONSTRUCTOR_PARAMS_(A1, N, ...) N, GLM_VEC1_CONSTRUCTOR_PARAMS_ ## N (A1)
+#define GLM_VEC1_CONSTRUCTOR_PARAMS(...) GLM_VEC1_CONSTRUCTOR_PARAMS_(__VA_ARGS__)
 
-#define GLM_CREATE_TVEC1(T, _1, N, ...) GLM_CREATE_TVEC1_##N(T, _1)
-#define glm_tvec1(T, ...) GLM_CREATE_TVEC1(T, __VA_ARGS__, 1, 0)
-
-#define GLM_SWIZZLE1(T, E0) T E0;
-
-#define GLM_SWIZZLE_X(T) GLM_SWIZZLE1(T, x)
-#define GLM_SWIZZLE_S(T) GLM_SWIZZLE1(T, s)
-#define GLM_SWIZZLE_R(T) GLM_SWIZZLE1(T, r)
+#define GLM_VEC1_CONSTRUCTOR(T, Q, ...) GLM_VECTOR_CONSTRUCTOR_NAME(1, T, Q)(GLM_VEC1_CONSTRUCTOR_PARAMS(__VA_ARGS__, , GLM_VEC1_RSEQ()))
+#define glm_tvec1(T, Q, ...) GLM_VEC1_CONSTRUCTOR(T, Q, __VA_ARGS__)
 
 #endif /* GLM_DETAIL_TYPE_VEC1_H */

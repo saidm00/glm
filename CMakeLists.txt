@@ -1,8 +1,18 @@
-﻿cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required(VERSION 3.8 FATAL_ERROR)
 
-project(glm LANGUAGES C)
+project(glm VERSION 0.0.1 LANGUAGES C)
 
-set(CMAKE_C_STANDARD 11)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "Build the GLFW example programs" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "Build the GLFW test programs" FORCE)
+add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/deps/glfw")
 
-add_executable(glm_test "./test/main.c")
-target_include_directories(glm_test PRIVATE "${CMAKE_CURRENT_LIST_DIR}")
+#set(CMAKE_C_COMPILER "C:/Program Files/LLVM/bin/clang.exe")
+set(CMAKE_C_COMPILER "C:/msys64/mingw64/bin/gcc.exe")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mcmodel=large -m64 -std=gnu17")
+
+#add_executable(teapot "./test/teapot.c")
+#target_include_directories(teapot PRIVATE "${CMAKE_CURRENT_LIST_DIR}")
+#target_link_libraries(teapot PRIVATE glfw OpenGL32)
+
+add_executable(experiment_constructor "./test/experiment_constructor.c")
+target_include_directories(experiment_constructor PRIVATE "${CMAKE_CURRENT_LIST_DIR}")
