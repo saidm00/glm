@@ -81,3 +81,4 @@ glm_vec4 v = glm_vec4(m);
 - [ ] Manually optimize versions of common vector or matrix operations using inline assembly. (Intel SSE, Arm NEON, etc..)
 - [ ] Precision Qualifiers.
 - [ ] Ability to build *glm-c* as a shared or a static library.
+- [ ] Custom format printing function.
