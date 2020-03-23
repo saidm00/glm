@@ -1,6 +1,6 @@
 /* Constructors & helper functions */
 
-/*  */
+/* Generates and returns the identity matrix for an nxn square matrix  */
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR mat(C, R, T, Q)
 identity(void)
 {
@@ -70,7 +70,7 @@ inv()
 {
 	mat(C, R, T, Q) _inv;
 
-	/* TO-DO: find invese matrix */
+	/* TO-DO: find inverse matrix */
 
 	return _inv;
 }
