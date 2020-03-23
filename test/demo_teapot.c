@@ -220,6 +220,9 @@ render_model_gl1(struct Model *model)
 {
 	glPushMatrix();
 
+	glTranslatef(0.0f, 0.25f * sinf(glfwGetTime()*2.5f), 0.0f);
+	glRotatef(glfwGetTime() * M_PI * 16.0f, 0.0f, 1.0f, 0.0f);
+
 	glScalef(0.2f, 0.2f, 0.2f);
 
 	glBegin(GL_TRIANGLES);

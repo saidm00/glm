@@ -29,9 +29,9 @@ int main(int argc, char *argv[])
 
 		glm_print("{bvec4} && {bvec4} = {bvec4}\n\n", v5, v6, v7);
 
-		bool b1 = glm_any(v7);
+		bool b1 = glm_any(glm_not(v7));
 
-		glm_print("any({bvec4}) = {b}\n\n", v7, b1);
+		glm_print("any(!{bvec4}) = {b}\n\n", v7, b1);
 	}
 
 	return EXIT_SUCCESS;
