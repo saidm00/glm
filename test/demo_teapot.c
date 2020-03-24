@@ -214,26 +214,244 @@ free_model(const struct Model *model)
 	free(model->indexArray);
 }
 
+static glm_mat4x4
+identity(void)
+{
+	glm_mat4x4 Result = { 0 };
+
+	Result.elem[0][0] = 1.0f;
+	Result.elem[1][1] = 1.0f;
+	Result.elem[2][2] = 1.0f;
+	Result.elem[3][3] = 1.0f;
+
+	return Result;
+}
+
+static glm_mat4x4
+perspective(float fovy, float aspect, float znear, float zfar)
+{
+	glm_mat4x4 m = identity();
+
+	float atanHalfFov = 1.0f / tan(fovy/2.0f);
+	m.elem[2][2] = -zfar / (zfar - znear);
+	m.elem[3][2] = -zfar * znear / (zfar - znear);
+	m.elem[2][3] = -1.0f; // set w = -z
+	m.elem[3][3] = 0.0f;
+	m.elem[0][0] = atanHalfFov;
+	m.elem[1][1] = atanHalfFov * aspect;
+
+	return m;
+}
+
+static glm_vec4
+glm_mul_mat4x4_vec4(glm_mat4x4 m, glm_vec4 v)
+{
+	glm_vec4 Result;
+
+	Result.elem[0] = m.elem[0][0] * v.x + m.elem[1][0] * v.y + m.elem[2][0] * v.z + m.elem[3][0] * v.w;
+	Result.elem[1] = m.elem[0][1] * v.x + m.elem[1][1] * v.y + m.elem[2][1] * v.z + m.elem[3][1] * v.w;
+	Result.elem[2] = m.elem[0][2] * v.x + m.elem[1][2] * v.y + m.elem[2][2] * v.z + m.elem[3][2] * v.w;
+	Result.elem[3] = m.elem[0][3] * v.x + m.elem[1][3] * v.y + m.elem[2][3] * v.z + m.elem[3][3] * v.w;
+
+	return Result;
+}
 
 static void
-render_model_gl1(struct Model *model)
+render_model_gl1(struct Model *model, glm_vec3 *pos, glm_vec3 *scale, float time, float rotSpeed)
 {
+	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
+	glLoadIdentity();
 
-	glTranslatef(0.0f, 0.25f * sinf(glfwGetTime()*2.5f), 0.0f);
+
+	//glMultMatrixf((const GLfloat*)&view->elem[0][0]);
+/*
+	glTranslatef(0.0f, 0.25f * sinf(glfwGetTime()*2.5f), 1.0f);
 	glRotatef(glfwGetTime() * M_PI * 16.0f, 0.0f, 1.0f, 0.0f);
-
 	glScalef(0.2f, 0.2f, 0.2f);
+*/
 
+	glTranslatef(pos->x, pos->y, pos->z);
+	glRotatef(time * 2.0f * M_PI * rotSpeed, 0.0f, 1.0f, 0.0f);
+	glScalef(scale->x, scale->y, scale->z);
+	
 	glBegin(GL_TRIANGLES);
 
 	for (size_t i = 0; i < model->vertexCount; ++i)
 	{
+		//glm_vec3 normal = model->vertexArray[i].normal;
+		//glm_vec3 lightDir = glm_normalize(glm_vec3(1.0f, 1.0f, 1.0f));
+		//glm_vec3 color = glm_vec3(glm_dot(normal, lightDir));
 		glNormal3fv(&model->vertexArray[i].normal.elem[0]);
+
+		//glColor3fv(&color.elem[0]);
 		glVertex3fv(&model->vertexArray[i].position.elem[0]);
 	}
 
 	glEnd();
+
+	glPopMatrix();
+}
+
+static void
+render(glm_mat4x4 *view, struct Model *teapot, float time)
+{
+	glEnable(GL_DEPTH_TEST);
+	glCullFace(GL_BACK);
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_LIGHTING);
+	glShadeModel(GL_SMOOTH);
+
+	//double aspect = (double)width / (double)height;
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glMultMatrixf((const GLfloat*)&view->elem[0][0]);
+
+
+	//glm_vec4 lightPos0 = glm_vec4(lightPos, 1.0f);
+
+	//lightPos0 = glm_mul_mat4x4_vec4(view, lightPos0);
+	//glOrtho(-aspect, aspect, -1.0, 1.0, 1.0, -1.0);
+
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+
+
+	{
+		glEnable(GL_LIGHT0);
+		glm_vec4 lightColorDiff = {5.0f, 5.0f, 5.0f, 0.0f};
+		glm_vec4 lightColorAmb = {0.0f, 0.0f, 0.0f, 0.0f};
+		glm_vec4 lightColorSpec = {5.0f, 5.0f, 5.0f, 0.0f};
+
+		glm_vec3 lightPos = { 0.0f, 6.0f, -0.0f };
+		glLightfv(GL_LIGHT0, GL_AMBIENT, lightColorAmb.elem);
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColorDiff.elem);
+		glLightfv(GL_LIGHT0, GL_SPECULAR, lightColorSpec.elem);
+		glLightfv(GL_LIGHT0, GL_POSITION, lightPos.elem);
+		float kc = 0.0f;
+		float kl = 0.0f;
+		float kq = 4.0f * M_PI;
+		glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, kc);
+		glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, kl);
+		glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, kq);
+	}
+
+	{
+		glEnable(GL_LIGHT1);
+		glm_vec4 lightColorDiff = {0.0f, 0.0f, 2.0f, 0.0f};
+		glm_vec4 lightColorAmb = {0.0f, 0.0f, 0.0f, 0.0f};
+		glm_vec4 lightColorSpec = {0.0f, 0.0f, 2.0f, 0.0f};
+
+		float a = 2.67f;
+		float b = 1.7f;
+		float t = time * M_PI * 2.0f;
+		float k = M_PI / 4.0f;
+		float n = 4.0f;
+		float x = a * sinf(t);
+		float y = b * cosf(n*t + k);
+
+		glm_vec3 lightPos = { x, y, -1.5f };
+		glLightfv(GL_LIGHT1, GL_AMBIENT, lightColorAmb.elem);
+		glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColorDiff.elem);
+		glLightfv(GL_LIGHT1, GL_SPECULAR, lightColorSpec.elem);
+		glLightfv(GL_LIGHT1, GL_POSITION, lightPos.elem);
+		float kc = 0.0f;
+		float kl = 0.0f;
+		float kq = 4.0f * M_PI;
+		glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, kc);
+		glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, kl);
+		glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, kq);
+	}
+
+	{
+		glEnable(GL_LIGHT2);
+		glm_vec4 lightColorDiff = {1.5f, 2.0f, 0.0f, 0.0f};
+		glm_vec4 lightColorAmb = {0.0f, 0.0f, 0.0f, 0.0f};
+		glm_vec4 lightColorSpec = {1.5f, 2.0f, 0.0f, 0.0f};
+
+		float a = 0.15f;
+		float b = 0.5f;
+		float t = time * M_PI * 0.5f;
+		float k = M_PI / 3.5f;
+		float n = 4.0f;
+		float x = a * sinf(t);
+		float y = b * cosf(n*t + k);
+
+		glm_vec3 lightPos = { x, 1.5f, y - 0.5f };
+		glLightfv(GL_LIGHT2, GL_AMBIENT, lightColorAmb.elem);
+		glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColorDiff.elem);
+		glLightfv(GL_LIGHT2, GL_SPECULAR, lightColorSpec.elem);
+		glLightfv(GL_LIGHT2, GL_POSITION, lightPos.elem);
+		float kc = 0.0f;
+		float kl = 0.0f;
+		float kq = 4.0f * M_PI;
+		glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, kc);
+		glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, kl);
+		glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, kq);
+	}
+
+
+
+	{
+		GLfloat ambient[] = {0.0, 0.0, 0.0, 1.0};
+		GLfloat diffuse[] = {0.2, 1.0, 0.6, 1.0};
+		GLfloat specular[] = {0.2, 1.0, 0.6, 1.0};
+		GLfloat shine = 200.0;
+		glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+		glMaterialf(GL_FRONT, GL_SHININESS, shine);
+
+		float t1 = time * M_PI * 0.74f;
+		float s1 = 0.5f + (0.5f + 0.5f * cosf(t1)) * 0.5f;
+		float s2 = 1.0f - (0.5f + 0.5f * -sinf(t1)) * 0.5f;
+
+		glm_vec3 scale = { s1 * 0.12f, s2 * 0.12f, s1 * 0.12f };
+
+		glm_vec3 pos = {0.0f, -0.2f + 0.05f * sinf(t1), -0.8f};
+		render_model_gl1(teapot, &pos, &scale, time, -22.0f);
+	}
+
+	{
+		GLfloat ambient[] = {0.0, 0.0, 0.0, 1.0};
+		GLfloat diffuse[] = {1.0, 0.6, 0.14, 1.0};
+		GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
+		GLfloat shine = 200.0;
+		glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+		glMaterialf(GL_FRONT, GL_SHININESS, shine);
+
+		float t1 = time * M_PI * 1.84f;
+		float s1 = 0.4f + (0.5f + 0.5f * cosf(t1)) * 0.6f;
+		float s2 = 1.0f - (0.5f + 0.5f * -sinf(t1)) * 0.6f;
+
+		glm_vec3 scale = { s1 * 0.055f, s2 * 0.055f, s1 * 0.055f };
+
+		glm_vec3 pos = {-0.43f, -0.15 + 0.15f * sinf(t1), -0.8f};
+		render_model_gl1(teapot, &pos, &scale, time, 44.0f);
+	}
+
+	{
+		GLfloat ambient[] = {0.0, 0.0, 0.0, 1.0};
+		GLfloat diffuse[] = {1.0f, 0.85f, 0.74f, 1.0f};
+		GLfloat specular[] = {1.0, 1.0, 1.0, 1.0};
+		GLfloat shine = 200.0;
+		glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+		glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+		glMaterialf(GL_FRONT, GL_SHININESS, shine);
+
+		float t1 = time * M_PI * 1.2f;
+		float s1 = 0.2f + (0.5f + 0.5f * cosf(t1)) * 0.8f;
+		float s2 = 1.0f - (0.5f + 0.5f * -sinf(t1)) * 0.8f;
+
+		glm_vec3 scale = { s1 * 0.08f, s2 * 0.08f, s1 * 0.08f };
+		glm_vec3 pos = {0.42f, -0.1f + 0.08f * sinf(t1), -0.8f};
+		render_model_gl1(teapot, &pos, &scale, time, 32.0f);
+	}
 
 	glPopMatrix();
 }
@@ -243,15 +461,17 @@ int main(int argc, char *argv[])
 	struct Model teapot = load_obj("../data/teapot.obj");
 	printf("done loading teapot!\n");
 
-	unsigned int width = 1280;
-	unsigned int height = 720;
+	unsigned int width = 640;
+	unsigned int height = 480;
+
+	glm_mat4x4 view;
 
 	glfwInit();
 	GLFWwindow *window = glfwCreateWindow(width, height, "Teapot", NULL, NULL);
 	glfwMakeContextCurrent(window);
 
 	glViewport(0, 0, width, height);
-	glClearColor(0.74f, 0.82f, 0.93f, 1.0f);
+	glClearColor(0.1f, 0.005f, 0.002f, 1.0f);
 
 	bool isQuit = false;
 
@@ -260,41 +480,42 @@ int main(int argc, char *argv[])
 		glfwPollEvents();
 
 		if (glfwWindowShouldClose(window)) isQuit = true;
+		glfwGetWindowSize(window, &width, &height);
+		glViewport(0, 0, width, height);
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_NORMALIZE);
-		glEnable(GL_LIGHTING);
-		glEnable(GL_LIGHT0);
-		glShadeModel(GL_SMOOTH);
+		float aspect = (float)width/(float)height;
+		view = perspective( 90.0f/360.0f *M_PI*2.0f, aspect, 0.01f, 1000.0f);
 
-		double aspect = (double)width / (double)height;
-		glLoadIdentity();
-		glOrtho(-aspect, aspect, -1.0, 1.0, 1.0, -1.0);
+		float time = glfwGetTime();
+		int n = 8;
+		float dt = 1.0f / 24.0f;//10.0f + (0.5f + 0.5f * sinf(time*0.2f*M_PI)) * 14.0f;
 
-		glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-		GLfloat light_ambient[] = {0.0, 0.0, 0.0, 1.0};
-		GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 1.0};
-		GLfloat light_specular[] = {0.0, 0.0, 0.0, 1.0};
-		GLfloat light_position[] = {0.0, 1.0, -1.0, 0.0};
-		glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-		glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-		glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-		glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+		glClear(GL_ACCUM_BUFFER_BIT);
 
-		float a = 1.0f;
-		glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, a);
-		GLfloat ambient[] = {0.0, 0.0, 0.0, 1.0};
-		GLfloat diffuse[] = {1.0, 1.0, 1.0, 1.0};
-		GLfloat specular[] = {0.0, 0.0, 0.0, 1.0};
-		GLfloat shine = 100.0;
-		glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
-		glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-		glMaterialf(GL_FRONT, GL_SHININESS, shine);
+		for (int i = 0; i < n; ++i)
+		{
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		render_model_gl1(&teapot);
+			float t = time + dt * (float)i/(float)n;
+
+			if (fmodf(t, 7.0f) <= 4.5f)
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			else
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+			render(&view, &teapot, t);
+
+
+			if(i == 0)
+				glAccum(GL_LOAD, 1.0f / (float)n);
+			else
+				glAccum(GL_ACCUM, 1.0f / (float)n);
+
+			glAccum(GL_ACCUM, 1.0f / (float)n);
+		}
+
+		glAccum(GL_RETURN, 1.0f);
 
 		glfwSwapBuffers(window);
 	}
