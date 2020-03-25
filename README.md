@@ -2,7 +2,7 @@
 # *OpenGL Mathematics for C*
 
 [*glm-c*](https://github.com/sizeof-voidp/glm-c) is a C alternative of the C++ library [*glm*](https://github.com/g-truc/glm).
-It was made referencing the [*GLSL specification*](https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.pdf) as well. This is meant to be used in C11/C17, you could use this no problem in C99/C89 with a smaller feature set though.
+It was made referencing the [*GLSL specification*](https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.pdf) as well. This is meant to be used in C11+ (C11, C18, C2x, etc...), you could use this no problem in earlier standards with a smaller feature set though.
 
 ### Features
 
