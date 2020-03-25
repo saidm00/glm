@@ -4,7 +4,7 @@
 #include "qualifier.h"
 #include "type_scalar.h"
 #include "type_matrix.h"
-
+/*
 #define GLM_VECTOR_TYPENAME_bool1   bvec1
 #define GLM_VECTOR_TYPENAME_bool2   bvec2
 #define GLM_VECTOR_TYPENAME_bool3   bvec3
@@ -29,8 +29,8 @@
 #define GLM_VECTOR_TYPENAME_uint2   uvec2
 #define GLM_VECTOR_TYPENAME_uint3   uvec3
 #define GLM_VECTOR_TYPENAME_uint4   uvec4
-
-#define GLM_VECTOR_TYPENAME_(L, T, Q) GLM_VECTOR_TYPENAME_ ## T ## L
+*/
+#define GLM_VECTOR_TYPENAME_(L, T, Q) T ## L
 #define GLM_VECTOR_TYPENAME(...) GLM_VECTOR_TYPENAME_(__VA_ARGS__)
 #define GLM_VECTOR_CONSTRUCTOR_NAME(L, T, Q) GLM_CALL_FUNC(constructor, GLM_VECTOR_TYPENAME(L, T, Q))
 
