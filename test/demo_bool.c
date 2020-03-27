@@ -6,7 +6,6 @@
 
 int main(int argc, char *argv[])
 {
-
 	{
 		glm_vec2 v1 = { 2.63f, 8.54f };
 		glm_vec2 v2 = { 1.81f, 11.2f };

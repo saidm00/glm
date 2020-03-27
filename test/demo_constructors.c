@@ -41,5 +41,12 @@ int main(int argc, char *argv[])
 		glm_print("Demo 4:\n\t vec4({f:1.1}, {f:1.1}, {f:1.1}, {f:1.1}) -> {vec4:1.1}\n\n", x,y,z,w,v);
 	}
 
+	{
+		glm_vec2 v1 = { 12.0f, 25.32f };
+		glm_mat2x2 m1 = { 11.2f, 8.21f, 3.24f, 4.64f };
+
+		glm_vec2 v = glm_vec2(v1, m1);
+	}
+
 	return EXIT_SUCCESS;
 }

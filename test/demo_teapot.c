@@ -380,6 +380,7 @@ render(glm_mat4x4 *view, struct Model *teapot, float time)
 		float y = b * cosf(n*t + k);
 
 		glm_vec3 lightPos = { x, 1.5f, y - 0.5f };
+		
 		glLightfv(GL_LIGHT2, GL_AMBIENT, lightColorAmb.elem);
 		glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColorDiff.elem);
 		glLightfv(GL_LIGHT2, GL_SPECULAR, lightColorSpec.elem);
