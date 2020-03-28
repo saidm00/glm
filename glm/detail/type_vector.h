@@ -48,7 +48,7 @@ union\
 		scalar(T, Q) E0;\
 		union\
 		{\
-			scalar(T, Q) E1, E2;\
+			struct { scalar(T, Q) E1, E2; };\
 			vec(2, T, Q) E1 ## E2;\
 		};\
 	};\
