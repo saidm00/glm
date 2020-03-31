@@ -531,4 +531,6 @@ glm_mat(4, 3, double, defaultp): GLM_TYPE_DOUBLE4X3,\
 glm_mat(4, 4, double, defaultp): GLM_TYPE_DOUBLE4X4\
 )
 
+#define GLM_STATIC_ASSERT(expr, message) _Static_assert(expr, message)
+
 #endif /* GLM_DETAIL_QUALIFIER_H */

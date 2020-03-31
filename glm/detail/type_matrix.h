@@ -7,8 +7,6 @@
 #include "namespace_begin.inl"
 
 /*
-	TODO: Rest of matrix precision qualifiers
-*/
 #define GLM_MATRIX_TYPENAME_float2x2_defaultp mat2x2
 #define GLM_MATRIX_TYPENAME_float2x3_defaultp mat2x3
 #define GLM_MATRIX_TYPENAME_float2x4_defaultp mat2x4
@@ -19,9 +17,6 @@
 #define GLM_MATRIX_TYPENAME_float4x3_defaultp mat4x3
 #define GLM_MATRIX_TYPENAME_float4x4_defaultp mat4x4
 
-/*
-	T = double
-*/
 #define GLM_MATRIX_TYPENAME_double2x2_defaultp dmat2x2
 #define GLM_MATRIX_TYPENAME_double2x3_defaultp dmat2x3
 #define GLM_MATRIX_TYPENAME_double2x4_defaultp dmat2x4
@@ -31,8 +26,9 @@
 #define GLM_MATRIX_TYPENAME_double4x2_defaultp dmat4x2
 #define GLM_MATRIX_TYPENAME_double4x3_defaultp dmat4x3
 #define GLM_MATRIX_TYPENAME_double4x4_defaultp dmat4x4
+*/
 
-#define GLM_MATRIX_TYPENAME(C, R, T, Q) GLM_MATRIX_TYPENAME_ ## T ## C ## x ## R ## _ ## Q
+#define GLM_MATRIX_TYPENAME(C, R, T, Q) T ## C ## x ## R
 
 /*
 	C: Left-hand  length_t (constexpr)
@@ -42,69 +38,102 @@
 */
 #define glm_mat(C, R, T, Q) GLM_PREFIX(GLM_MATRIX_TYPENAME(C, R, T, Q))
 
+#define GLM_MATRIX_DATA(C, R, T, Q)\
+union {\
+scalar(T, Q) elem[C][R];\
+unsigned char _data[sizeof(scalar(T, Q)) * C * R];\
+}
+
 /*
 	Define matrix types with float elements.
 */
 typedef
 struct mat(2, 2, float, defaultp)
 {
-	scalar(float, defaultp) elem[2][2];
+	union
+	{
+		GLM_MATRIX_DATA(2, 2, float, defaultp);
+	};
 }
 mat(2, 2, float, defaultp);
 
 typedef
 struct mat(2, 3, float, defaultp)
 {
-	scalar(float, defaultp) elem[2][3];
+	union
+	{
+		GLM_MATRIX_DATA(2, 3, float, defaultp);
+	};
 }
 mat(2, 3, float, defaultp);
 
 typedef
 struct mat(2, 4, float, defaultp)
 {
-	scalar(float, defaultp) elem[2][4];
+	union
+	{
+		GLM_MATRIX_DATA(2, 4, float, defaultp);
+	};
 }
 mat(2, 4, float, defaultp);
 
 typedef
 struct mat(3, 2, float, defaultp)
 {
-	scalar(float, defaultp) elem[3][2];
+	union
+	{
+		GLM_MATRIX_DATA(3, 2, float, defaultp);
+	};
 }
 mat(3, 2, float, defaultp);
 
 typedef
 struct mat(3, 3, float, defaultp)
 {
-	scalar(float, defaultp) elem[3][3];
+	union
+	{
+		GLM_MATRIX_DATA(3, 3, float, defaultp);
+	};
 }
 mat(3, 3, float, defaultp);
 
 typedef
 struct mat(3, 4, float, defaultp)
 {
-	scalar(float, defaultp) elem[3][4];
+	union
+	{
+		GLM_MATRIX_DATA(3, 4, float, defaultp);
+	};
 }
 mat(3, 4, float, defaultp);
 
 typedef
 struct mat(4, 2, float, defaultp)
 {
-	scalar(float, defaultp) elem[4][2];
+	union
+	{
+		GLM_MATRIX_DATA(4, 2, float, defaultp);
+	};
 }
 mat(4, 2, float, defaultp);
 
 typedef
 struct mat(4, 3, float, defaultp)
 {
-	scalar(float, defaultp) elem[4][3];
+	union
+	{
+		GLM_MATRIX_DATA(4, 3, float, defaultp);
+	};
 }
 mat(4, 3, float, defaultp);
 
 typedef
 struct mat(4, 4, float, defaultp)
 {
-	scalar(float, defaultp) elem[4][4];
+	union
+	{
+		GLM_MATRIX_DATA(4, 4, float, defaultp);
+	};
 }
 mat(4, 4, float, defaultp);
 
@@ -114,63 +143,90 @@ mat(4, 4, float, defaultp);
 typedef
 struct mat(2, 2, double, defaultp)
 {
-	scalar(double, defaultp) elem[2][2];
+	union
+	{
+		GLM_MATRIX_DATA(2, 2, double, defaultp);
+	};
 }
 mat(2, 2, double, defaultp);
 
 typedef
 struct mat(2, 3, double, defaultp)
 {
-	scalar(double, defaultp) elem[2][3];
+	union
+	{
+		GLM_MATRIX_DATA(2, 3, double, defaultp);
+	};
 }
 mat(2, 3, double, defaultp);
 
 typedef
 struct mat(2, 4, double, defaultp)
 {
-	scalar(double, defaultp) elem[2][4];
+	union
+	{
+		GLM_MATRIX_DATA(2, 4, double, defaultp);
+	};
 }
 mat(2, 4, double, defaultp);
 
 typedef
 struct mat(3, 2, double, defaultp)
 {
-	scalar(double, defaultp) elem[3][2];
+	union
+	{
+		GLM_MATRIX_DATA(3, 2, double, defaultp);
+	};
 }
 mat(3, 2, double, defaultp);
 
 typedef
 struct mat(3, 3, double, defaultp)
 {
-	scalar(double, defaultp) elem[3][3];
+	union
+	{
+		GLM_MATRIX_DATA(3, 3, double, defaultp);
+	};
 }
 mat(3, 3, double, defaultp);
 
 typedef
 struct mat(3, 4, double, defaultp)
 {
-	scalar(double, defaultp) elem[3][4];
+	union
+	{
+		GLM_MATRIX_DATA(3, 4, double, defaultp);
+	};
 }
 mat(3, 4, double, defaultp);
 
 typedef
 struct mat(4, 2, double, defaultp)
 {
-	scalar(double, defaultp) elem[4][2];
+	union
+	{
+		GLM_MATRIX_DATA(4, 2, double, defaultp);
+	};
 }
 mat(4, 2, double, defaultp);
 
 typedef
 struct mat(4, 3, double, defaultp)
 {
-	scalar(double, defaultp) elem[4][3];
+	union
+	{
+		GLM_MATRIX_DATA(4, 3, double, defaultp);
+	};
 }
 mat(4, 3, double, defaultp);
 
 typedef
 struct mat(4, 4, double, defaultp)
 {
-	scalar(double, defaultp) elem[4][4];
+	union
+	{
+		GLM_MATRIX_DATA(4, 4, double, defaultp);
+	};
 }
 mat(4, 4, double, defaultp);
 

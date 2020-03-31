@@ -24,6 +24,14 @@
 #undef muleq
 #undef diveq
 
+/* Boolean Functions */
+#undef or 
+#undef and
+#undef xor
+#undef all
+#undef any
+#undef not
+
 /* Common Functions */
 #undef abs
 #undef sign
