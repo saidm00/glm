@@ -1,7 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include <glm/glm.h>
 #include <glm/gtx/print.h>
+
+
+#include <glm/detail/namespace_begin.inl>
+#include <glm/detail/namespace_template_matrix_begin.inl>
+#define C 3
+#define R 3
+#define T float
+#define Q defaultp
+#include <glm/detail/type_matrix.inl>
+#undef C
+#undef R
+#undef T
+#undef Q
+#include <glm/detail/namespace_template_matrix_end.inl>
+#include <glm/detail/namespace_end.inl>
+
 
 int main(int argc, char *argv[])
 {
@@ -45,7 +62,23 @@ int main(int argc, char *argv[])
 		glm_vec2 v1 = { 12.0f, 25.32f };
 		glm_mat2x2 m1 = { 11.2f, 8.21f, 3.24f, 4.64f };
 
-		glm_vec2 v = glm_vec2(v1, m1);
+		glm_vec4 v = glm_vec4(v1, m1);
+
+	}
+
+	{
+		glm_vec4 v1 = glm_vec4(1,2,3,4);
+		glm_vec2 v2 = glm_vec2(5,6);
+		glm_vec3 v3 = glm_vec3(7,8,9);
+
+		glm_mat3x3 m1 = glm_constructor_float3x3(3, GLM_TYPE_FLOAT4, v1, GLM_TYPE_FLOAT2, v2, GLM_TYPE_FLOAT3, v3);
+
+		printf("[[%f %f %f], [%f %f %f], [%f %f %f]]\n",
+			m1.elem[0][0], m1.elem[0][1], m1.elem[0][2],
+			m1.elem[1][0], m1.elem[1][1], m1.elem[1][2],
+			m1.elem[2][0], m1.elem[2][1], m1.elem[2][2]
+			);
+
 	}
 
 	return EXIT_SUCCESS;
