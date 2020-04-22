@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 		glm_vec2 v1 = { 12.0f, 25.32f };
 		glm_mat2x2 m1 = { 11.2f, 8.21f, 3.24f, 4.64f };
 
-		glm_vec2 v = glm_vec2(v1, m1);
+		glm_vec4 v = glm_vec4(v1, m1);
 	}
 
 	return EXIT_SUCCESS;
