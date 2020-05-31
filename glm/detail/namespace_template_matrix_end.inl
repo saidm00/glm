@@ -1,0 +1,2 @@
+#undef constructor
+#undef identity

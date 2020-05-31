@@ -34,7 +34,7 @@ typedef struct
 
 float random_uniform(void)
 {
-	/*return (float)(rand() % 0xFFFFFFFF) / (float)0xFFFFFFFF; */
+	//return (float)(rand() % 0xFFFFFFFF) / (float)0xFFFFFFFF;
 	return (float)rand() / (float)RAND_MAX;
 }
 

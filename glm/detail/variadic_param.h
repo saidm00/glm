@@ -1,9 +1,7 @@
 #ifndef GLM_DETAIL_VARIADIC_PARAM_H
 #define GLM_DETAIL_VARIADIC_PARAM_H
 
-#include "type_scalar.h"
-#include "type_vector.h"
-#include "type_matrix.h"
+#include "qualifier.h"
 
 #define GLM_VARIADIC_PARAM_TYPE(A) GLM_TYPEOF(A)
 

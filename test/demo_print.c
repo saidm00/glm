@@ -41,5 +41,12 @@ int main(int argc, char *argv[])
 		glm_print("Demo 5:\n\t For {uvec2}, x <= y = {b}\n\n", v, b);
 	}
 
+	{
+		glm_vec3 v = { 2.53f, 74.3f, 22.32f };
+
+		float f = glm_length(v);
+		glm_print("Demo 6:\n\t length({vec3}) = {f}\n\n", v, f);
+	}
+
 	return EXIT_SUCCESS;
 }
