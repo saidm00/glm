@@ -53,15 +53,28 @@ int main(int argc, char *argv[])
 
 	{
 		glm_vec2 v1 = { 1.0f, 2.0f };
-		glm_vec2 v2 = { 3.0f, 3.0f };
+		glm_vec2 v2 = { 3.0f, 4.0f };
 
-		glm_mat2 m1 = glm_mat2(v1, v2);
+		glm_mat2 m1 = glm_mat2(v1,v2);
 
 		printf("[[%f %f],\n [%f %f]]\n",
 			m1.elem[0][0], m1.elem[0][1],
 			m1.elem[1][0], m1.elem[1][1]
 			);
 
+	}
+
+	{
+		glm_vec3 v1 = {1.0f, 2.0f, 3.0f};
+		glm_vec3 v2 = {1.0f, 2.0f, 3.0f};
+		glm_vec3 v3 = {1.0f, 2.0f, 3.0f};
+		glm_mat3 m1 = glm_mat3(v1, v2, v3);
+
+		printf("[[%f %f %f],\n [%f %f %f],\n [%f %f %f]]\n",
+		       m1.elem[0][0], m1.elem[0][1], m1.elem[0][2],
+		       m1.elem[1][0], m1.elem[1][1], m1.elem[1][2],
+		       m1.elem[2][0], m1.elem[2][1], m1.elem[2][2]
+		);
 	}
 
 	return EXIT_SUCCESS;

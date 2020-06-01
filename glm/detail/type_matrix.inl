@@ -21,68 +21,58 @@ GLM_FUNC_QUALIFIER GLM_CONSTEXPR mat(C, R, T, Q)
 constructor(size_t const paramCount, ...)
 {
 	mat(C, R, T, Q) Result;
-	va_list parameterList;
+	va_list params;
 	
 	uint64_t paramTypeFlag;
-	glm_RTTI paramRTTI;
+	glm_RuntimeTypeInformation paramTypeInfo;
 	static const size_t ELEMENT_COUNT = C * R;
 
 	uint64_t dstElemType = GLM_TYPEOF_SCALAR(T);
-	size_t paramIdx = 0;
-	size_t readElems = 0;
 
-	GLM_ASSERT(paramCount <= ELEMENT_COUNT, "Too many arguments for matrix constuctor.");
-	va_start(parameterList, paramCount);
+	GLM_ASSERT(paramCount <= ELEMENT_COUNT, "Too many arguments for matrix constructor.");
+	va_start(params, paramCount);
 
-#ifndef NDEBUG
-	GLM_ZERO_MEMORY(&Result, sizeof(Result));
-#endif
+	/* Parse variadic arguments */
+	if (paramCount == 1) {
+		paramTypeFlag = va_arg(params, uint64_t);
+		if (paramTypeFlag & GLM_TYPE_SCALAR) {
+			/* Cast from scalar (second paragraph, sect. 5.4.2 [GLSL 4.60]) */
+			scalar(T, defaultp) scalarValue;
+			length_t loopIdx;
+			static const length_t MINIMUM_DIM = C < R ? C : R;
+			GLM_ZERO_MEMORY(&Result, sizeof(Result));
 
-	/* Parse variadic arguments */	
-	for (; paramIdx < paramCount && readElems < ELEMENT_COUNT; ++paramIdx) {
-		paramTypeFlag = va_arg(parameterList, uint64_t);
-		
-		if (paramCount == 1) {
-			if (paramTypeFlag & GLM_TYPE_SCALAR) {
-				/* Cast from scalar (second paragraph, sect. 5.4.2 [GLSL 4.60]) */
-				T scalarValue;
-				size_t loopIdx;
-				static const size_t MINIMUM_DIM = C < R ? C : R;
-				GLM_ZERO_MEMORY(&Result, sizeof(Result));
-
-				switch (paramTypeFlag) {
-					case GLM_TYPE_BOOL: scalarValue = (T)va_arg(parameterList, int); break;
-					case GLM_TYPE_FLOAT: scalarValue = (T)va_arg(parameterList, double); break;
-					case GLM_TYPE_DOUBLE: scalarValue = (T)va_arg(parameterList, double); break;
-					case GLM_TYPE_INT: scalarValue = (T)va_arg(parameterList, int); break;
-					case GLM_TYPE_UINT: scalarValue = (T)va_arg(parameterList, unsigned int); break;
-					default:
-						break;
-				}
-
-				for (loopIdx = 0; loopIdx < MINIMUM_DIM; ++loopIdx)
-					Result.elem[loopIdx][loopIdx] = scalarValue;
-
-				goto FinishedConstruction;
+			switch (paramTypeFlag) {
+				case GLM_TYPE_BOOL: scalarValue = va_arg(params, int); break;
+				case GLM_TYPE_FLOAT: scalarValue = va_arg(params, double); break;
+				case GLM_TYPE_DOUBLE: scalarValue = va_arg(params, double); break;
+				case GLM_TYPE_INT: scalarValue = va_arg(params, int); break;
+				case GLM_TYPE_UINT: scalarValue = va_arg(params, unsigned int); break;
 			}
-			else if (paramTypeFlag & GLM_TYPE_MATRIX) {
-				/* Cast from matrix (third paragraph, sect. 5.4.2 [GLSL 4.60]) */
-				
-				goto FinishedConstruction;
-			}
+
+			for (loopIdx = 0; loopIdx < MINIMUM_DIM; ++loopIdx)
+				Result.elem[loopIdx][loopIdx] = scalarValue;
 		}
+		else if (paramTypeFlag & GLM_TYPE_MATRIX) {
+			/* Cast from matrix (third paragraph, sect. 5.4.2 [GLSL 4.60]) */
+		}
+		else {
+			glm_GetRuntimeTypeInformation(&paramTypeInfo, paramTypeFlag);
+			glm_ParseAndCastParameter(dstElemType, (void *)&Result, ELEMENT_COUNT, &paramTypeInfo, &params);
+		}
+	} else {
+		size_t paramIdx = 0;
+		length_t elemIdx = 0;
+		while (paramIdx < paramCount && elemIdx < ELEMENT_COUNT) {
+			paramTypeFlag = va_arg(params, uint64_t);
 
-		GetExtraTypeInformation(paramTypeFlag, &paramRTTI);
-		
-		//printf("0x%x\n", paramTypeFlag);
-		//printf("%u\n", readElems);
-		//printf("%u\n", ELEMENT_COUNT - readElems);
-		readElems += ParseAndCvtArg(dstElemType, (void *)((T *)&Result.elem[0][0] + readElems),
-			ELEMENT_COUNT - readElems, &paramRTTI, &parameterList);
+			glm_GetRuntimeTypeInformation(&paramTypeInfo, paramTypeFlag);
+			elemIdx += glm_ParseAndCastParameter(dstElemType, (void *)((T *)&Result + elemIdx),
+				ELEMENT_COUNT - elemIdx, &paramTypeInfo, &params);
+			++paramIdx;
+		}
 	}
 
-FinishedConstruction:
-	va_end(parameterList);
-
+	va_end(params);
 	return Result;
 }

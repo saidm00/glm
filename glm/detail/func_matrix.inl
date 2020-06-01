@@ -30,7 +30,7 @@ inverse(mat(C, R, T, Q) const m)
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR mat(R, C, T, Q)
 transpose(mat(C, R, T, Q) const m)
 {
-	mat(C, R, T, Q) Result;
+	mat(R, C, T, Q) Result;
 	length_t i, j;
 
 	for (i = 0; i < C; ++i)

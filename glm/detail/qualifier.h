@@ -7,16 +7,9 @@
 #include "type_matrix.h"
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
-GetExtraTypeInformation(uint64_t const typeFlag, glm_RTTI *dstInfo)
+glm_GetRuntimeTypeInformation(glm_RuntimeTypeInformation *dstInfo, uint64_t const typeFlag)
 {
 	dstInfo->typeFlag = typeFlag;
-
-	// if (typeFlag & (GLM_TYPE_FLOAT | GLM_TYPE_DOUBLE | GLM_TYPE_INT | GLM_TYPE_UINT | GLM_TYPE_BOOL)) {
-	// 	dstInfo->typeGroup = GLM_TYPE_GROUP_SCALAR;
-	// }
-	// else if (typeFlag & ()) {
-
-	// }
 
 	switch (typeFlag)
 	{
@@ -348,7 +341,7 @@ LimitedCvt(size_t const writeElemCount, void *dstAddr, uint64_t const dstElemTyp
 
 /* Parse and cast arguments for constructor */
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR size_t
-ParseAndCvtArg(uint64_t const dstElemType, void *dstAddr, size_t const writeElemLimit, glm_RTTI const* paramInfo, va_list* params)
+glm_ParseAndCastParameter(uint64_t const dstElemType, void *dstAddr, size_t const writeElemLimit, glm_RuntimeTypeInformation const* paramInfo, va_list* params)
 {
 	uint8_t tmpMem[128];
 	size_t writeElemCount = paramInfo->elemCount <= writeElemLimit ?
@@ -357,164 +350,159 @@ ParseAndCvtArg(uint64_t const dstElemType, void *dstAddr, size_t const writeElem
 #ifndef NDEBUG
 	GLM_ZERO_MEMORY(tmpMem, 128);
 #endif
-	printf("0x%x 0x%x\n", paramInfo->typeFlag, GLM_TYPE_FLOAT2);
 
 	switch (paramInfo->typeFlag)
 	{
 		case GLM_TYPE_BOOL:
-			*((bool *)tmpMem) = (bool)va_arg(*params, int);
+			*((bool *)tmpMem) = (bool)va_arg((*params), int);
 			break;
 		case GLM_TYPE_FLOAT:
-			*((float *)tmpMem) = (float)va_arg(*params, double);
+			*((float *)tmpMem) = (float)va_arg((*params), double);
 			break;
 		case GLM_TYPE_DOUBLE:
-			*((double *)tmpMem) = va_arg(*params, double);
+			*((double *)tmpMem) = va_arg((*params), double);
 			break;
 		case GLM_TYPE_INT:
-			*((int *)tmpMem) = va_arg(*params, int);
+			*((int *)tmpMem) = va_arg((*params), int);
 			break;
 		case GLM_TYPE_UINT:
-			*((unsigned int *)tmpMem) = va_arg(*params, unsigned int);
+			*((unsigned int *)tmpMem) = va_arg((*params), unsigned int);
 			break;
 
 		/* Bool types */
 		case GLM_TYPE_BOOL1:
-			*((glm_vec(1, bool, defaultp) *)tmpMem) = va_arg(*params, glm_vec(1, bool, defaultp));
+			*((glm_vec(1, bool, defaultp) *)tmpMem) = va_arg((*params), glm_vec(1, bool, defaultp));
 			break;
 		case GLM_TYPE_BOOL2:
-			*((glm_vec(2, bool, defaultp) *)tmpMem) = va_arg(*params, glm_vec(2, bool, defaultp));
+			*((glm_vec(2, bool, defaultp) *)tmpMem) = va_arg((*params), glm_vec(2, bool, defaultp));
 			break;
 		case GLM_TYPE_BOOL3:
-			*((glm_vec(3, bool, defaultp) *)tmpMem) = va_arg(*params, glm_vec(3, bool, defaultp));
+			*((glm_vec(3, bool, defaultp) *)tmpMem) = va_arg((*params), glm_vec(3, bool, defaultp));
 			break;
 		case GLM_TYPE_BOOL4:
-			*((glm_vec(4, bool, defaultp) *)tmpMem) = va_arg(*params, glm_vec(4, bool, defaultp));
+			*((glm_vec(4, bool, defaultp) *)tmpMem) = va_arg((*params), glm_vec(4, bool, defaultp));
 			break;
 
 		/* Float types */
 		case GLM_TYPE_FLOAT1:
-			*((glm_vec(1, float, defaultp) *)tmpMem) = va_arg(*params, glm_vec(1, float, defaultp));
+			*((glm_vec(1, float, defaultp) *)tmpMem) = va_arg((*params), glm_vec(1, float, defaultp));
 			break;
 		case GLM_TYPE_FLOAT2:
-			printf("%s\n", "Hi");
-			*((glm_vec(2, float, defaultp) *)tmpMem) = va_arg(*params, glm_vec(2, float, defaultp));
+			*((glm_vec(2, float, defaultp) *)tmpMem) = va_arg((*params), glm_vec(2, float, defaultp));
 			break;
 		case GLM_TYPE_FLOAT3:
-			*((glm_vec(3, float, defaultp) *)tmpMem) = va_arg(*params, glm_vec(3, float, defaultp));
+			*((glm_vec(3, float, defaultp) *)tmpMem) = va_arg((*params), glm_vec(3, float, defaultp));
 			break;
 		case GLM_TYPE_FLOAT4:
-			*((glm_vec(4, float, defaultp) *)tmpMem) = va_arg(*params, glm_vec(4, float, defaultp));
+			*((glm_vec(4, float, defaultp) *)tmpMem) = va_arg((*params), glm_vec(4, float, defaultp));
 			break;
 
 		/* Double types */
 		case GLM_TYPE_DOUBLE1:
-			*((glm_vec(1, double, defaultp) *)tmpMem) = va_arg(*params, glm_vec(1, double, defaultp));
+			*((glm_vec(1, double, defaultp) *)tmpMem) = va_arg((*params), glm_vec(1, double, defaultp));
 			break;
 		case GLM_TYPE_DOUBLE2:
-			*((glm_vec(2, double, defaultp) *)tmpMem) = va_arg(*params, glm_vec(2, double, defaultp));
+			*((glm_vec(2, double, defaultp) *)tmpMem) = va_arg((*params), glm_vec(2, double, defaultp));
 			break;
 		case GLM_TYPE_DOUBLE3:
-			*((glm_vec(3, double, defaultp) *)tmpMem) = va_arg(*params, glm_vec(3, double, defaultp));
+			*((glm_vec(3, double, defaultp) *)tmpMem) = va_arg((*params), glm_vec(3, double, defaultp));
 			break;
 		case GLM_TYPE_DOUBLE4:
-			*((glm_vec(4, double, defaultp) *)tmpMem) = va_arg(*params, glm_vec(4, double, defaultp));
+			*((glm_vec(4, double, defaultp) *)tmpMem) = va_arg((*params), glm_vec(4, double, defaultp));
 			break;
 
 		/* Integer types */
 		case GLM_TYPE_INT1:
-			*((glm_vec(1, int, defaultp) *)tmpMem) = va_arg(*params, glm_vec(1, int, defaultp));
+			*((glm_vec(1, int, defaultp) *)tmpMem) = va_arg((*params), glm_vec(1, int, defaultp));
 			break;
 		case GLM_TYPE_INT2:
-			*((glm_vec(2, int, defaultp) *)tmpMem) = va_arg(*params, glm_vec(2, int, defaultp));
+			*((glm_vec(2, int, defaultp) *)tmpMem) = va_arg((*params), glm_vec(2, int, defaultp));
 			break;
 		case GLM_TYPE_INT3:
-			*((glm_vec(3, int, defaultp) *)tmpMem) = va_arg(*params, glm_vec(3, int, defaultp));
+			*((glm_vec(3, int, defaultp) *)tmpMem) = va_arg((*params), glm_vec(3, int, defaultp));
 			break;
 		case GLM_TYPE_INT4:
-			*((glm_vec(4, int, defaultp) *)tmpMem) = va_arg(*params, glm_vec(4, int, defaultp));
+			*((glm_vec(4, int, defaultp) *)tmpMem) = va_arg((*params), glm_vec(4, int, defaultp));
 			break;
 
 		/* Unsigned Integer types */
 		case GLM_TYPE_UINT1:
-			*((glm_vec(1, uint, defaultp) *)tmpMem) = va_arg(*params, glm_vec(1, uint, defaultp));
+			*((glm_vec(1, uint, defaultp) *)tmpMem) = va_arg((*params), glm_vec(1, uint, defaultp));
 			break;
 		case GLM_TYPE_UINT2:
-			*((glm_vec(2, uint, defaultp) *)tmpMem) = va_arg(*params, glm_vec(2, uint, defaultp));
+			*((glm_vec(2, uint, defaultp) *)tmpMem) = va_arg((*params), glm_vec(2, uint, defaultp));
 			break;
 		case GLM_TYPE_UINT3:
-			*((glm_vec(3, uint, defaultp) *)tmpMem) = va_arg(*params, glm_vec(3, uint, defaultp));
+			*((glm_vec(3, uint, defaultp) *)tmpMem) = va_arg((*params), glm_vec(3, uint, defaultp));
 			break;
 		case GLM_TYPE_UINT4:
-			*((glm_vec(4, uint, defaultp) *)tmpMem) = va_arg(*params, glm_vec(4, uint, defaultp));
+			*((glm_vec(4, uint, defaultp) *)tmpMem) = va_arg((*params), glm_vec(4, uint, defaultp));
 			break;
 
 		/* Matrix types */
 		case GLM_TYPE_FLOAT2X2:
-			*((glm_mat(2, 2, float, defaultp) *)tmpMem) = va_arg(*params, glm_mat(2, 2, float, defaultp));
+			*((glm_mat(2, 2, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(2, 2, float, defaultp));
 			break;
 		case GLM_TYPE_FLOAT2X3:
-			*((glm_mat(2, 3, float, defaultp) *)tmpMem) = va_arg(*params, glm_mat(2, 3, float, defaultp));
+			*((glm_mat(2, 3, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(2, 3, float, defaultp));
 			break;
 		case GLM_TYPE_FLOAT2X4:
-			*((glm_mat(2, 4, float, defaultp) *)tmpMem) = va_arg(*params, glm_mat(2, 4, float, defaultp));
+			*((glm_mat(2, 4, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(2, 4, float, defaultp));
 			break;
 
 		case GLM_TYPE_FLOAT3X2:
-			*((glm_mat(3, 2, float, defaultp) *)tmpMem) = va_arg(*params, glm_mat(3, 2, float, defaultp));
+			*((glm_mat(3, 2, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(3, 2, float, defaultp));
 			break;
 		case GLM_TYPE_FLOAT3X3:
-			*((glm_mat(3, 3, float, defaultp) *)tmpMem) = va_arg(*params, glm_mat(3, 3, float, defaultp));
+			*((glm_mat(3, 3, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(3, 3, float, defaultp));
 			break;
 		case GLM_TYPE_FLOAT3X4:
-			*((glm_mat(3, 4, float, defaultp) *)tmpMem) = va_arg(*params, glm_mat(3, 4, float, defaultp));
+			*((glm_mat(3, 4, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(3, 4, float, defaultp));
 			break;
 
 		case GLM_TYPE_FLOAT4X2:
-			*((glm_mat(4, 2, float, defaultp) *)tmpMem) = va_arg(*params, glm_mat(4, 2, float, defaultp));
+			*((glm_mat(4, 2, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(4, 2, float, defaultp));
 			break;
 		case GLM_TYPE_FLOAT4X3:
-			*((glm_mat(4, 3, float, defaultp) *)tmpMem) = va_arg(*params, glm_mat(4, 3, float, defaultp));
+			*((glm_mat(4, 3, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(4, 3, float, defaultp));
 			break;
 		case GLM_TYPE_FLOAT4X4:
-			*((glm_mat(4, 4, float, defaultp) *)tmpMem) = va_arg(*params, glm_mat(4, 4, float, defaultp));
+			*((glm_mat(4, 4, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(4, 4, float, defaultp));
 			break;
 
 		/* Double matrices */
 		case GLM_TYPE_DOUBLE2X2:
-			*((glm_mat(2, 2, double, defaultp) *)tmpMem) = va_arg(*params, glm_mat(2, 2, double, defaultp));
+			*((glm_mat(2, 2, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(2, 2, double, defaultp));
 			break;
 		case GLM_TYPE_DOUBLE2X3:
-			*((glm_mat(2, 3, double, defaultp) *)tmpMem) = va_arg(*params, glm_mat(2, 3, double, defaultp));
+			*((glm_mat(2, 3, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(2, 3, double, defaultp));
 			break;
 		case GLM_TYPE_DOUBLE2X4:
-			*((glm_mat(2, 4, double, defaultp) *)tmpMem) = va_arg(*params, glm_mat(2, 4, double, defaultp));
+			*((glm_mat(2, 4, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(2, 4, double, defaultp));
 			break;
 		case GLM_TYPE_DOUBLE3X2:
-			*((glm_mat(3, 2, double, defaultp) *)tmpMem) = va_arg(*params, glm_mat(3, 2, double, defaultp));
+			*((glm_mat(3, 2, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(3, 2, double, defaultp));
 			break;
 		case GLM_TYPE_DOUBLE3X3:
-			*((glm_mat(3, 3, double, defaultp) *)tmpMem) = va_arg(*params, glm_mat(3, 3, double, defaultp));
+			*((glm_mat(3, 3, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(3, 3, double, defaultp));
 			break;
 		case GLM_TYPE_DOUBLE3X4:
-			*((glm_mat(3, 4, double, defaultp) *)tmpMem) = va_arg(*params, glm_mat(3, 4, double, defaultp));
+			*((glm_mat(3, 4, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(3, 4, double, defaultp));
 			break;
 		case GLM_TYPE_DOUBLE4X2:
-			*((glm_mat(4, 2, double, defaultp) *)tmpMem) = va_arg(*params, glm_mat(4, 2, double, defaultp));
+			*((glm_mat(4, 2, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(4, 2, double, defaultp));
 			break;
 		case GLM_TYPE_DOUBLE4X3:
-			*((glm_mat(4, 3, double, defaultp) *)tmpMem) = va_arg(*params, glm_mat(4, 3, double, defaultp));
+			*((glm_mat(4, 3, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(4, 3, double, defaultp));
 			break;
 		case GLM_TYPE_DOUBLE4X4:
-			*((glm_mat(4, 4, double, defaultp) *)tmpMem) = va_arg(*params, glm_mat(4, 4, double, defaultp));
+			*((glm_mat(4, 4, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(4, 4, double, defaultp));
 			break;
 
 		default: break;
 	}
 
-	printf("elems: %f %f\n", ((float*)tmpMem)[0], ((float*)tmpMem)[1] );
-
-	//LimitedCvt(writeElemCount, dstAddr, dstElemType, (void const*)tmpMem, paramInfo->elemType);
-
+	LimitedCvt(writeElemCount, dstAddr, dstElemType, (void const*)tmpMem, paramInfo->elemType);
 	return writeElemCount;
 }
 

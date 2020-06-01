@@ -120,73 +120,73 @@ typedef enum glm_qualifier
 
 
 /* Enums of all glm typenames */
-typedef enum glm_type
-{
-	GLM_TYPE_BOOL       = (1ULL << 0),
-	GLM_TYPE_FLOAT      = (1ULL << 1),
-	GLM_TYPE_DOUBLE     = (1ULL << 2),
-	GLM_TYPE_INT        = (1ULL << 3),
-	GLM_TYPE_UINT       = (1ULL << 4),
-	GLM_TYPE_BOOL1      = (1ULL << 5),
-	GLM_TYPE_BOOL2      = (1ULL << 6),
-	GLM_TYPE_BOOL3      = (1ULL << 7),
-	GLM_TYPE_BOOL4      = (1ULL << 8),
-	GLM_TYPE_FLOAT1     = (1ULL << 9),
-	GLM_TYPE_FLOAT2     = (1ULL << 10),
-	GLM_TYPE_FLOAT3     = (1ULL << 11),
-	GLM_TYPE_FLOAT4     = (1ULL << 12),
-	GLM_TYPE_DOUBLE1    = (1ULL << 13),
-	GLM_TYPE_DOUBLE2    = (1ULL << 14),
-	GLM_TYPE_DOUBLE3    = (1ULL << 15),
-	GLM_TYPE_DOUBLE4    = (1ULL << 16),
-	GLM_TYPE_INT1       = (1ULL << 17),
-	GLM_TYPE_INT2       = (1ULL << 18),
-	GLM_TYPE_INT3       = (1ULL << 19),
-	GLM_TYPE_INT4       = (1ULL << 20),
-	GLM_TYPE_UINT1      = (1ULL << 21),
-	GLM_TYPE_UINT2      = (1ULL << 22),
-	GLM_TYPE_UINT3      = (1ULL << 23),
-	GLM_TYPE_UINT4      = (1ULL << 24),
-	GLM_TYPE_FLOAT2X2   = (1ULL << 25),
-	GLM_TYPE_FLOAT2X3   = (1ULL << 26),
-	GLM_TYPE_FLOAT2X4   = (1ULL << 27),
-	GLM_TYPE_FLOAT3X2   = (1ULL << 28),
-	GLM_TYPE_FLOAT3X3   = (1ULL << 29),
-	GLM_TYPE_FLOAT3X4   = (1ULL << 30),
-	GLM_TYPE_FLOAT4X2   = (1ULL << 31),
-	GLM_TYPE_FLOAT4X3   = (1ULL << 32),
-	GLM_TYPE_FLOAT4X4   = (1ULL << 33),
-	GLM_TYPE_DOUBLE2X2  = (1ULL << 34),
-	GLM_TYPE_DOUBLE2X3  = (1ULL << 35),
-	GLM_TYPE_DOUBLE2X4  = (1ULL << 36),
-	GLM_TYPE_DOUBLE3X2  = (1ULL << 37),
-	GLM_TYPE_DOUBLE3X3  = (1ULL << 38),
-	GLM_TYPE_DOUBLE3X4  = (1ULL << 39),
-	GLM_TYPE_DOUBLE4X2  = (1ULL << 40),
-	GLM_TYPE_DOUBLE4X3  = (1ULL << 41),
-	GLM_TYPE_DOUBLE4X4  = (1ULL << 42),
-	GLM_TYPE_SCALAR = GLM_TYPE_BOOL | GLM_TYPE_FLOAT | GLM_TYPE_DOUBLE | GLM_TYPE_INT | GLM_TYPE_UINT,
-	GLM_TYPE_VECTOR = GLM_TYPE_BOOL1 | GLM_TYPE_BOOL2 | GLM_TYPE_BOOL3 | GLM_TYPE_BOOL4
+#define GLM_TYPE_BOOL      (1ULL << 0)
+#define GLM_TYPE_FLOAT     (1ULL << 1)
+#define GLM_TYPE_DOUBLE    (1ULL << 2)
+#define GLM_TYPE_INT       (1ULL << 3)
+#define GLM_TYPE_UINT      (1ULL << 4)
+#define GLM_TYPE_BOOL1     (1ULL << 5)
+#define GLM_TYPE_BOOL2     (1ULL << 6)
+#define GLM_TYPE_BOOL3     (1ULL << 7)
+#define GLM_TYPE_BOOL4     (1ULL << 8)
+#define GLM_TYPE_FLOAT1    (1ULL << 9)
+#define GLM_TYPE_FLOAT2    (1ULL << 10)
+#define GLM_TYPE_FLOAT3    (1ULL << 11)
+#define GLM_TYPE_FLOAT4    (1ULL << 12)
+#define GLM_TYPE_DOUBLE1   (1ULL << 13)
+#define GLM_TYPE_DOUBLE2   (1ULL << 14)
+#define GLM_TYPE_DOUBLE3   (1ULL << 15)
+#define GLM_TYPE_DOUBLE4   (1ULL << 16)
+#define GLM_TYPE_INT1      (1ULL << 17)
+#define GLM_TYPE_INT2      (1ULL << 18)
+#define GLM_TYPE_INT3      (1ULL << 19)
+#define GLM_TYPE_INT4      (1ULL << 20)
+#define GLM_TYPE_UINT1     (1ULL << 21)
+#define GLM_TYPE_UINT2     (1ULL << 22)
+#define GLM_TYPE_UINT3     (1ULL << 23)
+#define GLM_TYPE_UINT4     (1ULL << 24)
+#define GLM_TYPE_FLOAT2X2  (1ULL << 25)
+#define GLM_TYPE_FLOAT2X3  (1ULL << 26)
+#define GLM_TYPE_FLOAT2X4  (1ULL << 27)
+#define GLM_TYPE_FLOAT3X2  (1ULL << 28)
+#define GLM_TYPE_FLOAT3X3  (1ULL << 29)
+#define GLM_TYPE_FLOAT3X4  (1ULL << 30)
+#define GLM_TYPE_FLOAT4X2  (1ULL << 31)
+#define GLM_TYPE_FLOAT4X3  (1ULL << 32)
+#define GLM_TYPE_FLOAT4X4  (1ULL << 33)
+#define GLM_TYPE_DOUBLE2X2 (1ULL << 34)
+#define GLM_TYPE_DOUBLE2X3 (1ULL << 35)
+#define GLM_TYPE_DOUBLE2X4 (1ULL << 36)
+#define GLM_TYPE_DOUBLE3X2 (1ULL << 37)
+#define GLM_TYPE_DOUBLE3X3 (1ULL << 38)
+#define GLM_TYPE_DOUBLE3X4 (1ULL << 39)
+#define GLM_TYPE_DOUBLE4X2 (1ULL << 40)
+#define GLM_TYPE_DOUBLE4X3 (1ULL << 41)
+#define GLM_TYPE_DOUBLE4X4 (1ULL << 42)
+
+static const uint64_t GLM_TYPE_SCALAR = GLM_TYPE_BOOL | GLM_TYPE_FLOAT | GLM_TYPE_DOUBLE | GLM_TYPE_INT | GLM_TYPE_UINT;
+
+static const uint64_t GLM_TYPE_VECTOR = GLM_TYPE_BOOL1 | GLM_TYPE_BOOL2 | GLM_TYPE_BOOL3 | GLM_TYPE_BOOL4
 		| GLM_TYPE_FLOAT1 | GLM_TYPE_FLOAT2 | GLM_TYPE_FLOAT3 | GLM_TYPE_FLOAT4
 		| GLM_TYPE_DOUBLE1 | GLM_TYPE_DOUBLE2 | GLM_TYPE_DOUBLE3 | GLM_TYPE_DOUBLE4
 		| GLM_TYPE_INT1 | GLM_TYPE_INT2 | GLM_TYPE_INT3 | GLM_TYPE_INT4
-		| GLM_TYPE_UINT1 | GLM_TYPE_UINT2 | GLM_TYPE_UINT3 | GLM_TYPE_UINT4,
-	GLM_TYPE_MATRIX = GLM_TYPE_FLOAT2X2 | GLM_TYPE_FLOAT2X3 | GLM_TYPE_FLOAT2X4
+		| GLM_TYPE_UINT1 | GLM_TYPE_UINT2 | GLM_TYPE_UINT3 | GLM_TYPE_UINT4;
+
+static const uint64_t GLM_TYPE_MATRIX = GLM_TYPE_FLOAT2X2 | GLM_TYPE_FLOAT2X3 | GLM_TYPE_FLOAT2X4
 		| GLM_TYPE_FLOAT3X2 | GLM_TYPE_FLOAT3X3 | GLM_TYPE_FLOAT3X4
 		| GLM_TYPE_FLOAT4X2 | GLM_TYPE_FLOAT4X3 | GLM_TYPE_FLOAT4X4
 		| GLM_TYPE_DOUBLE2X2 | GLM_TYPE_DOUBLE2X3 | GLM_TYPE_DOUBLE2X4
 		| GLM_TYPE_DOUBLE3X2 | GLM_TYPE_DOUBLE3X3 | GLM_TYPE_DOUBLE3X4
-		| GLM_TYPE_DOUBLE4X2 | GLM_TYPE_DOUBLE4X3 | GLM_TYPE_DOUBLE4X4
-} glm_type_t;
+		| GLM_TYPE_DOUBLE4X2 | GLM_TYPE_DOUBLE4X3 | GLM_TYPE_DOUBLE4X4;
 
-typedef struct glm_RTTI {
+typedef struct glm_RuntimeTypeInformation {
 	uint64_t typeFlag;
 	uint64_t elemType;
 	size_t elemCol, elemRow;
 	size_t elemCount; /* C * R for matrices, and L for vectors */
 	//size_t elemSize;
 	//uint8_t typeGroup;
-} glm_RTTI;
+} glm_RuntimeTypeInformation;
 
 
 
@@ -205,7 +205,7 @@ typedef struct glm_RTTI {
 #define GLM_TYPEOF_SCALAR(...) GLM_TYPEOF_SCALAR_(__VA_ARGS__)
 
 #define GLM_TYPEOF(x)\
-_Generic((x),\
+(uint64_t)(_Generic((x),\
 bool : GLM_TYPE_BOOL,\
 float : GLM_TYPE_FLOAT,\
 double : GLM_TYPE_DOUBLE,\
@@ -249,6 +249,6 @@ glm_mat(3, 4, double, defaultp): GLM_TYPE_DOUBLE3X4,\
 glm_mat(4, 2, double, defaultp): GLM_TYPE_DOUBLE4X2,\
 glm_mat(4, 3, double, defaultp): GLM_TYPE_DOUBLE4X3,\
 glm_mat(4, 4, double, defaultp): GLM_TYPE_DOUBLE4X4\
-)
+))
 
 #endif /* GLM_DETAIL_SETUP_H */

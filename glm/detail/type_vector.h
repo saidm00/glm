@@ -7,9 +7,9 @@
 #include "namespace_begin.inl"
 #include "namespace_template_vector_begin.inl"
 
-#define GLM_SWIZZLE1_MEMBERS(T, Q, E0) union { scalar(T, Q) E0; }
+#define GLM_SWIZZLE1_MEMBERS(T, Q, E0) struct { scalar(T, Q) E0; }
 
-#define GLM_SWIZZLE2_MEMBERS(T, Q, E0, E1) union { scalar(T, Q) E0, E1; }
+#define GLM_SWIZZLE2_MEMBERS(T, Q, E0, E1) struct { scalar(T, Q) E0, E1; }
 
 #define GLM_SWIZZLE3_MEMBERS(T, Q, E0, E1, E2)\
 union\
@@ -57,13 +57,8 @@ GLM_SWIZZLE_VEC ## L ## _MEMBERS(T, Q, s, t, p, q);\
 
 #define GLM_SWIZZLE_MEMBERS(...) GLM_SWIZZLE_MEMBERS_(__VA_ARGS__)
 
-
 /* Align arrays to 1-byte boundaries */
-#define GLM_VECTOR_DATA(L, T, Q)\
-union {\
-scalar(T, Q) elem[L];\
-unsigned char _data[sizeof(scalar(T, Q)) * L];\
-}
+#define GLM_VECTOR_DATA(L, T, Q) struct { scalar(T, Q) elem[L]; }
 
 #define L 1
 #define T bool
