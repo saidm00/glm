@@ -1,6 +1,6 @@
 /* Construct vectors from scalars, matrices, etc. */
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
-constructor(size_t const paramCount, ...)
+constructor(length_t const paramCount, ...)
 {
 	vec(L, T, Q) Result;
 
@@ -33,7 +33,7 @@ constructor(size_t const paramCount, ...)
 				Result.elem[loopIdx] = scalarValue;
 		}
 	} else {
-		size_t paramIdx = 0;
+		length_t paramIdx = 0;
 		length_t elemIdx = 0;
 		while (paramIdx < paramCount && elemIdx < L) {
 			paramTypeFlag = va_arg(params, uint64_t);

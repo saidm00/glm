@@ -18,7 +18,7 @@ identity(void)
 
 /* Matrix Constructor (From section 5.4.2. Vector and Matrix Constructors of GLSL 4.60.7 specification) */
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR mat(C, R, T, Q)
-constructor(size_t const paramCount, ...)
+constructor(length_t const paramCount, ...)
 {
 	mat(C, R, T, Q) Result;
 	va_list params;
@@ -55,13 +55,15 @@ constructor(size_t const paramCount, ...)
 		}
 		else if (paramTypeFlag & GLM_TYPE_MATRIX) {
 			/* Cast from matrix (third paragraph, sect. 5.4.2 [GLSL 4.60]) */
-		}
-		else {
+			Result = identity();
+			glm_GetRuntimeTypeInformation(&paramTypeInfo, paramTypeFlag);
+			glm_MoveMatrixArgToMatrix((void *)&Result, C, R, dstElemType, &paramTypeInfo, &params);
+		} else {
 			glm_GetRuntimeTypeInformation(&paramTypeInfo, paramTypeFlag);
 			glm_ParseAndCastParameter(dstElemType, (void *)&Result, ELEMENT_COUNT, &paramTypeInfo, &params);
 		}
 	} else {
-		size_t paramIdx = 0;
+		length_t paramIdx = 0;
 		length_t elemIdx = 0;
 		while (paramIdx < paramCount && elemIdx < ELEMENT_COUNT) {
 			paramTypeFlag = va_arg(params, uint64_t);

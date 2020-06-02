@@ -271,7 +271,7 @@ glm_GetRuntimeTypeInformation(glm_RuntimeTypeInformation *dstInfo, uint64_t cons
 
 /* Same as glm_cast_array(), but with limited WriteSize */
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
-LimitedCvt(size_t const writeElemCount, void *dstAddr, uint64_t const dstElemType, void const* srcAddr, uint64_t const srcElemType)
+glm_LimitedCvt(size_t const writeElemCount, void *dstAddr, uint64_t const dstElemType, void const* srcAddr, uint64_t const srcElemType)
 {
 	size_t elemIdx;
 
@@ -502,9 +502,27 @@ glm_ParseAndCastParameter(uint64_t const dstElemType, void *dstAddr, size_t cons
 		default: break;
 	}
 
-	LimitedCvt(writeElemCount, dstAddr, dstElemType, (void const*)tmpMem, paramInfo->elemType);
+	glm_LimitedCvt(writeElemCount, dstAddr, dstElemType, (void const*)tmpMem, paramInfo->elemType);
 	return writeElemCount;
 }
+
+
+/*
+ *  NOTE: Expects identity matrix passed as 'dstAddr'.
+ *  The parameter passed in to 'params' must also be of a matrix type.
+ * */
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+glm_MoveMatrixArgToMatrix(void *dstAddr, uint64_t const dstElemType, glm_length_t const C, glm_length_t const R,
+	glm_RuntimeTypeInformation const *paramInfo, va_list *params)
+{
+	/* Cast from matrix (third paragraph, sect. 5.4.2 [GLSL 4.60]) */
+/*
+	switch (paramInfo->typeFlag)
+	{
+		case GLM_TYPE_FLOAT2x2:
+	}*/
+}
+
 
 #include "type_vector_impl.h"
 #include "type_matrix_impl.h"
