@@ -3,534 +3,528 @@
 
 #include "setup.h"
 #include "type_scalar.h"
-
-typedef enum glm_qualifier
-{
-	GLM_QUALIFIER_LOWP,
-	GLM_QUALIFIER_MEDIUMP,
-	GLM_QUALIFIER_HIGHP,
-	GLM_QUALIFIER_DEFAULTP = GLM_QUALIFIER_HIGHP
-} glm_qualifier_t;
-
-typedef enum glm_type_category
-{
-	GLM_TYPE_CATEGORY_SCALAR,
-	GLM_TYPE_CATEGORY_VECTOR,
-	GLM_TYPE_CATEGORY_MATRIX
-} glm_type_category_t;
-
-/* Enums of all GLM-C typenames */
-typedef enum glm_type
-{
-	GLM_TYPE_BOOL,
-	GLM_TYPE_FLOAT,
-	GLM_TYPE_DOUBLE,
-	GLM_TYPE_INT,
-	GLM_TYPE_UINT,
-	GLM_TYPE_BOOL1,
-	GLM_TYPE_BOOL2,
-	GLM_TYPE_BOOL3,
-	GLM_TYPE_BOOL4,
-	GLM_TYPE_FLOAT1,
-	GLM_TYPE_FLOAT2,
-	GLM_TYPE_FLOAT3,
-	GLM_TYPE_FLOAT4,
-	GLM_TYPE_DOUBLE1,
-	GLM_TYPE_DOUBLE2,
-	GLM_TYPE_DOUBLE3,
-	GLM_TYPE_DOUBLE4,
-	GLM_TYPE_INT1,
-	GLM_TYPE_INT2,
-	GLM_TYPE_INT3,
-	GLM_TYPE_INT4,
-	GLM_TYPE_UINT1,
-	GLM_TYPE_UINT2,
-	GLM_TYPE_UINT3,
-	GLM_TYPE_UINT4,
-	GLM_TYPE_FLOAT2X2,
-	GLM_TYPE_FLOAT2X3,
-	GLM_TYPE_FLOAT2X4,
-	GLM_TYPE_FLOAT3X2,
-	GLM_TYPE_FLOAT3X3,
-	GLM_TYPE_FLOAT3X4,
-	GLM_TYPE_FLOAT4X2,
-	GLM_TYPE_FLOAT4X3,
-	GLM_TYPE_FLOAT4X4,
-	GLM_TYPE_DOUBLE2X2,
-	GLM_TYPE_DOUBLE2X3,
-	GLM_TYPE_DOUBLE2X4,
-	GLM_TYPE_DOUBLE3X2,
-	GLM_TYPE_DOUBLE3X3,
-	GLM_TYPE_DOUBLE3X4,
-	GLM_TYPE_DOUBLE4X2,
-	GLM_TYPE_DOUBLE4X3,
-	GLM_TYPE_DOUBLE4X4
-} glm_type_t;
-
-/* Return size of GLM-C types */
-GLM_FUNC_QUALIFIER GLM_CONSTEXPR size_t
-glm_sizeof_elem_type(glm_type_t type)
-{
-	switch (type)
-	{
-		case GLM_TYPE_BOOL:
-			return sizeof(bool);
-			break;
-		case GLM_TYPE_FLOAT:
-			return sizeof(float);
-			break;
-		case GLM_TYPE_DOUBLE:
-			return sizeof(double);
-			break;
-		case GLM_TYPE_INT:
-			return sizeof(int);
-			break;
-		case GLM_TYPE_UINT:
-			return sizeof(uint);
-			break;
-		default: return 0;
-	}
-
-	return 0;
-}
-
-struct glm_type_info
-{
-	glm_type_category_t typeCategory;
-	glm_type_t elemType;
-	glm_length_t elemCol, elemRow;
-	glm_length_t elemCount; // C * R for matrices, and L for vectors
-	glm_qualifier_t elemQualifier;
-};
-
-typedef struct glm_type_info glm_type_info_t;
+#include "type_vector.h"
+#include "type_matrix.h"
 
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
-glm_get_type_info(glm_type_t type, glm_type_info_t *info)
+glm_GetRuntimeTypeInformation(glm_RuntimeTypeInformation *dstInfo, uint64_t const typeFlag)
 {
-	switch (type)
-	{
-	case GLM_TYPE_FLOAT2X2:
-		info->elemType = GLM_TYPE_FLOAT;
-		info->elemCol = 2;
-		info->elemRow = 2;
-		info->elemCount = 4;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_FLOAT2X3:
-		info->elemType = GLM_TYPE_FLOAT;
-		info->elemCol = 2;
-		info->elemRow = 3;
-		info->elemCount = 6;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_FLOAT2X4:
-		info->elemType = GLM_TYPE_FLOAT;
-		info->elemCol = 2;
-		info->elemRow = 4;
-		info->elemCount = 8;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_FLOAT3X2:
-		info->elemType = GLM_TYPE_FLOAT;
-		info->elemCol = 3;
-		info->elemRow = 2;
-		info->elemCount = 6;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_FLOAT3X3:
-		info->elemType = GLM_TYPE_FLOAT3X3;
-		info->elemCol = 3;
-		info->elemRow = 3;
-		info->elemCount = 9;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_FLOAT3X4:
-		info->elemType = GLM_TYPE_FLOAT;
-		info->elemCol = 3;
-		info->elemRow = 4;
-		info->elemCount = 12;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_FLOAT4X2:
-		info->elemType = GLM_TYPE_FLOAT;
-		info->elemCol = 4;
-		info->elemRow = 2;
-		info->elemCount = 8;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_FLOAT4X3:
-		info->elemType = GLM_TYPE_FLOAT;
-		info->elemCol = 4;
-		info->elemRow = 3;
-		info->elemCount = 12;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_FLOAT4X4:
-		info->elemType = GLM_TYPE_FLOAT;
-		info->elemCol = 4;
-		info->elemRow = 4;
-		info->elemCount = 16;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_DOUBLE2X2:
-		info->elemType = GLM_TYPE_DOUBLE;
-		info->elemCol = 2;
-		info->elemRow = 2;
-		info->elemCount = 4;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_DOUBLE2X3:
-		info->elemType = GLM_TYPE_DOUBLE;
-		info->elemCol = 2;
-		info->elemRow = 3;
-		info->elemCount = 6;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_DOUBLE2X4:
-		info->elemType = GLM_TYPE_DOUBLE;
-		info->elemCol = 2;
-		info->elemRow = 4;
-		info->elemCount = 8;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_DOUBLE3X2:
-		info->elemType = GLM_TYPE_DOUBLE;
-		info->elemCol = 3;
-		info->elemRow = 2;
-		info->elemCount = 6;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_DOUBLE3X3:
-		info->elemType = GLM_TYPE_DOUBLE;
-		info->elemCol = 3;
-		info->elemRow = 3;
-		info->elemCount = 9;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_DOUBLE3X4:
-		info->elemType = GLM_TYPE_DOUBLE;
-		info->elemCol = 3;
-		info->elemRow = 4;
-		info->elemCount = 12;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_DOUBLE4X2:
-		info->elemType = GLM_TYPE_DOUBLE;
-		info->elemCol = 4;
-		info->elemRow = 2;
-		info->elemCount = 8;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_DOUBLE4X3:
-		info->elemType = GLM_TYPE_DOUBLE;
-		info->elemCol = 4;
-		info->elemRow = 3;
-		info->elemCount = 12;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_DOUBLE4X4:
-		info->elemType = GLM_TYPE_DOUBLE;
-		info->elemCol = 4;
-		info->elemRow = 4;
-		info->elemCount = 16;
-		/* info->elemQualifier = ;*/
-		break;
-	case GLM_TYPE_BOOL:
-		info->elemType  = GLM_TYPE_BOOL;
-		info->elemCount = 1;
-		break;
-	case GLM_TYPE_BOOL1:
-		info->elemType  = GLM_TYPE_BOOL;
-		info->elemCount = 1;
-		break;
-	case GLM_TYPE_BOOL2:
-		info->elemType  = GLM_TYPE_BOOL;
-		info->elemCount = 2;
-		break;
-	case GLM_TYPE_BOOL3:
-		info->elemType  = GLM_TYPE_BOOL;
-		info->elemCount = 3;
-		break;
-	case GLM_TYPE_BOOL4:
-		info->elemType  = GLM_TYPE_BOOL;
-		info->elemCount = 4;
-		break;
-	case GLM_TYPE_FLOAT:
-		info->elemType  = GLM_TYPE_FLOAT;
-		info->elemCount = 1;
-		break;
-	case GLM_TYPE_FLOAT1:
-		info->elemType  = GLM_TYPE_FLOAT;
-		info->elemCount = 1;
-		break;
-	case GLM_TYPE_FLOAT2:
-		info->elemType  = GLM_TYPE_FLOAT;
-		info->elemCount = 2;
-		break;
-	case GLM_TYPE_FLOAT3:
-		info->elemType  = GLM_TYPE_FLOAT;
-		info->elemCount = 3;
-		break;
-	case GLM_TYPE_FLOAT4:
-		info->elemType  = GLM_TYPE_FLOAT;
-		info->elemCount = 4;
-		break;
-	case GLM_TYPE_DOUBLE:
-		info->elemType  = GLM_TYPE_DOUBLE;
-		info->elemCount = 1;
-		break;
-	case GLM_TYPE_DOUBLE1:
-		info->elemType  = GLM_TYPE_DOUBLE;
-		info->elemCount = 1;
-		break;
-	case GLM_TYPE_DOUBLE2:
-		info->elemType  = GLM_TYPE_DOUBLE;
-		info->elemCount = 2;
-		break;
-	case GLM_TYPE_DOUBLE3:
-		info->elemType  = GLM_TYPE_DOUBLE;
-		info->elemCount = 3;
-		break;
-	case GLM_TYPE_DOUBLE4:
-		info->elemType  = GLM_TYPE_DOUBLE;
-		info->elemCount = 4;
-		break;
-	case GLM_TYPE_INT:
-		info->elemType  = GLM_TYPE_INT;
-		info->elemCount = 1;
-		break;
-	case GLM_TYPE_INT1:
-		info->elemType  = GLM_TYPE_INT;
-		info->elemCount = 1;
-		break;
-	case GLM_TYPE_INT2:
-		info->elemType  = GLM_TYPE_INT;
-		info->elemCount = 2;
-		break;
-	case GLM_TYPE_INT3:
-		info->elemType  = GLM_TYPE_INT;
-		info->elemCount = 3;
-		break;
-	case GLM_TYPE_INT4:
-		info->elemType  = GLM_TYPE_INT;
-		info->elemCount = 4;
-		break;
-	case GLM_TYPE_UINT:
-		info->elemType  = GLM_TYPE_UINT;
-		info->elemCount = 1;
-		break;
-	case GLM_TYPE_UINT1:
-		info->elemType  = GLM_TYPE_UINT;
-		info->elemCount = 1;
-		break;
-	case GLM_TYPE_UINT2:
-		info->elemType  = GLM_TYPE_UINT;
-		info->elemCount = 2;
-		break;
-	case GLM_TYPE_UINT3:
-		info->elemType  = GLM_TYPE_UINT;
-		info->elemCount = 3;
-		break;
-	case GLM_TYPE_UINT4:
-		info->elemType  = GLM_TYPE_UINT;
-		info->elemCount = 4;
-		break;
-	default:
-		break;
-	}
-}
+	dstInfo->typeFlag = typeFlag;
 
-/* Handles type-casting of vectors and matrices */
-GLM_FUNC_QUALIFIER void
-glm_cast_array(void *dstArr, glm_type_t dstType, const void *srcArr, glm_type_t srcType, glm_length_t arrLen)
-{
-	switch (srcType)
+	switch (typeFlag)
 	{
+		case GLM_TYPE_FLOAT2X2:
+			dstInfo->elemType = GLM_TYPE_FLOAT;
+			dstInfo->elemCol = 2;
+			dstInfo->elemRow = 2;
+			dstInfo->elemCount = 4;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_FLOAT2X3:
+			dstInfo->elemType = GLM_TYPE_FLOAT;
+			dstInfo->elemCol = 2;
+			dstInfo->elemRow = 3;
+			dstInfo->elemCount = 6;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_FLOAT2X4:
+			dstInfo->elemType = GLM_TYPE_FLOAT;
+			dstInfo->elemCol = 2;
+			dstInfo->elemRow = 4;
+			dstInfo->elemCount = 8;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_FLOAT3X2:
+			dstInfo->elemType = GLM_TYPE_FLOAT;
+			dstInfo->elemCol = 3;
+			dstInfo->elemRow = 2;
+			dstInfo->elemCount = 6;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_FLOAT3X3:
+			dstInfo->elemType = GLM_TYPE_FLOAT3X3;
+			dstInfo->elemCol = 3;
+			dstInfo->elemRow = 3;
+			dstInfo->elemCount = 9;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_FLOAT3X4:
+			dstInfo->elemType = GLM_TYPE_FLOAT;
+			dstInfo->elemCol = 3;
+			dstInfo->elemRow = 4;
+			dstInfo->elemCount = 12;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_FLOAT4X2:
+			dstInfo->elemType = GLM_TYPE_FLOAT;
+			dstInfo->elemCol = 4;
+			dstInfo->elemRow = 2;
+			dstInfo->elemCount = 8;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_FLOAT4X3:
+			dstInfo->elemType = GLM_TYPE_FLOAT;
+			dstInfo->elemCol = 4;
+			dstInfo->elemRow = 3;
+			dstInfo->elemCount = 12;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_FLOAT4X4:
+			dstInfo->elemType = GLM_TYPE_FLOAT;
+			dstInfo->elemCol = 4;
+			dstInfo->elemRow = 4;
+			dstInfo->elemCount = 16;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_DOUBLE2X2:
+			dstInfo->elemType = GLM_TYPE_DOUBLE;
+			dstInfo->elemCol = 2;
+			dstInfo->elemRow = 2;
+			dstInfo->elemCount = 4;
+			//dstInfo->elemSize = sizeof(double);
+			break;
+		case GLM_TYPE_DOUBLE2X3:
+			dstInfo->elemType = GLM_TYPE_DOUBLE;
+			dstInfo->elemCol = 2;
+			dstInfo->elemRow = 3;
+			dstInfo->elemCount = 6;
+			//dstInfo->elemSize = sizeof(double);
+			break;
+		case GLM_TYPE_DOUBLE2X4:
+			dstInfo->elemType = GLM_TYPE_DOUBLE;
+			dstInfo->elemCol = 2;
+			dstInfo->elemRow = 4;
+			dstInfo->elemCount = 8;
+			//dstInfo->elemSize = sizeof(double);
+			break;
+		case GLM_TYPE_DOUBLE3X2:
+			dstInfo->elemType = GLM_TYPE_DOUBLE;
+			dstInfo->elemCol = 3;
+			dstInfo->elemRow = 2;
+			dstInfo->elemCount = 6;
+			//dstInfo->elemSize = sizeof(double);
+			break;
+		case GLM_TYPE_DOUBLE3X3:
+			dstInfo->elemType = GLM_TYPE_DOUBLE;
+			dstInfo->elemCol = 3;
+			dstInfo->elemRow = 3;
+			dstInfo->elemCount = 9;
+			//dstInfo->elemSize = sizeof(double);
+			break;
+		case GLM_TYPE_DOUBLE3X4:
+			dstInfo->elemType = GLM_TYPE_DOUBLE;
+			dstInfo->elemCol = 3;
+			dstInfo->elemRow = 4;
+			dstInfo->elemCount = 12;
+			//dstInfo->elemSize = sizeof(double);
+			break;
+		case GLM_TYPE_DOUBLE4X2:
+			dstInfo->elemType = GLM_TYPE_DOUBLE;
+			dstInfo->elemCol = 4;
+			dstInfo->elemRow = 2;
+			dstInfo->elemCount = 8;
+			//dstInfo->elemSize = sizeof(double);
+			break;
+		case GLM_TYPE_DOUBLE4X3:
+			dstInfo->elemType = GLM_TYPE_DOUBLE;
+			dstInfo->elemCol = 4;
+			dstInfo->elemRow = 3;
+			dstInfo->elemCount = 12;
+			//dstInfo->elemSize = sizeof(double);
+			break;
+		case GLM_TYPE_DOUBLE4X4:
+			dstInfo->elemType = GLM_TYPE_DOUBLE;
+			dstInfo->elemCol = 4;
+			dstInfo->elemRow = 4;
+			dstInfo->elemCount = 16;
+			//dstInfo->elemSize = sizeof(double);
+			break;
 		case GLM_TYPE_BOOL:
-			switch(dstType)
-			{
-				case GLM_TYPE_BOOL:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(bool, defaultp)*)dstArr)[i] = ((glm_scalar(bool, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_FLOAT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(float, defaultp)*)dstArr)[i] = ((glm_scalar(bool, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_DOUBLE:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(double, defaultp)*)dstArr)[i] = ((glm_scalar(bool, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_INT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(int, defaultp)*)dstArr)[i] = ((glm_scalar(bool, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_UINT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(uint, defaultp)*)dstArr)[i] = ((glm_scalar(bool, defaultp)*)srcArr)[i];
-					break;
-			}
+			dstInfo->elemType  = GLM_TYPE_BOOL;
+			dstInfo->elemCount = 1;
+			//dstInfo->elemSize = sizeof(bool);
+			break;
+		case GLM_TYPE_BOOL1:
+			dstInfo->elemType  = GLM_TYPE_BOOL;
+			dstInfo->elemCount = 1;
+			//dstInfo->elemSize = sizeof(bool);
+			break;
+		case GLM_TYPE_BOOL2:
+			dstInfo->elemType  = GLM_TYPE_BOOL;
+			dstInfo->elemCount = 2;
+			//dstInfo->elemSize = sizeof(bool);
+			break;
+		case GLM_TYPE_BOOL3:
+			dstInfo->elemType  = GLM_TYPE_BOOL;
+			dstInfo->elemCount = 3;
+			//dstInfo->elemSize = sizeof(bool);
+			break;
+		case GLM_TYPE_BOOL4:
+			dstInfo->elemType  = GLM_TYPE_BOOL;
+			dstInfo->elemCount = 4;
+			//dstInfo->elemSize = sizeof(bool);
 			break;
 		case GLM_TYPE_FLOAT:
-			switch(dstType)
-			{
-				case GLM_TYPE_BOOL:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(bool, defaultp)*)dstArr)[i] = ((glm_scalar(float, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_FLOAT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(float, defaultp)*)dstArr)[i] = ((glm_scalar(float, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_DOUBLE:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(double, defaultp)*)dstArr)[i] = ((glm_scalar(float, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_INT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(int, defaultp)*)dstArr)[i] = ((glm_scalar(float, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_UINT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(uint, defaultp)*)dstArr)[i] = ((glm_scalar(float, defaultp)*)srcArr)[i];
-					break;
-			}
+			dstInfo->elemType  = GLM_TYPE_FLOAT;
+			dstInfo->elemCount = 1;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_FLOAT1:
+			dstInfo->elemType  = GLM_TYPE_FLOAT;
+			dstInfo->elemCount = 1;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_FLOAT2:
+			dstInfo->elemType  = GLM_TYPE_FLOAT;
+			dstInfo->elemCount = 2;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_FLOAT3:
+			dstInfo->elemType  = GLM_TYPE_FLOAT;
+			dstInfo->elemCount = 3;
+			//dstInfo->elemSize = sizeof(float);
+			break;
+		case GLM_TYPE_FLOAT4:
+			dstInfo->elemType  = GLM_TYPE_FLOAT;
+			dstInfo->elemCount = 4;
+			//dstInfo->elemSize = sizeof(float);
 			break;
 		case GLM_TYPE_DOUBLE:
-			switch(dstType)
-			{
-				case GLM_TYPE_BOOL:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(bool, defaultp)*)dstArr)[i] = ((glm_scalar(double, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_FLOAT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(float, defaultp)*)dstArr)[i] = ((glm_scalar(double, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_DOUBLE:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(double, defaultp)*)dstArr)[i] = ((glm_scalar(double, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_INT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(int, defaultp)*)dstArr)[i] = ((glm_scalar(double, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_UINT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(uint, defaultp)*)dstArr)[i] = ((glm_scalar(double, defaultp)*)srcArr)[i];
-					break;
-			}
+			dstInfo->elemType  = GLM_TYPE_DOUBLE;
+			dstInfo->elemCount = 1;
+			//dstInfo->elemSize = sizeof(double);
+			break;
+		case GLM_TYPE_DOUBLE1:
+			dstInfo->elemType  = GLM_TYPE_DOUBLE;
+			dstInfo->elemCount = 1;
+			//dstInfo->elemSize = sizeof(double);
+			break;
+		case GLM_TYPE_DOUBLE2:
+			dstInfo->elemType  = GLM_TYPE_DOUBLE;
+			dstInfo->elemCount = 2;
+			//dstInfo->elemSize = sizeof(double);
+			break;
+		case GLM_TYPE_DOUBLE3:
+			dstInfo->elemType  = GLM_TYPE_DOUBLE;
+			dstInfo->elemCount = 3;
+			//dstInfo->elemSize = sizeof(double);
+			break;
+		case GLM_TYPE_DOUBLE4:
+			dstInfo->elemType  = GLM_TYPE_DOUBLE;
+			dstInfo->elemCount = 4;
+			//dstInfo->elemSize = sizeof(double);
 			break;
 		case GLM_TYPE_INT:
-			switch(dstType)
-			{
-				case GLM_TYPE_BOOL:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(bool, defaultp)*)dstArr)[i] = ((glm_scalar(int, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_FLOAT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(float, defaultp)*)dstArr)[i] = ((glm_scalar(int, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_DOUBLE:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(double, defaultp)*)dstArr)[i] = ((glm_scalar(int, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_INT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(int, defaultp)*)dstArr)[i] = ((glm_scalar(int, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_UINT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(uint, defaultp)*)dstArr)[i] = ((glm_scalar(int, defaultp)*)srcArr)[i];
-					break;
-			}
+			dstInfo->elemType  = GLM_TYPE_INT;
+			dstInfo->elemCount = 1;
+			//dstInfo->elemSize = sizeof(int);
+			break;
+		case GLM_TYPE_INT1:
+			dstInfo->elemType  = GLM_TYPE_INT;
+			dstInfo->elemCount = 1;
+			//dstInfo->elemSize = sizeof(int);
+			break;
+		case GLM_TYPE_INT2:
+			dstInfo->elemType  = GLM_TYPE_INT;
+			dstInfo->elemCount = 2;
+			//dstInfo->elemSize = sizeof(int);
+			break;
+		case GLM_TYPE_INT3:
+			dstInfo->elemType  = GLM_TYPE_INT;
+			dstInfo->elemCount = 3;
+			//dstInfo->elemSize = sizeof(int);
+			break;
+		case GLM_TYPE_INT4:
+			dstInfo->elemType  = GLM_TYPE_INT;
+			dstInfo->elemCount = 4;
+			//dstInfo->elemSize = sizeof(int);
 			break;
 		case GLM_TYPE_UINT:
-			switch(dstType)
-			{
-				case GLM_TYPE_BOOL:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(bool, defaultp)*)dstArr)[i] = ((glm_scalar(uint, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_FLOAT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(float, defaultp)*)dstArr)[i] = ((glm_scalar(uint, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_DOUBLE:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(double, defaultp)*)dstArr)[i] = ((glm_scalar(uint, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_INT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(int, defaultp)*)dstArr)[i] = ((glm_scalar(uint, defaultp)*)srcArr)[i];
-					break;
-				case GLM_TYPE_UINT:
-					for(glm_length_t i = 0; i < arrLen; ++i)
-						((glm_scalar(uint, defaultp)*)dstArr)[i] = ((glm_scalar(uint, defaultp)*)srcArr)[i];
-					break;
-			}
+			dstInfo->elemType  = GLM_TYPE_UINT;
+			dstInfo->elemCount = 1;
+			//dstInfo->elemSize = sizeof(unsigned int);
+			break;
+		case GLM_TYPE_UINT1:
+			dstInfo->elemType  = GLM_TYPE_UINT;
+			dstInfo->elemCount = 1;
+			//dstInfo->elemSize = sizeof(unsigned int);
+			break;
+		case GLM_TYPE_UINT2:
+			dstInfo->elemType  = GLM_TYPE_UINT;
+			dstInfo->elemCount = 2;
+			//dstInfo->elemSize = sizeof(unsigned int);
+			break;
+		case GLM_TYPE_UINT3:
+			dstInfo->elemType  = GLM_TYPE_UINT;
+			dstInfo->elemCount = 3;
+			//dstInfo->elemSize = sizeof(unsigned int);
+			break;
+		case GLM_TYPE_UINT4:
+			dstInfo->elemType  = GLM_TYPE_UINT;
+			dstInfo->elemCount = 4;
+			//dstInfo->elemSize = sizeof(unsigned int);
+			break;
+		default:
 			break;
 	}
 }
 
-#define GLM_TYPEOF_SCALAR_bool		GLM_TYPE_BOOL
-#define GLM_TYPEOF_SCALAR_float		GLM_TYPE_FLOAT
-#define GLM_TYPEOF_SCALAR_double	GLM_TYPE_DOUBLE
-#define GLM_TYPEOF_SCALAR_int		GLM_TYPE_INT
-#define GLM_TYPEOF_SCALAR_uint		GLM_TYPE_UINT
+/* Same as glm_cast_array(), but with limited WriteSize */
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+glm_LimitedCvt(size_t const writeElemCount, void *dstAddr, uint64_t const dstElemType, void const* srcAddr, uint64_t const srcElemType)
+{
+	size_t elemIdx;
 
-#define GLM_TYPE_SCALAR_(T) GLM_TYPEOF_SCALAR_ ## T
-#define GLM_TYPEOF_SCALAR(...) GLM_TYPE_SCALAR_(__VA_ARGS__)
+	//printf("%d\n", writeElemCount);
 
-#define GLM_TYPEOF(x)\
-_Generic((x),\
-bool : GLM_TYPE_BOOL,\
-float : GLM_TYPE_FLOAT,\
-double : GLM_TYPE_DOUBLE,\
-int : GLM_TYPE_INT,\
-uint : GLM_TYPE_UINT,\
-glm_vec(1, bool, defaultp): GLM_TYPE_BOOL1,\
-glm_vec(2, bool, defaultp): GLM_TYPE_BOOL2,\
-glm_vec(3, bool, defaultp): GLM_TYPE_BOOL3,\
-glm_vec(4, bool, defaultp): GLM_TYPE_BOOL4,\
-glm_vec(1, float, defaultp): GLM_TYPE_FLOAT1,\
-glm_vec(2, float, defaultp): GLM_TYPE_FLOAT2,\
-glm_vec(3, float, defaultp): GLM_TYPE_FLOAT3,\
-glm_vec(4, float, defaultp): GLM_TYPE_FLOAT4,\
-glm_vec(1, double, defaultp): GLM_TYPE_DOUBLE1,\
-glm_vec(2, double, defaultp): GLM_TYPE_DOUBLE2,\
-glm_vec(3, double, defaultp): GLM_TYPE_DOUBLE3,\
-glm_vec(4, double, defaultp): GLM_TYPE_DOUBLE4,\
-glm_vec(1, int, defaultp): GLM_TYPE_INT1,\
-glm_vec(2, int, defaultp): GLM_TYPE_INT2,\
-glm_vec(3, int, defaultp): GLM_TYPE_INT3,\
-glm_vec(4, int, defaultp): GLM_TYPE_INT4,\
-glm_vec(1, uint, defaultp): GLM_TYPE_UINT1,\
-glm_vec(2, uint, defaultp): GLM_TYPE_UINT2,\
-glm_vec(3, uint, defaultp): GLM_TYPE_UINT3,\
-glm_vec(4, uint, defaultp): GLM_TYPE_UINT4,\
-glm_mat(2, 2, float, defaultp): GLM_TYPE_FLOAT2X2,\
-glm_mat(2, 3, float, defaultp): GLM_TYPE_FLOAT2X3,\
-glm_mat(2, 4, float, defaultp): GLM_TYPE_FLOAT2X4,\
-glm_mat(3, 2, float, defaultp): GLM_TYPE_FLOAT3X2,\
-glm_mat(3, 3, float, defaultp): GLM_TYPE_FLOAT3X3,\
-glm_mat(3, 4, float, defaultp): GLM_TYPE_FLOAT3X4,\
-glm_mat(4, 2, float, defaultp): GLM_TYPE_FLOAT4X2,\
-glm_mat(4, 3, float, defaultp): GLM_TYPE_FLOAT4X3,\
-glm_mat(4, 4, float, defaultp): GLM_TYPE_FLOAT4X4,\
-glm_mat(2, 2, double, defaultp): GLM_TYPE_DOUBLE2X2,\
-glm_mat(2, 3, double, defaultp): GLM_TYPE_DOUBLE2X3,\
-glm_mat(2, 4, double, defaultp): GLM_TYPE_DOUBLE2X4,\
-glm_mat(3, 2, double, defaultp): GLM_TYPE_DOUBLE3X2,\
-glm_mat(3, 3, double, defaultp): GLM_TYPE_DOUBLE3X3,\
-glm_mat(3, 4, double, defaultp): GLM_TYPE_DOUBLE3X4,\
-glm_mat(4, 2, double, defaultp): GLM_TYPE_DOUBLE4X2,\
-glm_mat(4, 3, double, defaultp): GLM_TYPE_DOUBLE4X3,\
-glm_mat(4, 4, double, defaultp): GLM_TYPE_DOUBLE4X4\
-)
+	for (elemIdx = 0; elemIdx < writeElemCount; ++elemIdx)
+	{
+		switch (dstElemType)
+		{
+			case GLM_TYPE_BOOL:
+				switch (srcElemType)
+				{
+					case GLM_TYPE_BOOL:   *((bool *)dstAddr + elemIdx) = *((const bool *)srcAddr + elemIdx); break;
+					case GLM_TYPE_FLOAT:  *((bool *)dstAddr + elemIdx) = *((const float *)srcAddr + elemIdx); break;
+					case GLM_TYPE_DOUBLE: *((bool *)dstAddr + elemIdx) = *((const double *)srcAddr + elemIdx); break;
+					case GLM_TYPE_INT:    *((bool *)dstAddr + elemIdx) = *((const int *)srcAddr + elemIdx); break;
+					case GLM_TYPE_UINT:   *((bool *)dstAddr + elemIdx) = *((const unsigned int *)srcAddr + elemIdx); break;
+				}
+				break;
 
-#define GLM_STATIC_ASSERT(expr, message) _Static_assert(expr, message)
+			case GLM_TYPE_FLOAT:
+				switch (srcElemType)
+				{
+					case GLM_TYPE_BOOL:   *((float *)dstAddr + elemIdx) = *((const bool *)srcAddr + elemIdx); break;
+					case GLM_TYPE_FLOAT:  *((float *)dstAddr + elemIdx) = *((const float *)srcAddr + elemIdx); break;
+					case GLM_TYPE_DOUBLE: *((float *)dstAddr + elemIdx) = *((const double *)srcAddr + elemIdx); break;
+					case GLM_TYPE_INT:    *((float *)dstAddr + elemIdx) = *((const int *)srcAddr + elemIdx); break;
+					case GLM_TYPE_UINT:   *((float *)dstAddr + elemIdx) = *((const unsigned int *)srcAddr + elemIdx); break;
+				}
+				break;
+
+			case GLM_TYPE_DOUBLE:
+				switch (srcElemType)
+				{
+					case GLM_TYPE_BOOL:   *((double *)dstAddr + elemIdx) = *((const bool *)srcAddr + elemIdx); break;
+					case GLM_TYPE_FLOAT:  *((double *)dstAddr + elemIdx) = *((const float *)srcAddr + elemIdx); break;
+					case GLM_TYPE_DOUBLE: *((double *)dstAddr + elemIdx) = *((const double *)srcAddr + elemIdx); break;
+					case GLM_TYPE_INT:    *((double *)dstAddr + elemIdx) = *((const int *)srcAddr + elemIdx); break;
+					case GLM_TYPE_UINT:   *((double *)dstAddr + elemIdx) = *((const unsigned int *)srcAddr + elemIdx); break;
+				} 
+				break;
+
+			case GLM_TYPE_INT:
+				switch (srcElemType)
+				{
+					case GLM_TYPE_BOOL:   *((int *)dstAddr + elemIdx) = *((const bool *)srcAddr + elemIdx); break;
+					case GLM_TYPE_FLOAT:  *((int *)dstAddr + elemIdx) = *((const float *)srcAddr + elemIdx); break;
+					case GLM_TYPE_DOUBLE: *((int *)dstAddr + elemIdx) = *((const double *)srcAddr + elemIdx); break;
+					case GLM_TYPE_INT:    *((int *)dstAddr + elemIdx) = *((const int *)srcAddr + elemIdx); break;
+					case GLM_TYPE_UINT:   *((int *)dstAddr + elemIdx) = *((const unsigned int *)srcAddr + elemIdx); break;
+				}
+				break;
+
+			case GLM_TYPE_UINT:
+				switch (srcElemType)
+				{
+					case GLM_TYPE_BOOL:   *((unsigned int *)dstAddr + elemIdx) = *((const bool *)srcAddr + elemIdx); break;
+					case GLM_TYPE_FLOAT:  *((unsigned int *)dstAddr + elemIdx) = *((const float *)srcAddr + elemIdx); break;
+					case GLM_TYPE_DOUBLE: *((unsigned int *)dstAddr + elemIdx) = *((const double *)srcAddr + elemIdx); break;
+					case GLM_TYPE_INT:    *((unsigned int *)dstAddr + elemIdx) = *((const int *)srcAddr + elemIdx); break;
+					case GLM_TYPE_UINT:   *((unsigned int *)dstAddr + elemIdx) = *((const unsigned int *)srcAddr + elemIdx); break;
+				}
+				break;
+		}
+	}
+}
+
+/* Parse and cast arguments for constructor */
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR size_t
+glm_ParseAndCastParameter(uint64_t const dstElemType, void *dstAddr, size_t const writeElemLimit, glm_RuntimeTypeInformation const* paramInfo, va_list* params)
+{
+	uint8_t tmpMem[128];
+	size_t writeElemCount = paramInfo->elemCount <= writeElemLimit ?
+		paramInfo->elemCount : writeElemLimit;
+
+#ifndef NDEBUG
+	GLM_ZERO_MEMORY(tmpMem, 128);
+#endif
+
+	switch (paramInfo->typeFlag)
+	{
+		case GLM_TYPE_BOOL:
+			*((bool *)tmpMem) = (bool)va_arg((*params), int);
+			break;
+		case GLM_TYPE_FLOAT:
+			*((float *)tmpMem) = (float)va_arg((*params), double);
+			break;
+		case GLM_TYPE_DOUBLE:
+			*((double *)tmpMem) = va_arg((*params), double);
+			break;
+		case GLM_TYPE_INT:
+			*((int *)tmpMem) = va_arg((*params), int);
+			break;
+		case GLM_TYPE_UINT:
+			*((unsigned int *)tmpMem) = va_arg((*params), unsigned int);
+			break;
+
+		/* Bool types */
+		case GLM_TYPE_BOOL1:
+			*((glm_vec(1, bool, defaultp) *)tmpMem) = va_arg((*params), glm_vec(1, bool, defaultp));
+			break;
+		case GLM_TYPE_BOOL2:
+			*((glm_vec(2, bool, defaultp) *)tmpMem) = va_arg((*params), glm_vec(2, bool, defaultp));
+			break;
+		case GLM_TYPE_BOOL3:
+			*((glm_vec(3, bool, defaultp) *)tmpMem) = va_arg((*params), glm_vec(3, bool, defaultp));
+			break;
+		case GLM_TYPE_BOOL4:
+			*((glm_vec(4, bool, defaultp) *)tmpMem) = va_arg((*params), glm_vec(4, bool, defaultp));
+			break;
+
+		/* Float types */
+		case GLM_TYPE_FLOAT1:
+			*((glm_vec(1, float, defaultp) *)tmpMem) = va_arg((*params), glm_vec(1, float, defaultp));
+			break;
+		case GLM_TYPE_FLOAT2:
+			*((glm_vec(2, float, defaultp) *)tmpMem) = va_arg((*params), glm_vec(2, float, defaultp));
+			break;
+		case GLM_TYPE_FLOAT3:
+			*((glm_vec(3, float, defaultp) *)tmpMem) = va_arg((*params), glm_vec(3, float, defaultp));
+			break;
+		case GLM_TYPE_FLOAT4:
+			*((glm_vec(4, float, defaultp) *)tmpMem) = va_arg((*params), glm_vec(4, float, defaultp));
+			break;
+
+		/* Double types */
+		case GLM_TYPE_DOUBLE1:
+			*((glm_vec(1, double, defaultp) *)tmpMem) = va_arg((*params), glm_vec(1, double, defaultp));
+			break;
+		case GLM_TYPE_DOUBLE2:
+			*((glm_vec(2, double, defaultp) *)tmpMem) = va_arg((*params), glm_vec(2, double, defaultp));
+			break;
+		case GLM_TYPE_DOUBLE3:
+			*((glm_vec(3, double, defaultp) *)tmpMem) = va_arg((*params), glm_vec(3, double, defaultp));
+			break;
+		case GLM_TYPE_DOUBLE4:
+			*((glm_vec(4, double, defaultp) *)tmpMem) = va_arg((*params), glm_vec(4, double, defaultp));
+			break;
+
+		/* Integer types */
+		case GLM_TYPE_INT1:
+			*((glm_vec(1, int, defaultp) *)tmpMem) = va_arg((*params), glm_vec(1, int, defaultp));
+			break;
+		case GLM_TYPE_INT2:
+			*((glm_vec(2, int, defaultp) *)tmpMem) = va_arg((*params), glm_vec(2, int, defaultp));
+			break;
+		case GLM_TYPE_INT3:
+			*((glm_vec(3, int, defaultp) *)tmpMem) = va_arg((*params), glm_vec(3, int, defaultp));
+			break;
+		case GLM_TYPE_INT4:
+			*((glm_vec(4, int, defaultp) *)tmpMem) = va_arg((*params), glm_vec(4, int, defaultp));
+			break;
+
+		/* Unsigned Integer types */
+		case GLM_TYPE_UINT1:
+			*((glm_vec(1, uint, defaultp) *)tmpMem) = va_arg((*params), glm_vec(1, uint, defaultp));
+			break;
+		case GLM_TYPE_UINT2:
+			*((glm_vec(2, uint, defaultp) *)tmpMem) = va_arg((*params), glm_vec(2, uint, defaultp));
+			break;
+		case GLM_TYPE_UINT3:
+			*((glm_vec(3, uint, defaultp) *)tmpMem) = va_arg((*params), glm_vec(3, uint, defaultp));
+			break;
+		case GLM_TYPE_UINT4:
+			*((glm_vec(4, uint, defaultp) *)tmpMem) = va_arg((*params), glm_vec(4, uint, defaultp));
+			break;
+
+		/* Matrix types */
+		case GLM_TYPE_FLOAT2X2:
+			*((glm_mat(2, 2, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(2, 2, float, defaultp));
+			break;
+		case GLM_TYPE_FLOAT2X3:
+			*((glm_mat(2, 3, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(2, 3, float, defaultp));
+			break;
+		case GLM_TYPE_FLOAT2X4:
+			*((glm_mat(2, 4, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(2, 4, float, defaultp));
+			break;
+
+		case GLM_TYPE_FLOAT3X2:
+			*((glm_mat(3, 2, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(3, 2, float, defaultp));
+			break;
+		case GLM_TYPE_FLOAT3X3:
+			*((glm_mat(3, 3, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(3, 3, float, defaultp));
+			break;
+		case GLM_TYPE_FLOAT3X4:
+			*((glm_mat(3, 4, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(3, 4, float, defaultp));
+			break;
+
+		case GLM_TYPE_FLOAT4X2:
+			*((glm_mat(4, 2, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(4, 2, float, defaultp));
+			break;
+		case GLM_TYPE_FLOAT4X3:
+			*((glm_mat(4, 3, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(4, 3, float, defaultp));
+			break;
+		case GLM_TYPE_FLOAT4X4:
+			*((glm_mat(4, 4, float, defaultp) *)tmpMem) = va_arg((*params), glm_mat(4, 4, float, defaultp));
+			break;
+
+		/* Double matrices */
+		case GLM_TYPE_DOUBLE2X2:
+			*((glm_mat(2, 2, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(2, 2, double, defaultp));
+			break;
+		case GLM_TYPE_DOUBLE2X3:
+			*((glm_mat(2, 3, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(2, 3, double, defaultp));
+			break;
+		case GLM_TYPE_DOUBLE2X4:
+			*((glm_mat(2, 4, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(2, 4, double, defaultp));
+			break;
+		case GLM_TYPE_DOUBLE3X2:
+			*((glm_mat(3, 2, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(3, 2, double, defaultp));
+			break;
+		case GLM_TYPE_DOUBLE3X3:
+			*((glm_mat(3, 3, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(3, 3, double, defaultp));
+			break;
+		case GLM_TYPE_DOUBLE3X4:
+			*((glm_mat(3, 4, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(3, 4, double, defaultp));
+			break;
+		case GLM_TYPE_DOUBLE4X2:
+			*((glm_mat(4, 2, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(4, 2, double, defaultp));
+			break;
+		case GLM_TYPE_DOUBLE4X3:
+			*((glm_mat(4, 3, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(4, 3, double, defaultp));
+			break;
+		case GLM_TYPE_DOUBLE4X4:
+			*((glm_mat(4, 4, double, defaultp) *)tmpMem) = va_arg((*params), glm_mat(4, 4, double, defaultp));
+			break;
+
+		default: break;
+	}
+
+	glm_LimitedCvt(writeElemCount, dstAddr, dstElemType, (void const*)tmpMem, paramInfo->elemType);
+	return writeElemCount;
+}
+
+
+/*
+ *  NOTE: Expects identity matrix passed as 'dstAddr'.
+ *  The parameter passed in to 'params' must also be of a matrix type.
+ * */
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
+glm_MoveMatrixArgToMatrix(void *dstAddr, uint64_t const dstElemType, glm_length_t const C, glm_length_t const R,
+	glm_RuntimeTypeInformation const *paramInfo, va_list *params)
+{
+	/* Cast from matrix (third paragraph, sect. 5.4.2 [GLSL 4.60]) */
+/*
+	switch (paramInfo->typeFlag)
+	{
+		case GLM_TYPE_FLOAT2x2:
+	}*/
+}
+
+
+#include "type_vector_impl.h"
+#include "type_matrix_impl.h"
 
 #endif /* GLM_DETAIL_QUALIFIER_H */

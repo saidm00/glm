@@ -1,47 +1,16 @@
 #ifndef GLM_DETAIL_TYPE_MATRIX_H
 #define GLM_DETAIL_TYPE_MATRIX_H
 
-#include "qualifier.h"
+#include "setup.h"
 #include "type_scalar.h"
+#include "type_vector.h"
 
 #include "namespace_begin.inl"
-
-/*
-#define GLM_MATRIX_TYPENAME_float2x2_defaultp mat2x2
-#define GLM_MATRIX_TYPENAME_float2x3_defaultp mat2x3
-#define GLM_MATRIX_TYPENAME_float2x4_defaultp mat2x4
-#define GLM_MATRIX_TYPENAME_float3x2_defaultp mat3x2
-#define GLM_MATRIX_TYPENAME_float3x3_defaultp mat3x3
-#define GLM_MATRIX_TYPENAME_float3x4_defaultp mat3x4
-#define GLM_MATRIX_TYPENAME_float4x2_defaultp mat4x2
-#define GLM_MATRIX_TYPENAME_float4x3_defaultp mat4x3
-#define GLM_MATRIX_TYPENAME_float4x4_defaultp mat4x4
-
-#define GLM_MATRIX_TYPENAME_double2x2_defaultp dmat2x2
-#define GLM_MATRIX_TYPENAME_double2x3_defaultp dmat2x3
-#define GLM_MATRIX_TYPENAME_double2x4_defaultp dmat2x4
-#define GLM_MATRIX_TYPENAME_double3x2_defaultp dmat3x2
-#define GLM_MATRIX_TYPENAME_double3x3_defaultp dmat3x3
-#define GLM_MATRIX_TYPENAME_double3x4_defaultp dmat3x4
-#define GLM_MATRIX_TYPENAME_double4x2_defaultp dmat4x2
-#define GLM_MATRIX_TYPENAME_double4x3_defaultp dmat4x3
-#define GLM_MATRIX_TYPENAME_double4x4_defaultp dmat4x4
-*/
-
-#define GLM_MATRIX_TYPENAME(C, R, T, Q) T ## C ## x ## R
-
-/*
-	C: Left-hand  length_t (constexpr)
-	R: Right hand length_t (constexpr)
-	T: typename (type)
-	Q: qualifier (constexpr)
-*/
-#define glm_mat(C, R, T, Q) GLM_PREFIX(GLM_MATRIX_TYPENAME(C, R, T, Q))
+#include "namespace_template_matrix_begin.inl"
 
 #define GLM_MATRIX_DATA(C, R, T, Q)\
-union {\
+struct {\
 scalar(T, Q) elem[C][R];\
-unsigned char _data[sizeof(scalar(T, Q)) * C * R];\
 }
 
 /*
@@ -249,6 +218,7 @@ typedef mat(4, 2, double, defaultp) glm_dmat4x2;
 typedef mat(4, 3, double, defaultp) glm_dmat4x3;
 typedef mat(4, 4, double, defaultp) glm_dmat4x4, glm_dmat4;
 
+#include "namespace_template_matrix_end.inl"
 #include "namespace_end.inl"
 
 #endif /* GLM_DETAIL_TYPE_MATRIX_H */
