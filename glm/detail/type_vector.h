@@ -434,6 +434,23 @@ glm_vec(3, bool, defaultp): GLM_CALL_FUNC(not, GLM_VECTOR_TYPENAME(3, bool, defa
 glm_vec(4, bool, defaultp): GLM_CALL_FUNC(not, GLM_VECTOR_TYPENAME(4, bool, defaultp))\
 )(x)
 
+#define glm_cross(x, y) _Generic(x,\
+glm_vec(3, float, defaultp): GLM_CALL_FUNC(cross, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+glm_vec(3, double, defaultp): GLM_CALL_FUNC(cross, GLM_VECTOR_TYPENAME(3, double, defaultp))\
+)(x,y)
+
+
+#define glm_clamps(x, minVal, maxVal) _Generic(x,\
+glm_vec(1, float, defaultp): GLM_CALL_FUNC(clamps, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
+glm_vec(2, float, defaultp): GLM_CALL_FUNC(clamps, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
+glm_vec(3, float, defaultp): GLM_CALL_FUNC(clamps, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+glm_vec(4, float, defaultp): GLM_CALL_FUNC(clamps, GLM_VECTOR_TYPENAME(4, float, defaultp)),\
+glm_vec(1, double, defaultp): GLM_CALL_FUNC(clamps, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+glm_vec(2, double, defaultp): GLM_CALL_FUNC(clamps, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+glm_vec(3, double, defaultp): GLM_CALL_FUNC(clamps, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+glm_vec(4, double, defaultp): GLM_CALL_FUNC(clamps, GLM_VECTOR_TYPENAME(4, double, defaultp))\
+)(x, minVal, maxVal)
+
 #include "namespace_template_vector_end.inl"
 #include "namespace_end.inl"
 

@@ -77,6 +77,7 @@
 #undef faceforward
 #undef reflect
 #undef refract
+#undef cross
 
 /* Vector Relational Functions */
 #undef lessThan

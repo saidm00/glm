@@ -104,7 +104,7 @@ div(vec(L, T, Q) const x, vec(L, T, Q) const y)
 
 	return Result;
 }
-/*
+
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
 adds(vec(L, T, Q) const x, T const y)
 {
@@ -148,7 +148,7 @@ divs(vec(L, T, Q) const x, T const y)
 
 	return Result;
 }
-*/
+
 /*
 GLM_FUNC_QUALIFIER GLM_CONSTEXPR void
 addeqs(vec(L, T, Q) *lhs, T const rhs)

@@ -78,6 +78,7 @@
 #define faceforward GLM_CALL_FUNC(faceforward, GLM_VECTOR_TYPENAME(L, T, Q))
 #define reflect     GLM_CALL_FUNC(reflect    , GLM_VECTOR_TYPENAME(L, T, Q))
 #define refract     GLM_CALL_FUNC(refract    , GLM_VECTOR_TYPENAME(L, T, Q))
+#define cross       GLM_CALL_FUNC(cross      , GLM_VECTOR_TYPENAME(L, T, Q))
 
 /* Vector Relational Functions */
 #define lessThan         GLM_CALL_FUNC(lessThan        , GLM_VECTOR_TYPENAME(L, T, Q))
