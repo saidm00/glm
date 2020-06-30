@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 		       m1.elem[1][0], m1.elem[1][1], m1.elem[1][2],
 		       m1.elem[2][0], m1.elem[2][1], m1.elem[2][2]
 		);
-	}
+  }
 
 	return EXIT_SUCCESS;
 }
