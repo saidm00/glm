@@ -8,7 +8,7 @@ add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/deps/glfw")
 
 #set(CMAKE_C_COMPILER "C:/Program Files/LLVM/bin/clang.exe")
 set(CMAKE_C_COMPILER "C:/msys64/mingw64/bin/gcc.exe")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mcmodel=large -m64 -std=gnu17")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mcmodel=large -m64 -std=c2x")
 
 #add_executable(teapot "./test/teapot.c")
 #target_include_directories(teapot PRIVATE "${CMAKE_CURRENT_LIST_DIR}")

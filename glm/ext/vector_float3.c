@@ -8,6 +8,7 @@
 #include "../detail/func_vector_exponential.inl"
 #include "../detail/func_vector_relational.inl"
 #include "../detail/func_vector_geometric.inl"
+#include "../detail/func_vector_vec3.inl"
 #undef L
 #undef T
 #undef Q

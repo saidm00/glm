@@ -50,3 +50,9 @@ faceforward(vec(L, T, Q) const N, vec(L, T, Q) const I, vec(L, T, Q) const Nref)
 {
 	return (dot(Nref,I) < 0) ? N : negate(N);
 }
+
+GLM_FUNC_QUALIFIER GLM_CONSTEXPR vec(L, T, Q)
+reflect(vec(L, T, Q) const I, vec(L, T, Q) const N)
+{
+	return sub(I, muls(N, 2 * dot(N,I)));
+}
