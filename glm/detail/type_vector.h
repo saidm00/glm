@@ -451,6 +451,17 @@ glm_vec(3, double, defaultp): GLM_CALL_FUNC(clamps, GLM_VECTOR_TYPENAME(3, doubl
 glm_vec(4, double, defaultp): GLM_CALL_FUNC(clamps, GLM_VECTOR_TYPENAME(4, double, defaultp))\
 )(x, minVal, maxVal)
 
+#define glm_reflect(N, I) _Generic(N,\
+glm_vec(1, float, defaultp): GLM_CALL_FUNC(reflect, GLM_VECTOR_TYPENAME(1, float, defaultp)),\
+glm_vec(2, float, defaultp): GLM_CALL_FUNC(reflect, GLM_VECTOR_TYPENAME(2, float, defaultp)),\
+glm_vec(3, float, defaultp): GLM_CALL_FUNC(reflect, GLM_VECTOR_TYPENAME(3, float, defaultp)),\
+glm_vec(4, float, defaultp): GLM_CALL_FUNC(reflect, GLM_VECTOR_TYPENAME(4, float, defaultp)),\
+glm_vec(1, double, defaultp): GLM_CALL_FUNC(reflect, GLM_VECTOR_TYPENAME(1, double, defaultp)),\
+glm_vec(2, double, defaultp): GLM_CALL_FUNC(reflect, GLM_VECTOR_TYPENAME(2, double, defaultp)),\
+glm_vec(3, double, defaultp): GLM_CALL_FUNC(reflect, GLM_VECTOR_TYPENAME(3, double, defaultp)),\
+glm_vec(4, double, defaultp): GLM_CALL_FUNC(reflect, GLM_VECTOR_TYPENAME(4, double, defaultp))\
+)(N, I)
+
 #include "namespace_template_vector_end.inl"
 #include "namespace_end.inl"
 

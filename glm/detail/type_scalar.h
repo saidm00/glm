@@ -22,6 +22,8 @@ typedef uint32_t   uint;
 typedef _Bool bool;
 typedef _Bool glm_bool;
 
+#define bool bool
+
 typedef size_t glm_length_t;
 
 /* Typedefs for different precision */
