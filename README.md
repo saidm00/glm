@@ -1,7 +1,7 @@
 
 # *OpenGL Mathematics for C*
 
-[*glm-c*](https://github.com/sizeof-voidp/glm-c) is a C alternative of the C++ library [*glm*](https://github.com/g-truc/glm).
+[*xeritha/glm*](https://github.com/xeritha/glm) is a C alternative of the C++ library [*glm*](https://github.com/g-truc/glm).
 It was made referencing the [*GLSL specification*](https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.pdf) as well. This is meant to be used in C11+ (C11, C18, C2x, etc...), you could use this no problem in earlier standards with a smaller feature set.
 
 ### Features
